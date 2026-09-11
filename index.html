@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harish Tuition Centre | Classes 7th to 10th</title>
+  <title>Harish Tuition Centre | హరీష్ ట్యూషన్ సెంటర్</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -33,23 +34,23 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-emerald-500 selection:text-white">
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white transition-colors duration-200">
 
   <!-- TOP NOTIFICATION BANNER -->
   <div class="bg-gradient-to-r from-emerald-700 via-emerald-800 to-teal-900 text-white text-xs sm:text-sm py-2 px-4 shadow-sm">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/30 text-emerald-200 border border-emerald-400/30">
-          <i data-lucide="sparkles" class="w-3 h-3 mr-1 inline"></i> Admissions Open
+          <i data-lucide="sparkles" class="w-3 h-3 mr-1 inline"></i> <span data-i18n="admissionsOpen">Admissions Open</span>
         </span>
-        <span class="font-medium">Class 7th, 8th, 9th & 10th Batches (CBSE & State Board)</span>
+        <span class="font-medium" data-i18n="bannerText">Class 7th, 8th, 9th & 10th Batches (CBSE & State Board)</span>
       </div>
-      <div class="flex items-center gap-4 text-xs">
+      <div class="flex items-center gap-3 text-xs">
         <span class="hidden md:inline-flex items-center gap-1 opacity-90">
           <i data-lucide="phone" class="w-3.5 h-3.5"></i> +91 98765 43210
         </span>
         <span class="hidden sm:inline-flex items-center gap-1 opacity-90">
-          <i data-lucide="clock" class="w-3.5 h-3.5"></i> Mon-Sat: 4:30 PM - 8:30 PM
+          <i data-lucide="clock" class="w-3.5 h-3.5"></i> 4:30 PM - 8:30 PM
         </span>
         <span class="bg-emerald-600/60 px-2 py-0.5 rounded text-emerald-100 text-[11px] font-mono">HTC Digital Portal</span>
       </div>
@@ -57,7 +58,7 @@
   </div>
 
   <!-- MAIN NAVIGATION BAR -->
-  <nav class="sticky top-0 z-40 glass-nav shadow-sm">
+  <nav class="sticky top-0 z-40 glass-nav shadow-sm transition-colors duration-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         
@@ -67,43 +68,51 @@
             <i data-lucide="graduation-cap" class="w-7 h-7"></i>
           </div>
           <div>
-            <span class="font-display font-bold text-xl sm:text-2xl text-slate-900 tracking-tight block leading-tight">
-              Harish <span class="text-emerald-600">Tuition Centre</span>
+            <span class="font-display font-bold text-xl sm:text-2xl text-slate-900 dark:text-white tracking-tight block leading-tight">
+              Harish <span class="text-emerald-600 dark:text-emerald-400">Tuition Centre</span>
             </span>
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Classes 7th to 10th &bull; Est. 2014</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400" data-i18n="logoSubtitle">Classes 7th to 10th &bull; Est. 2014</span>
           </div>
         </div>
 
         <!-- Role Navigation Links -->
-        <div class="hidden lg:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200">
-          <button onclick="switchView('public')" id="nav-btn-public" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 hover:text-emerald-700">
-            <i data-lucide="home" class="w-4 h-4"></i> Home
+        <div class="hidden lg:flex items-center gap-1 bg-slate-100/90 dark:bg-slate-900/80 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+          <button onclick="switchView('public')" id="nav-btn-public" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-emerald-700">
+            <i data-lucide="home" class="w-4 h-4"></i> <span data-i18n="navHome">Home</span>
           </button>
-          <button onclick="switchView('admin')" id="nav-btn-admin" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 hover:text-emerald-700">
-            <i data-lucide="shield-check" class="w-4 h-4"></i> Teacher Portal
+          <button onclick="handleTeacherNavClick()" id="nav-btn-admin" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-emerald-700">
+            <i data-lucide="shield-check" class="w-4 h-4"></i> <span data-i18n="navTeacher">Teacher Portal</span>
           </button>
-          <button onclick="switchView('student')" id="nav-btn-student" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 hover:text-emerald-700">
-            <i data-lucide="book-open" class="w-4 h-4"></i> Student Portal
+          <button onclick="handleStudentNavClick()" id="nav-btn-student" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-emerald-700">
+            <i data-lucide="book-open" class="w-4 h-4"></i> <span data-i18n="navStudent">Student Portal</span>
           </button>
-          <button onclick="switchView('parent')" id="nav-btn-parent" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 hover:text-emerald-700">
-            <i data-lucide="users" class="w-4 h-4"></i> Parent Portal
+          <button onclick="handleParentNavClick()" id="nav-btn-parent" class="px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-emerald-700">
+            <i data-lucide="users" class="w-4 h-4"></i> <span data-i18n="navParent">Parent Portal</span>
           </button>
         </div>
 
-        <!-- Right Quick Portal Switcher & Active Role Badge -->
-        <div class="flex items-center gap-3">
-          <div id="current-role-badge" class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-full text-xs font-semibold">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span>
-            <span id="current-role-label">Public View</span>
-          </div>
-
-          <button onclick="openRoleModal()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-md shadow-emerald-600/20 transition-all flex items-center gap-2">
-            <i data-lucide="user-check" class="w-4 h-4"></i>
-            <span>Switch Role</span>
+        <!-- Right Controls: Language Selector, Theme Switcher & Login/Session -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- Language Toggle Button (English | తెలుగు) -->
+          <button onclick="toggleLanguage()" id="lang-toggle-btn" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-200 dark:border-slate-700 shadow-sm" title="Switch Language / భాషను మార్చండి">
+            <i data-lucide="languages" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+            <span id="current-lang-label">తెలుగు</span>
           </button>
 
+          <!-- Theme Toggle Button (Dark / Light) -->
+          <button onclick="toggleTheme()" id="theme-toggle-btn" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm transition-all" title="Toggle Dark / Light Theme">
+            <i data-lucide="moon" id="theme-icon-moon" class="w-4 h-4 block"></i>
+            <i data-lucide="sun" id="theme-icon-sun" class="w-4 h-4 hidden text-amber-400"></i>
+          </button>
+
+          <!-- Active User / Login Status Badge -->
+          <div id="auth-status-container" class="flex items-center gap-2">
+            <!-- Populated via app.js (shows role badge or login button) -->
+          </div>
+
           <!-- Mobile Hamburger -->
-          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100">
+          <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
             <i data-lucide="menu" class="w-6 h-6"></i>
           </button>
         </div>
@@ -112,18 +121,18 @@
     </div>
 
     <!-- Mobile Dropdown Navigation -->
-    <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
-      <button onclick="switchView('public'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-        <i data-lucide="home" class="w-4 h-4"></i> Home
+    <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-2">
+      <button onclick="switchView('public'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+        <i data-lucide="home" class="w-4 h-4"></i> <span data-i18n="navHome">Home</span>
       </button>
-      <button onclick="switchView('admin'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-        <i data-lucide="shield-check" class="w-4 h-4"></i> Teacher Portal
+      <button onclick="handleTeacherNavClick(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-4 h-4"></i> <span data-i18n="navTeacher">Teacher Portal</span>
       </button>
-      <button onclick="switchView('student'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-        <i data-lucide="book-open" class="w-4 h-4"></i> Student Portal
+      <button onclick="handleStudentNavClick(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+        <i data-lucide="book-open" class="w-4 h-4"></i> <span data-i18n="navStudent">Student Portal</span>
       </button>
-      <button onclick="switchView('parent'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
-        <i data-lucide="users" class="w-4 h-4"></i> Parent Portal
+      <button onclick="handleParentNavClick(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
+        <i data-lucide="users" class="w-4 h-4"></i> <span data-i18n="navParent">Parent Portal</span>
       </button>
     </div>
   </nav>
@@ -137,52 +146,54 @@
     <section id="view-public" class="space-y-16 pb-20">
       
       <!-- Hero Section -->
-      <div class="relative overflow-hidden bg-gradient-to-b from-emerald-50/60 via-slate-50 to-white pt-12 pb-20 border-b border-slate-200">
+      <div class="relative overflow-hidden bg-gradient-to-b from-emerald-50/60 via-slate-50 to-white dark:from-slate-900 dark:via-slate-950 dark:to-slate-950 pt-12 pb-20 border-b border-slate-200 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">
-                <i data-lucide="award" class="w-4 h-4"></i> Dedicated Coaching for Classes 7th to 10th
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                <i data-lucide="award" class="w-4 h-4"></i> <span data-i18n="heroBadge">Dedicated Coaching for Classes 7th to 10th</span>
               </div>
-              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
-                Clear Concepts. <br class="hidden sm:block">
-                Daily Discipline. <br class="hidden sm:block">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700">Guaranteed Board Success.</span>
+              
+              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15]">
+                <span data-i18n="heroTitle1">Clear Concepts.</span> <br class="hidden sm:block">
+                <span data-i18n="heroTitle2">Daily Discipline.</span> <br class="hidden sm:block">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-700 dark:from-emerald-400 dark:to-teal-300" data-i18n="heroTitle3">Guaranteed Board Success.</span>
               </h1>
-              <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Welcome to <strong>Harish Tuition Centre</strong>. We mentor students of 7th, 8th, 9th, and 10th standards in <strong>Mathematics, Science, English & Social Science</strong> with comprehensive chapter notes, recorded video lectures, live daily attendance tracking, and transparent parental updates.
+              
+              <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed" data-i18n="heroSubtitle">
+                Welcome to Harish Tuition Centre. We mentor students of 7th, 8th, 9th, and 10th standards in Mathematics, Science, English & Social Science with digital chapter notes, video lectures, live daily attendance, and transparent parental updates.
               </p>
 
               <!-- CTA Action Buttons -->
               <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
-                <button onclick="switchView('parent')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base px-6 py-3.5 rounded-2xl shadow-lg shadow-emerald-600/30 hover-lift flex items-center gap-2">
+                <button onclick="handleParentNavClick()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base px-6 py-3.5 rounded-2xl shadow-lg shadow-emerald-600/30 hover-lift flex items-center gap-2">
                   <i data-lucide="heart-handshake" class="w-5 h-5"></i>
-                  <span>Parent Portal Login</span>
+                  <span data-i18n="ctaParent">Parent Portal Login</span>
                 </button>
-                <button onclick="switchView('student')" class="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-bold text-sm sm:text-base px-6 py-3.5 rounded-2xl hover-lift flex items-center gap-2 shadow-sm">
-                  <i data-lucide="book-open" class="w-5 h-5 text-emerald-600"></i>
-                  <span>Browse Notes & Videos</span>
+                <button onclick="handleStudentNavClick()" class="bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700 font-bold text-sm sm:text-base px-6 py-3.5 rounded-2xl hover-lift flex items-center gap-2 shadow-sm">
+                  <i data-lucide="book-open" class="w-5 h-5 text-emerald-600 dark:text-emerald-400"></i>
+                  <span data-i18n="ctaStudent">Student Learning Hub</span>
                 </button>
-                <button onclick="switchView('admin')" class="bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs sm:text-sm px-5 py-3 rounded-2xl flex items-center gap-2">
+                <button onclick="handleTeacherNavClick()" class="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-medium text-xs sm:text-sm px-5 py-3 rounded-2xl flex items-center gap-2">
                   <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
-                  <span>Teacher Portal</span>
+                  <span data-i18n="ctaTeacher">Teacher Harish Portal</span>
                 </button>
               </div>
 
               <!-- Highlights Row -->
-              <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 max-w-lg mx-auto lg:mx-0">
+              <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80 dark:border-slate-800 max-w-lg mx-auto lg:mx-0">
                 <div>
-                  <div class="font-display text-2xl sm:text-3xl font-bold text-slate-900">100%</div>
-                  <div class="text-xs text-slate-500 font-medium">Board Pass Rate</div>
+                  <div class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">100%</div>
+                  <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="statPassRate">Board Pass Rate</div>
                 </div>
                 <div>
-                  <div class="font-display text-2xl sm:text-3xl font-bold text-emerald-600">12+</div>
-                  <div class="text-xs text-slate-500 font-medium">Years Experience</div>
+                  <div class="font-display text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">12+</div>
+                  <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="statExperience">Years Experience</div>
                 </div>
                 <div>
-                  <div class="font-display text-2xl sm:text-3xl font-bold text-slate-900">Daily</div>
-                  <div class="text-xs text-slate-500 font-medium">Attendance & SMS</div>
+                  <div class="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white" data-i18n="statDaily">Daily</div>
+                  <div class="text-xs text-slate-500 dark:text-slate-400 font-medium" data-i18n="statAttendanceSms">Attendance Tracking</div>
                 </div>
               </div>
 
@@ -190,68 +201,68 @@
 
             <!-- Right Visual / Feature Card Deck -->
             <div class="lg:col-span-5 relative">
-              <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl shadow-slate-200/60 relative z-10 border border-slate-200">
-                <div class="flex items-center justify-between pb-5 border-b border-slate-100">
+              <div class="glass-panel p-6 sm:p-8 rounded-3xl shadow-xl shadow-slate-200/60 dark:shadow-none relative z-10 border border-slate-200 dark:border-slate-800">
+                <div class="flex items-center justify-between pb-5 border-b border-slate-100 dark:border-slate-800">
                   <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold">
                       HTC
                     </div>
                     <div>
-                      <h2 class="font-bold text-slate-900 text-sm">Centre Live Dashboard</h2>
-                      <p class="text-xs text-slate-500">Live Status &bull; Class 7 to 10</p>
+                      <h2 class="font-bold text-slate-900 dark:text-white text-sm" data-i18n="centreLiveDashboard">Centre Live Portal</h2>
+                      <p class="text-xs text-slate-500 dark:text-slate-400">Classes 7 to 10 &bull; 2026</p>
                     </div>
                   </div>
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span> System Online
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span> <span data-i18n="systemOnline">Live 24/7</span>
                   </span>
                 </div>
 
                 <!-- Feature Mini List -->
-                <div class="space-y-4 py-5">
-                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 transition-colors border border-slate-100">
+                <div class="space-y-3.5 py-5">
+                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                     <div class="w-9 h-9 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0">
                       <i data-lucide="file-text" class="w-5 h-5"></i>
                     </div>
                     <div>
-                      <h3 class="text-sm font-bold text-slate-900">Subject Notes & Formulas</h3>
-                      <p class="text-xs text-slate-500">Comprehensive chapter notes, derivation sheets, and NCERT solutions.</p>
+                      <h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="featNotes">Subject Notes & Formulas</h3>
+                      <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="featNotesDesc">Full revision notes, formula cheat sheets, and board questions.</p>
                     </div>
                   </div>
 
-                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 transition-colors border border-slate-100">
+                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                     <div class="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0">
                       <i data-lucide="video" class="w-5 h-5"></i>
                     </div>
                     <div>
-                      <h3 class="text-sm font-bold text-slate-900">Recorded Video Lectures</h3>
-                      <p class="text-xs text-slate-500">Curated topic explanations for revision & missed class catchup.</p>
+                      <h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="featVideos">Curated Video Lessons</h3>
+                      <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="featVideosDesc">Watch conceptual chapter lectures anytime from home.</p>
                     </div>
                   </div>
 
-                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 transition-colors border border-slate-100">
+                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                     <div class="w-9 h-9 rounded-lg bg-amber-600 text-white flex items-center justify-center shrink-0">
                       <i data-lucide="calendar-check" class="w-5 h-5"></i>
                     </div>
                     <div>
-                      <h3 class="text-sm font-bold text-slate-900">Daily Attendance Tracking</h3>
-                      <p class="text-xs text-slate-500">Marked daily per batch with instant arrival notifications.</p>
+                      <h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="featAttendance">Daily Attendance Tracking</h3>
+                      <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="featAttendanceDesc">Marked daily with live arrival timestamps for parents.</p>
                     </div>
                   </div>
 
-                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 hover:bg-emerald-50/50 transition-colors border border-slate-100">
+                  <div class="flex items-start gap-3.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800">
                     <div class="w-9 h-9 rounded-lg bg-purple-600 text-white flex items-center justify-center shrink-0">
-                      <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                      <i data-lucide="qr-code" class="w-5 h-5"></i>
                     </div>
                     <div>
-                      <h3 class="text-sm font-bold text-slate-900">Parental Access & Marks Card</h3>
-                      <p class="text-xs text-slate-500">Parents can log in with their secret PIN to inspect performance.</p>
+                      <h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="featUpi">Parent UPI Fee Payment</h3>
+                      <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="featUpiDesc">Instant QR Code payment via PhonePe, GPay, Paytm with receipts.</p>
                     </div>
                   </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                  <span>Batch Capacity: Max 15 students</span>
-                  <span class="font-semibold text-emerald-600">Personalized Attention</span>
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <span data-i18n="batchSize">Small Batch: Max 15 students</span>
+                  <span class="font-semibold text-emerald-600 dark:text-emerald-400" data-i18n="personalAttention">Personalized Attention</span>
                 </div>
               </div>
             </div>
@@ -263,14 +274,14 @@
       <!-- Classes 7th to 10th Grid -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-3xl mx-auto mb-12">
-          <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+          <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800" data-i18n="targetedCurriculum">
             Targeted Curriculum
           </span>
-          <h2 class="text-3xl font-extrabold text-slate-900 mt-3 font-display">
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-3 font-display" data-i18n="classesTitle">
             Specialized Batches for Classes 7th to 10th
           </h2>
-          <p class="text-slate-600 mt-2 text-sm sm:text-base">
-            Structured batches designed specifically for middle school foundations and secondary board examination excellence.
+          <p class="text-slate-600 dark:text-slate-400 mt-2 text-sm sm:text-base" data-i18n="classesSubtitle">
+            Tailored curriculum for CBSE and State Board examinations.
           </p>
         </div>
 
@@ -279,113 +290,62 @@
         </div>
       </div>
 
-      <!-- Core Pillars: Notes, Videos, Attendance, Parent Transparency -->
-      <div class="bg-slate-100/80 py-16 border-y border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center max-w-3xl mx-auto mb-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 font-display">Why Harish Tuition Centre?</h2>
-            <p class="text-slate-600 mt-2 text-sm sm:text-base">A complete academic ecosystem blending classroom teaching with digital mastery.</p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200 hover-lift">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-5">
-                <i data-lucide="book-marked" class="w-6 h-6"></i>
-              </div>
-              <h3 class="text-xl font-bold text-slate-900 mb-2">Subject Notes & Materials</h3>
-              <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                Handcrafted chapter notes for every unit in Mathematics and Science. Includes key formulas, mind maps, previous 10-year board questions, and step-by-step problem proofs.
-              </p>
-              <button onclick="switchView('student')" class="text-emerald-600 text-sm font-bold inline-flex items-center gap-1 hover:underline">
-                Explore Notes <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-            </div>
-
-            <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200 hover-lift">
-              <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mb-5">
-                <i data-lucide="play-circle" class="w-6 h-6"></i>
-              </div>
-              <h3 class="text-xl font-bold text-slate-900 mb-2">Topic Video Lectures</h3>
-              <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                Missed a class or need revision before unit tests? Our curated video lectures break down tough concepts like Trigonometry, Redox Reactions, and Newton's Laws with animations.
-              </p>
-              <button onclick="switchView('student')" class="text-blue-600 text-sm font-bold inline-flex items-center gap-1 hover:underline">
-                Watch Lectures <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-            </div>
-
-            <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200 hover-lift">
-              <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center mb-5">
-                <i data-lucide="heart" class="w-6 h-6"></i>
-              </div>
-              <h3 class="text-xl font-bold text-slate-900 mb-2">Parent Portal & Attendance</h3>
-              <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                Full transparency for parents. Log in anytime to check your child's daily arrival time, monthly attendance percentage, test scores, homework completion, and direct WhatsApp connect.
-              </p>
-              <button onclick="switchView('parent')" class="text-purple-600 text-sm font-bold inline-flex items-center gap-1 hover:underline">
-                Access Parent Portal <i data-lucide="arrow-right" class="w-4 h-4"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Announcements / Notice Board Preview -->
+      <!-- Announcements Preview -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="glass-panel p-8 rounded-3xl border border-slate-200 shadow-md">
+        <div class="glass-panel p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md">
           <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center">
                 <i data-lucide="bell" class="w-5 h-5"></i>
               </div>
               <div>
-                <h3 class="text-xl font-bold text-slate-900 font-display">Centre Notice Board</h3>
-                <p class="text-xs text-slate-500">Official updates for Students & Parents</p>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="noticeBoard">Centre Notice Board</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="noticeBoardSubtitle">Official updates for Students & Parents</p>
               </div>
             </div>
-            <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            <span class="text-xs font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-200 dark:border-emerald-800" data-i18n="updatedToday">
               Updated Today
             </span>
           </div>
 
-          <div id="public-announcements-container" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div id="public-announcements-container" class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <!-- Populated via app.js -->
           </div>
         </div>
       </div>
 
-      <!-- Director's Message & Inquiry -->
+      <!-- Director's Message -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl">
+        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-slate-800">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div class="lg:col-span-8 space-y-4">
-              <span class="text-emerald-400 font-bold text-xs uppercase tracking-wider">Meet The Director</span>
-              <h2 class="text-2xl sm:text-3xl font-extrabold font-display">
+              <span class="text-emerald-400 font-bold text-xs uppercase tracking-wider" data-i18n="meetDirector">Director's Desk</span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold font-display leading-snug" data-i18n="directorQuote">
                 "Every student has the potential to excel with the right guidance and daily discipline."
               </h2>
-              <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                At Harish Tuition Centre, we do not believe in rote memorization. We teach from the ground up, ensuring students understand the 'why' behind every mathematical formula and scientific phenomenon. Our small batch sizes guarantee that no student is left behind.
+              <p class="text-slate-300 text-sm sm:text-base leading-relaxed" data-i18n="directorMsg">
+                At Harish Tuition Centre, we do not believe in rote memorization. We teach from the ground up, ensuring students understand the 'why' behind every mathematical formula and scientific phenomenon.
               </p>
               <div class="pt-2">
-                <div class="font-bold text-emerald-300 text-base">Harish R., M.Sc., B.Ed.</div>
-                <div class="text-xs text-slate-400">Founder & Academic Director (12+ Years Teaching Experience)</div>
+                <div class="font-bold text-emerald-300 text-base" data-i18n="directorName">Harish R., M.Sc., B.Ed.</div>
+                <div class="text-xs text-slate-400" data-i18n="directorExp">Founder & Academic Director (12+ Years Teaching Experience)</div>
               </div>
             </div>
 
-            <div class="lg:col-span-4 bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 space-y-3">
+            <div class="lg:col-span-4 bg-white/10 dark:bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/10 space-y-3">
               <h4 class="font-bold text-white text-base flex items-center gap-2">
-                <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> Visit Our Centre
+                <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> <span data-i18n="visitCentre">Visit Our Centre</span>
               </h4>
-              <p class="text-xs text-slate-300">
+              <p class="text-xs text-slate-300" data-i18n="centreAddress">
                 #42, Temple Road, 2nd Main, Near City Library, Main Town.
               </p>
               <div class="text-xs text-slate-300 space-y-1 pt-2 border-t border-white/10">
                 <div><strong>Classes:</strong> 7th, 8th, 9th, 10th (CBSE/State)</div>
-                <div><strong>Batches:</strong> 4:30 PM to 8:30 PM (Mon-Sat)</div>
+                <div><strong>Batches:</strong> 4:30 PM - 8:30 PM (Mon-Sat)</div>
                 <div><strong>Helpline:</strong> +91 98765 43210</div>
               </div>
-              <button onclick="switchView('parent')" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition-all mt-2">
+              <button onclick="handleParentNavClick()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition-all mt-2" data-i18n="loginCheckProgress">
                 Log In to Check Student Progress
               </button>
             </div>
@@ -397,132 +357,129 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- VIEW 2: TEACHER / ADMIN PORTAL -->
+    <!-- VIEW 2: TEACHER / ADMIN PORTAL (HARISH SIR) -->
     <!-- ========================================================================= -->
     <section id="view-admin" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
       <!-- Admin Header -->
-      <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 mb-1">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Harish Sir - Administrator Mode
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mb-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <span data-i18n="teacherHarishMode">Harish Sir - Teacher Administrator Mode</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-display">Tuition Management Dashboard</h2>
-          <p class="text-xs sm:text-sm text-slate-500">Mark daily attendance, manage notes, video lectures, student records, and test marks.</p>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display" data-i18n="tuitionManagement">Tuition Management Dashboard</h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400" data-i18n="teacherDashboardSubtitle">Manage daily attendance, notes, videos, student passwords, and fee records.</p>
         </div>
 
         <div class="flex items-center gap-2">
           <button onclick="openAddStudentModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-2">
-            <i data-lucide="user-plus" class="w-4 h-4"></i> Add Student
+            <i data-lucide="user-plus" class="w-4 h-4"></i> <span data-i18n="addStudentBtn">Add Student</span>
           </button>
-          <button onclick="exportDataBackup()" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm flex items-center gap-1.5" title="Download JSON Backup">
-            <i data-lucide="download" class="w-4 h-4"></i> Backup
+          <button onclick="logoutSession()" class="bg-red-50 hover:bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl flex items-center gap-1.5">
+            <i data-lucide="log-out" class="w-4 h-4"></i> <span data-i18n="logoutBtn">Logout</span>
           </button>
         </div>
       </div>
 
       <!-- Admin KPI Stats Grid -->
       <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div class="flex items-center justify-between text-slate-500 mb-2">
-            <span class="text-xs font-semibold">Total Students</span>
+            <span class="text-xs font-semibold" data-i18n="totalStudents">Total Students</span>
             <i data-lucide="users" class="w-4 h-4 text-emerald-600"></i>
           </div>
-          <div id="stat-total-students" class="text-2xl font-extrabold text-slate-900">0</div>
+          <div id="stat-total-students" class="text-2xl font-extrabold text-slate-900 dark:text-white">0</div>
           <div class="text-[11px] text-slate-400 mt-0.5">Classes 7th to 10th</div>
         </div>
 
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div class="flex items-center justify-between text-slate-500 mb-2">
-            <span class="text-xs font-semibold">Today's Attendance</span>
+            <span class="text-xs font-semibold" data-i18n="todayAttendance">Today's Attendance</span>
             <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600"></i>
           </div>
           <div id="stat-today-attendance" class="text-2xl font-extrabold text-emerald-600">--%</div>
           <div class="text-[11px] text-slate-400 mt-0.5" id="stat-attendance-counts">0 Present / 0 Absent</div>
         </div>
 
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div class="flex items-center justify-between text-slate-500 mb-2">
-            <span class="text-xs font-semibold">Study Notes</span>
+            <span class="text-xs font-semibold" data-i18n="studyNotesCount">Study Notes</span>
             <i data-lucide="file-text" class="w-4 h-4 text-blue-600"></i>
           </div>
-          <div id="stat-total-notes" class="text-2xl font-extrabold text-slate-900">0</div>
+          <div id="stat-total-notes" class="text-2xl font-extrabold text-slate-900 dark:text-white">0</div>
           <div class="text-[11px] text-slate-400 mt-0.5">Chapters & Formulae</div>
         </div>
 
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div class="flex items-center justify-between text-slate-500 mb-2">
-            <span class="text-xs font-semibold">Video Lectures</span>
+            <span class="text-xs font-semibold" data-i18n="videoLecturesCount">Video Lectures</span>
             <i data-lucide="video" class="w-4 h-4 text-indigo-600"></i>
           </div>
-          <div id="stat-total-videos" class="text-2xl font-extrabold text-slate-900">0</div>
-          <div class="text-[11px] text-slate-400 mt-0.5">Curated Lessons</div>
+          <div id="stat-total-videos" class="text-2xl font-extrabold text-slate-900 dark:text-white">0</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Online Lessons</div>
         </div>
 
-        <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm col-span-2 lg:col-span-1">
+        <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm col-span-2 lg:col-span-1">
           <div class="flex items-center justify-between text-slate-500 mb-2">
-            <span class="text-xs font-semibold">Weekly Tests</span>
-            <i data-lucide="clipboard-list" class="w-4 h-4 text-purple-600"></i>
+            <span class="text-xs font-semibold" data-i18n="upiFeeCollection">UPI Fee Status</span>
+            <i data-lucide="qr-code" class="w-4 h-4 text-purple-600"></i>
           </div>
-          <div id="stat-total-tests" class="text-2xl font-extrabold text-slate-900">0</div>
-          <div class="text-[11px] text-slate-400 mt-0.5">Evaluated Tests</div>
+          <div id="stat-fees-collected" class="text-2xl font-extrabold text-purple-600">--</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">PhonePe / GPay Active</div>
         </div>
       </div>
 
       <!-- Admin Sub-Navigation Tabs -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800">
         <button onclick="setAdminTab('attendance')" id="admin-tab-attendance" class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all">
-          <i data-lucide="calendar-check" class="w-4 h-4"></i> Mark Attendance
+          <i data-lucide="calendar-check" class="w-4 h-4"></i> <span data-i18n="tabMarkAttendance">Mark Attendance</span>
         </button>
-        <button onclick="setAdminTab('reports')" id="admin-tab-reports" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="bar-chart-3" class="w-4 h-4"></i> Attendance Records & Log
+        <button onclick="setAdminTab('credentials')" id="admin-tab-credentials" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="key" class="w-4 h-4 text-amber-500"></i> <span data-i18n="tabStudentCredentials">Student & Parent Credentials</span>
         </button>
-        <button onclick="setAdminTab('notes')" id="admin-tab-notes" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="file-text" class="w-4 h-4"></i> Manage Notes
+        <button onclick="setAdminTab('reports')" id="admin-tab-reports" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i> <span data-i18n="tabReports">Attendance Records & Log</span>
         </button>
-        <button onclick="setAdminTab('videos')" id="admin-tab-videos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="video" class="w-4 h-4"></i> Manage Videos
+        <button onclick="setAdminTab('notes')" id="admin-tab-notes" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="file-text" class="w-4 h-4"></i> <span data-i18n="tabNotes">Manage Notes</span>
         </button>
-        <button onclick="setAdminTab('students')" id="admin-tab-students" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="users" class="w-4 h-4"></i> Student Directory
+        <button onclick="setAdminTab('videos')" id="admin-tab-videos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="video" class="w-4 h-4"></i> <span data-i18n="tabVideos">Manage Videos</span>
         </button>
-        <button onclick="setAdminTab('tests')" id="admin-tab-tests" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="award" class="w-4 h-4"></i> Test Marks
-        </button>
-        <button onclick="setAdminTab('homework')" id="admin-tab-homework" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="book-check" class="w-4 h-4"></i> Daily Homework
+        <button onclick="setAdminTab('fees')" id="admin-tab-fees" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="indian-rupee" class="w-4 h-4 text-emerald-500"></i> <span data-i18n="tabFeeManager">Fee Ledger & UPI</span>
         </button>
       </div>
 
       <!-- TAB 1: MARK ATTENDANCE -->
       <div id="admin-panel-attendance" class="space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100">
+        <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h3 class="text-lg font-bold text-slate-900 font-display">Daily Attendance Register</h3>
-              <p class="text-xs text-slate-500">Select class and date to mark attendance. Parents will see this status in real-time.</p>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display" data-i18n="dailyAttendanceRegister">Daily Attendance Register</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="dailyAttendanceSub">Select batch and date to mark attendance. Synchronizes live to Parent Portal.</p>
             </div>
 
             <!-- Controls: Class Selector & Date Picker -->
             <div class="flex flex-wrap items-center gap-3">
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Select Batch</label>
-                <select id="attendance-class-select" onchange="renderAttendanceSheet()" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
-                  <option value="class-10">Class 10 (7:30 PM)</option>
-                  <option value="class-9">Class 9 (6:30 PM)</option>
-                  <option value="class-8">Class 8 (5:30 PM)</option>
-                  <option value="class-7">Class 7 (4:30 PM)</option>
+                <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1" data-i18n="selectBatch">Select Batch</label>
+                <select id="attendance-class-select" onchange="renderAttendanceSheet()" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none">
+                  <option value="class-10">Class 10 (10వ తరగతి - 7:30 PM)</option>
+                  <option value="class-9">Class 9 (9వ తరగతి - 6:30 PM)</option>
+                  <option value="class-8">Class 8 (8వ తరగతి - 5:30 PM)</option>
+                  <option value="class-7">Class 7 (7వ తరగతి - 4:30 PM)</option>
                 </select>
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Date</label>
-                <input type="date" id="attendance-date-input" onchange="renderAttendanceSheet()" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none">
+                <label class="block text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1" data-i18n="attendanceDate">Date</label>
+                <input type="date" id="attendance-date-input" onchange="renderAttendanceSheet()" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none">
               </div>
 
               <div class="pt-5">
-                <button onclick="markAllAttendance('Present')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition-all">
-                  <i data-lucide="check-check" class="w-4 h-4"></i> Mark All Present
+                <button onclick="markAllAttendance('Present')" class="bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 font-semibold text-xs px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 transition-all">
+                  <i data-lucide="check-check" class="w-4 h-4"></i> <span data-i18n="markAllPresent">Mark All Present</span>
                 </button>
               </div>
             </div>
@@ -532,55 +489,85 @@
           <div class="mt-6 overflow-x-auto">
             <table class="w-full text-left border-collapse">
               <thead>
-                <tr class="border-b border-slate-200 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50">
-                  <th class="py-3 px-4 rounded-l-xl">Roll & Student</th>
-                  <th class="py-3 px-4">Parent Details</th>
-                  <th class="py-3 px-4 text-center">Attendance Status</th>
-                  <th class="py-3 px-4">Arrival Time</th>
-                  <th class="py-3 px-4 rounded-r-xl">Teacher Remark</th>
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[11px] uppercase tracking-wider bg-slate-50/50 dark:bg-slate-900/50">
+                  <th class="py-3 px-4 rounded-l-xl" data-i18n="colRollStudent">Roll & Student</th>
+                  <th class="py-3 px-4" data-i18n="colParentDetails">Parent Details</th>
+                  <th class="py-3 px-4 text-center" data-i18n="colAttendanceStatus">Attendance Status</th>
+                  <th class="py-3 px-4" data-i18n="colArrivalTime">Arrival Time</th>
+                  <th class="py-3 px-4 rounded-r-xl" data-i18n="colTeacherRemark">Teacher Remark</th>
                 </tr>
               </thead>
-              <tbody id="attendance-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm">
+              <tbody id="attendance-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
                 <!-- Populated via app.js -->
               </tbody>
             </table>
           </div>
 
           <!-- Save Attendance Footer -->
-          <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
-            <div class="text-xs text-slate-500 flex items-center gap-2">
+          <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+            <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
               <i data-lucide="info" class="w-4 h-4 text-emerald-600"></i>
-              <span>Clicking 'Save Attendance' synchronizes records to the Parent Portal immediately.</span>
+              <span data-i18n="attendanceSyncNotice">Saved attendance updates the live Parent & Student portals immediately.</span>
             </div>
             <button onclick="saveAttendanceRecords()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-emerald-600/20 flex items-center gap-2 active:scale-95 transition-all">
-              <i data-lucide="save" class="w-4 h-4"></i> Save & Broadcast Attendance
+              <i data-lucide="save" class="w-4 h-4"></i> <span data-i18n="saveAttendanceBtn">Save & Broadcast Attendance</span>
             </button>
           </div>
 
         </div>
       </div>
 
-      <!-- TAB 2: ATTENDANCE RECORDS & REPORTS -->
-      <div id="admin-panel-reports" class="hidden space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100">
+      <!-- TAB 2: STUDENT & PARENT CREDENTIALS MANAGER (HARISH SIR CONTROL) -->
+      <div id="admin-panel-credentials" class="hidden space-y-6">
+        <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h3 class="text-lg font-bold text-slate-900 font-display">Cumulative Attendance Register & Audit</h3>
-              <p class="text-xs text-slate-500">Audit attendance percentages, identify students falling below 75%, and export reports.</p>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display" data-i18n="credManagerTitle">Student & Parent Credential Management</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="credManagerSubtitle">Set and manage login IDs and passwords for each student and parent. Share directly via WhatsApp.</p>
             </div>
             <div class="flex items-center gap-2">
-              <select id="report-class-filter" onchange="renderAttendanceReports()" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm font-semibold text-slate-800">
+              <input type="text" id="credential-search-input" onkeyup="filterCredentialsDirectory()" placeholder="Search student or roll number..." class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-200 outline-none w-48 sm:w-64">
+            </div>
+          </div>
+
+          <div class="mt-6 overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-[11px] uppercase tracking-wider bg-slate-50/50 dark:bg-slate-900/50">
+                  <th class="py-3 px-4 rounded-l-xl" data-i18n="colStudent">Student Name</th>
+                  <th class="py-3 px-4" data-i18n="colClass">Class</th>
+                  <th class="py-3 px-4" data-i18n="colLoginId">Login ID</th>
+                  <th class="py-3 px-4" data-i18n="colPassword">Password</th>
+                  <th class="py-3 px-4" data-i18n="colParentPhone">Parent Phone</th>
+                  <th class="py-3 px-4 rounded-r-xl text-right" data-i18n="colActions">Actions & WhatsApp</th>
+                </tr>
+              </thead>
+              <tbody id="credentials-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: ATTENDANCE CUMULATIVE REPORTS -->
+      <div id="admin-panel-reports" class="hidden space-y-6">
+        <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display" data-i18n="cumulativeReports">Cumulative Attendance Register & Audit</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="cumulativeReportsSub">Audit percentages, spot absences, and export reports.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="report-class-filter" onchange="renderAttendanceReports()" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold">
                 <option value="all">All Classes (7 to 10)</option>
                 <option value="class-10">Class 10</option>
                 <option value="class-9">Class 9</option>
                 <option value="class-8">Class 8</option>
                 <option value="class-7">Class 7</option>
               </select>
-              <button onclick="exportAttendanceCSV()" class="bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 font-semibold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm">
+              <button onclick="exportAttendanceCSV()" class="bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-semibold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm">
                 <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> Export CSV
-              </button>
-              <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm">
-                <i data-lucide="printer" class="w-4 h-4"></i> Print Roster
               </button>
             </div>
           </div>
@@ -588,17 +575,16 @@
           <div class="mt-6 overflow-x-auto">
             <table class="w-full text-left border-collapse">
               <thead>
-                <tr class="border-b border-slate-200 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50">
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50 dark:bg-slate-900/50">
                   <th class="py-3 px-4 rounded-l-xl">Student Name</th>
                   <th class="py-3 px-4">Class</th>
-                  <th class="py-3 px-4">Roll No</th>
                   <th class="py-3 px-4 text-center">Present</th>
                   <th class="py-3 px-4 text-center">Absent</th>
                   <th class="py-3 px-4 text-center">Attendance %</th>
-                  <th class="py-3 px-4 rounded-r-xl text-right">Status & Action</th>
+                  <th class="py-3 px-4 rounded-r-xl text-right">Status</th>
                 </tr>
               </thead>
-              <tbody id="attendance-report-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm">
+              <tbody id="attendance-report-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
                 <!-- Populated via app.js -->
               </tbody>
             </table>
@@ -606,15 +592,15 @@
         </div>
       </div>
 
-      <!-- TAB 3: SUBJECT NOTES MANAGER -->
+      <!-- TAB 4: SUBJECT NOTES MANAGER -->
       <div id="admin-panel-notes" class="hidden space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h3 class="text-xl font-bold text-slate-900 font-display">Notes & Study Materials Hub</h3>
-            <p class="text-xs text-slate-500">Upload revision notes, formula sheets, and chapter summaries for Classes 7th to 10th.</p>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="notesManagerTitle">Notes & Study Materials Hub</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="notesManagerSub">Upload revision notes, formula sheets, and chapter summaries.</p>
           </div>
           <button onclick="openAddNoteModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-2">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i> Add New Subject Note
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> <span data-i18n="addNewNote">Add New Subject Note</span>
           </button>
         </div>
 
@@ -623,15 +609,15 @@
         </div>
       </div>
 
-      <!-- TAB 4: VIDEO LECTURES MANAGER -->
+      <!-- TAB 5: VIDEO LECTURES MANAGER -->
       <div id="admin-panel-videos" class="hidden space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h3 class="text-xl font-bold text-slate-900 font-display">Video Lecture Repository</h3>
-            <p class="text-xs text-slate-500">Add and manage video lectures with embedded players for students and parents.</p>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="videoManagerTitle">Video Lecture Repository</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="videoManagerSub">Add and manage video lectures with embedded players.</p>
           </div>
           <button onclick="openAddVideoModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-2">
-            <i data-lucide="video" class="w-4 h-4"></i> Add New Video Lecture
+            <i data-lucide="video" class="w-4 h-4"></i> <span data-i18n="addNewVideo">Add New Video Lecture</span>
           </button>
         </div>
 
@@ -640,74 +626,63 @@
         </div>
       </div>
 
-      <!-- TAB 5: STUDENT DIRECTORY -->
-      <div id="admin-panel-students" class="hidden space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100">
-            <div>
-              <h3 class="text-lg font-bold text-slate-900 font-display">Enrolled Students & Parent Access Credentials</h3>
-              <p class="text-xs text-slate-500">Each student is provisioned a Student ID and a 4-digit Parent PIN for confidential access.</p>
+      <!-- TAB 6: FEE LEDGER & UPI SETTINGS (HARISH SIR) -->
+      <div id="admin-panel-fees" class="hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- UPI Configuration Box (5 cols) -->
+          <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center font-bold">
+                <i data-lucide="qr-code" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm" data-i18n="upiSettings">Teacher UPI Fee Settings</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Configure your GPay/PhonePe UPI ID</p>
+              </div>
             </div>
-            <div class="flex items-center gap-2">
-              <input type="text" id="student-search-input" onkeyup="filterStudentDirectory()" placeholder="Search student or parent..." class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-800 outline-none w-48 sm:w-64">
-              <button onclick="openAddStudentModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1.5">
-                <i data-lucide="plus" class="w-4 h-4"></i> Add
+
+            <div class="space-y-3 text-xs pt-2">
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Your Receiving UPI ID *</label>
+                <input type="text" id="teacher-upi-input" value="9876543210@upi" placeholder="e.g. yourname@okaxis or phone@upi" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white font-mono outline-none">
+                <p class="text-[11px] text-slate-400 mt-1">Parents will see this QR code and UPI ID to send fees directly to your bank account.</p>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Payee Name</label>
+                <input type="text" id="teacher-upi-name" value="Harish Tuition Centre" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+              </div>
+
+              <button onclick="saveUpiSettings()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                Update UPI Fee Configuration
               </button>
             </div>
           </div>
 
-          <div class="mt-6 overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr class="border-b border-slate-200 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50">
-                  <th class="py-3 px-4 rounded-l-xl">Student ID & Name</th>
-                  <th class="py-3 px-4">Class</th>
-                  <th class="py-3 px-4">Parent Name & Contact</th>
-                  <th class="py-3 px-4 text-center">Parent PIN</th>
-                  <th class="py-3 px-4 text-center">Monthly Fee</th>
-                  <th class="py-3 px-4 rounded-r-xl text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="student-directory-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm">
-                <!-- Populated via app.js -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+          <!-- Student Fee Ledger Table (7 cols) -->
+          <div class="lg:col-span-7 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm" data-i18n="feeLedgerTitle">Student Fee Ledger & Payment Status</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Toggle fee status or view submitted transaction IDs.</p>
 
-      <!-- TAB 6: TEST MARKS & EVALUATION -->
-      <div id="admin-panel-tests" class="hidden space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100">
-            <div>
-              <h3 class="text-lg font-bold text-slate-900 font-display">Unit Tests & Exam Marks Ledger</h3>
-              <p class="text-xs text-slate-500">Record marks, assign grades, and write personal mentor remarks for parents to review.</p>
-            </div>
-            <button onclick="openAddTestModal()" class="bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-2">
-              <i data-lucide="plus-circle" class="w-4 h-4"></i> Record New Test Marks
-            </button>
-          </div>
-
-          <div id="admin-tests-list" class="mt-6 space-y-4">
-            <!-- Populated via app.js -->
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 7: DAILY HOMEWORK LOG -->
-      <div id="admin-panel-homework" class="hidden space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100">
-            <div>
-              <h3 class="text-lg font-bold text-slate-900 font-display">Daily Syllabus Coverage & Homework Tracker</h3>
-              <p class="text-xs text-slate-500">What was taught today and homework assigned. Parents check this daily.</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50 dark:bg-slate-900/50">
+                    <th class="py-2.5 px-3">Student</th>
+                    <th class="py-2.5 px-3">Class</th>
+                    <th class="py-2.5 px-3">Amount</th>
+                    <th class="py-2.5 px-3 text-center">Status</th>
+                    <th class="py-2.5 px-3 text-right">Toggle</th>
+                  </tr>
+                </thead>
+                <tbody id="fee-ledger-table-body" class="divide-y divide-slate-100 dark:divide-slate-800">
+                  <!-- Populated via app.js -->
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <div id="admin-homework-list" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Populated via app.js -->
-          </div>
         </div>
       </div>
 
@@ -732,54 +707,48 @@
           </div>
         </div>
 
-        <!-- Student Switcher for Testing/Demo -->
-        <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
-          <div>
-            <label class="block text-[10px] uppercase font-bold text-slate-300 tracking-wider">Switch Student Account</label>
-            <select id="student-account-switcher" onchange="switchStudentAccount(this.value)" class="bg-slate-800 border border-slate-600 rounded-xl px-3 py-1.5 text-xs text-white outline-none">
-              <!-- Populated via app.js -->
-            </select>
-          </div>
-        </div>
+        <button onclick="logoutSession()" class="bg-white/15 hover:bg-white/25 text-white border border-white/20 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all">
+          <i data-lucide="log-out" class="w-4 h-4"></i> <span data-i18n="logoutBtn">Logout</span>
+        </button>
       </div>
 
       <!-- Student Attendance & Performance Summary Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         
         <!-- Attendance Gauge Card -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">My Attendance Rate</span>
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" data-i18n="myAttendanceRate">My Attendance Rate</span>
             <div id="student-attendance-percent" class="text-3xl font-extrabold text-emerald-600 mt-1">92%</div>
-            <p id="student-attendance-detail" class="text-xs text-slate-500 mt-1">23 Present &bull; 2 Absent</p>
+            <p id="student-attendance-detail" class="text-xs text-slate-500 dark:text-slate-400 mt-1">23 Present &bull; 2 Absent</p>
           </div>
-          <div class="w-16 h-16 rounded-full bg-emerald-50 border-4 border-emerald-500 flex items-center justify-center font-bold text-emerald-700 text-sm">
+          <div class="w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border-4 border-emerald-500 flex items-center justify-center font-bold text-emerald-700 text-sm">
             <i data-lucide="check" class="w-8 h-8 text-emerald-600"></i>
           </div>
         </div>
 
         <!-- Today's Status -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Today's Class Status</span>
-            <div id="student-today-status" class="text-2xl font-extrabold text-slate-900 mt-1 flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" data-i18n="todayClassStatus">Today's Class Status</span>
+            <div id="student-today-status" class="text-2xl font-extrabold text-slate-900 dark:text-white mt-1 flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-emerald-500 live-dot"></span> Present
             </div>
-            <p id="student-today-time" class="text-xs text-slate-500 mt-1">Checked in at 7:28 PM</p>
+            <p id="student-today-time" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Checked in at 7:28 PM</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center">
+          <div class="w-12 h-12 rounded-2xl bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 flex items-center justify-center">
             <i data-lucide="clock" class="w-6 h-6"></i>
           </div>
         </div>
 
-        <!-- Upcoming Test / Goal -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center justify-between">
+        <!-- Academic Standing -->
+        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between">
           <div>
-            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Academic Standing</span>
-            <div class="text-2xl font-extrabold text-purple-700 mt-1">Grade A+</div>
-            <p class="text-xs text-slate-500 mt-1">Top 5% in Mathematics Batch</p>
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider" data-i18n="academicStanding">Academic Standing</span>
+            <div class="text-2xl font-extrabold text-purple-700 dark:text-purple-400 mt-1">Grade A+</div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Top 5% in Mathematics</p>
           </div>
-          <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center">
+          <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center">
             <i data-lucide="trophy" class="w-6 h-6"></i>
           </div>
         </div>
@@ -787,32 +756,23 @@
       </div>
 
       <!-- Student Navigation Tabs -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800">
         <button onclick="setStudentTab('notes')" id="student-tab-notes" class="tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all">
-          <i data-lucide="file-text" class="w-4 h-4"></i> Subject Notes & Formulae
+          <i data-lucide="file-text" class="w-4 h-4"></i> <span data-i18n="tabNotes">Subject Notes</span>
         </button>
-        <button onclick="setStudentTab('videos')" id="student-tab-videos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="video" class="w-4 h-4"></i> Video Lectures
+        <button onclick="setStudentTab('videos')" id="student-tab-videos" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="video" class="w-4 h-4"></i> <span data-i18n="tabVideos">Video Lectures</span>
         </button>
-        <button onclick="setStudentTab('tests')" id="student-tab-tests" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="award" class="w-4 h-4"></i> My Test Marks & Feedback
+        <button onclick="setStudentTab('tests')" id="student-tab-tests" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="award" class="w-4 h-4"></i> <span data-i18n="tabMarks">My Test Marks</span>
         </button>
-        <button onclick="setStudentTab('calendar')" id="student-tab-calendar" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 flex items-center gap-2 transition-all">
-          <i data-lucide="calendar" class="w-4 h-4"></i> My Attendance Log
+        <button onclick="setStudentTab('calendar')" id="student-tab-calendar" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="calendar" class="w-4 h-4"></i> <span data-i18n="tabAttendanceLog">Attendance Log</span>
         </button>
       </div>
 
       <!-- STUDENT TAB 1: NOTES -->
       <div id="student-panel-notes" class="space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <h3 class="text-lg font-bold text-slate-900 font-display">Notes for My Class</h3>
-          <div class="flex items-center gap-2">
-            <button onclick="filterStudentNotes('all')" class="note-filter-btn active px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white">All Subjects</button>
-            <button onclick="filterStudentNotes('Mathematics')" class="note-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-300 text-slate-700">Mathematics</button>
-            <button onclick="filterStudentNotes('Science')" class="note-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-300 text-slate-700">Science</button>
-          </div>
-        </div>
-
         <div id="student-notes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Populated via app.js -->
         </div>
@@ -820,11 +780,6 @@
 
       <!-- STUDENT TAB 2: VIDEOS -->
       <div id="student-panel-videos" class="hidden space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <h3 class="text-lg font-bold text-slate-900 font-display">Video Lectures for My Class</h3>
-          <p class="text-xs text-slate-500">High-definition lectures curated by Harish Sir</p>
-        </div>
-
         <div id="student-videos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Populated via app.js -->
         </div>
@@ -832,30 +787,21 @@
 
       <!-- STUDENT TAB 3: TESTS -->
       <div id="student-panel-tests" class="hidden space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <div class="flex items-center justify-between pb-5 border-b border-slate-100">
-            <div>
-              <h3 class="text-lg font-bold text-slate-900 font-display">My Academic Scorecard</h3>
-              <p class="text-xs text-slate-500">Unit test scores and personal teacher remarks</p>
-            </div>
-            <button onclick="printStudentReportCard()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5">
-              <i data-lucide="printer" class="w-4 h-4"></i> Print Report Card
-            </button>
-          </div>
-
-          <div class="mt-6 overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+        <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display mb-4" data-i18n="myScorecard">My Academic Scorecard</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
-                <tr class="border-b border-slate-200 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50">
-                  <th class="py-3 px-4 rounded-l-xl">Test Name</th>
+                <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 bg-slate-50/50 dark:bg-slate-900/50">
+                  <th class="py-3 px-4">Test Name</th>
                   <th class="py-3 px-4">Subject</th>
                   <th class="py-3 px-4">Date</th>
                   <th class="py-3 px-4 text-center">Score</th>
                   <th class="py-3 px-4 text-center">Grade</th>
-                  <th class="py-3 px-4 rounded-r-xl">Harish Sir's Remarks</th>
+                  <th class="py-3 px-4">Remarks</th>
                 </tr>
               </thead>
-              <tbody id="student-tests-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm">
+              <tbody id="student-tests-table-body" class="divide-y divide-slate-100 dark:divide-slate-800">
                 <!-- Populated via app.js -->
               </tbody>
             </table>
@@ -865,8 +811,8 @@
 
       <!-- STUDENT TAB 4: ATTENDANCE LOG -->
       <div id="student-panel-calendar" class="hidden space-y-6">
-        <div class="glass-panel p-6 rounded-3xl border border-slate-200">
-          <h3 class="text-lg font-bold text-slate-900 font-display mb-4">My Complete Attendance History</h3>
+        <div class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display mb-4" data-i18n="attendanceHistory">My Complete Attendance History</h3>
           <div id="student-attendance-log-container" class="space-y-2">
             <!-- Populated via app.js -->
           </div>
@@ -881,34 +827,28 @@
     <section id="view-parent" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
       <!-- Parent Portal Header -->
-      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-md">
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md">
         <div class="flex flex-wrap items-center justify-between gap-6">
           
           <div class="flex items-center gap-4">
-            <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+            <div class="w-14 h-14 rounded-2xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center font-bold">
               <i data-lucide="shield-check" class="w-8 h-8"></i>
             </div>
             <div>
               <div class="flex items-center gap-2 mb-1">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800 border border-purple-200">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800" data-i18n="verifiedParent">
                   Verified Parent Access
                 </span>
                 <span class="text-xs text-slate-400">Harish Tuition Centre Security</span>
               </div>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-display">Parent Transparency Portal</h2>
-              <p class="text-xs sm:text-sm text-slate-500">Live monitoring of your child's attendance, test scores, homework, and syllabus progress.</p>
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display" data-i18n="parentPortalTitle">Parent Transparency Portal</h2>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400" data-i18n="parentPortalSub">Live monitoring of attendance, test scores, homework, and UPI fee payment.</p>
             </div>
           </div>
 
-          <!-- Parent Quick Selector -->
-          <div class="flex flex-wrap items-center gap-3 bg-slate-100 p-3 rounded-2xl border border-slate-200">
-            <div>
-              <label class="block text-[10px] uppercase font-bold text-slate-500 tracking-wider">Viewing Ward / Student</label>
-              <select id="parent-student-select" onchange="switchParentWard(this.value)" class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-800 outline-none">
-                <!-- Populated via app.js -->
-              </select>
-            </div>
-          </div>
+          <button onclick="logoutSession()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all">
+            <i data-lucide="log-out" class="w-4 h-4"></i> <span data-i18n="logoutBtn">Logout</span>
+          </button>
 
         </div>
       </div>
@@ -917,53 +857,53 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <!-- Left Ward Info (5 cols) -->
-        <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-5">
-          <div class="flex items-center gap-4 pb-4 border-b border-slate-100">
-            <img id="parent-ward-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150" alt="Ward Avatar" class="w-16 h-16 rounded-2xl object-cover border border-slate-200">
+        <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+          <div class="flex items-center gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <img id="parent-ward-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150" alt="Ward Avatar" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700">
             <div>
-              <h3 id="parent-ward-name" class="font-extrabold text-xl text-slate-900 font-display">Rahul Verma</h3>
-              <div class="text-xs text-slate-500 mt-0.5">
+              <h3 id="parent-ward-name" class="font-extrabold text-xl text-slate-900 dark:text-white font-display">Rahul Verma</h3>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 <span id="parent-ward-class">Class 10 CBSE</span> &bull; Roll No: <span id="parent-ward-roll">10-01</span>
               </div>
-              <div class="text-xs font-mono text-emerald-700 font-semibold mt-1" id="parent-ward-id">HTC-1001</div>
+              <div class="text-xs font-mono text-emerald-700 dark:text-emerald-400 font-semibold mt-1" id="parent-ward-id">HTC-1001</div>
             </div>
           </div>
 
           <!-- Parent & Fee Details -->
-          <div class="space-y-3 text-xs text-slate-600">
-            <div class="flex justify-between py-1.5 border-b border-slate-50">
-              <span class="text-slate-400">Parent / Guardian:</span>
-              <span id="parent-guardian-name" class="font-bold text-slate-800">Suresh Verma</span>
+          <div class="space-y-3 text-xs text-slate-600 dark:text-slate-300">
+            <div class="flex justify-between py-1.5 border-b border-slate-50 dark:border-slate-800">
+              <span class="text-slate-400" data-i18n="guardianLabel">Parent / Guardian:</span>
+              <span id="parent-guardian-name" class="font-bold text-slate-800 dark:text-slate-200">Suresh Verma</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-slate-50">
-              <span class="text-slate-400">Registered Mobile:</span>
-              <span id="parent-guardian-phone" class="font-bold text-slate-800">+91 98450 11223</span>
+            <div class="flex justify-between py-1.5 border-b border-slate-50 dark:border-slate-800">
+              <span class="text-slate-400" data-i18n="phoneLabel">Registered Mobile:</span>
+              <span id="parent-guardian-phone" class="font-bold text-slate-800 dark:text-slate-200">+91 98450 11223</span>
             </div>
-            <div class="flex justify-between py-1.5 border-b border-slate-50">
-              <span class="text-slate-400">Batch Timing:</span>
-              <span id="parent-ward-timing" class="font-bold text-slate-800">7:30 PM - 8:30 PM (Mon-Sat)</span>
+            <div class="flex justify-between py-1.5 border-b border-slate-50 dark:border-slate-800">
+              <span class="text-slate-400" data-i18n="batchTimeLabel">Batch Timing:</span>
+              <span id="parent-ward-timing" class="font-bold text-slate-800 dark:text-slate-200">7:30 PM - 8:30 PM (Mon-Sat)</span>
             </div>
             <div class="flex justify-between py-1.5">
-              <span class="text-slate-400">Monthly Tuition Fee:</span>
-              <span id="parent-fee-badge" class="px-2 py-0.5 rounded-full font-bold text-emerald-800 bg-emerald-100">Paid (₹2,500/mo)</span>
+              <span class="text-slate-400" data-i18n="feeStatusLabel">Monthly Tuition Fee:</span>
+              <span id="parent-fee-badge" class="px-2.5 py-0.5 rounded-full font-bold text-emerald-800 bg-emerald-100">Paid (₹2,500/mo)</span>
             </div>
           </div>
 
           <!-- Direct Teacher Connect -->
-          <div class="pt-4 border-t border-slate-100 space-y-2">
-            <div class="text-xs font-bold text-slate-700">Direct Contact with Harish Sir:</div>
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <div class="text-xs font-bold text-slate-700 dark:text-slate-300" data-i18n="contactTeacher">Direct Contact with Harish Sir:</div>
             <div class="grid grid-cols-2 gap-2">
-              <a href="tel:+919876543210" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
-                <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-600"></i> Call Teacher
+              <a href="tel:+919876543210" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-600"></i> <span data-i18n="callTeacher">Call Teacher</span>
               </a>
-              <a href="https://wa.me/919876543210?text=Hello%20Harish%20Sir%2C%20I%20am%20the%20parent%20of%20Rahul%20Verma%20(Class%2010)." target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
-                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> WhatsApp
+              <a id="parent-whatsapp-link" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> <span>WhatsApp</span>
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Right Live Attendance & Metric Cards (7 cols) -->
+        <!-- Right Live Attendance Card (7 cols) -->
         <div class="lg:col-span-7 space-y-6">
           
           <!-- Live Attendance Status Card -->
@@ -971,9 +911,9 @@
             <div class="relative z-10">
               <div class="flex items-center justify-between mb-4">
                 <span class="text-xs uppercase font-bold tracking-wider text-emerald-100 flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-white live-dot"></span> Real-Time Attendance Today
+                  <span class="w-2 h-2 rounded-full bg-white live-dot"></span> <span data-i18n="realtimeToday">Real-Time Attendance Today</span>
                 </span>
-                <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full font-mono text-white">2026-09-10</span>
+                <span class="text-xs bg-white/20 px-2.5 py-1 rounded-full font-mono text-white" id="parent-today-date">2026-09-12</span>
               </div>
 
               <div class="flex items-center justify-between">
@@ -991,16 +931,16 @@
 
           <!-- Attendance Stats breakdown -->
           <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
-              <div class="text-xs text-slate-500 font-semibold mb-1">Monthly Attendance</div>
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-semibold mb-1" data-i18n="monthlyAttendance">Monthly Attendance</div>
               <div id="parent-stat-percentage" class="text-3xl font-extrabold text-emerald-600">92%</div>
-              <div class="text-xs text-slate-500 mt-1">Status: Regular &amp; Consistent</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1" data-i18n="regularStatus">Status: Regular & Consistent</div>
             </div>
 
-            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
-              <div class="text-xs text-slate-500 font-semibold mb-1">Recent Absences</div>
+            <div class="bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <div class="text-xs text-slate-500 dark:text-slate-400 font-semibold mb-1" data-i18n="recentAbsences">Recent Absences</div>
               <div id="parent-stat-absent-count" class="text-3xl font-extrabold text-amber-600">1 Day</div>
-              <div class="text-xs text-slate-500 mt-1">Last absent: 2026-09-03</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">Informed in advance</div>
             </div>
           </div>
 
@@ -1008,15 +948,86 @@
 
       </div>
 
+      <!-- ===================================================================== -->
+      <!-- NEW: UPI QR CODE FEE PAYMENT SECTION FOR PARENTS -->
+      <!-- ===================================================================== -->
+      <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border-2 border-emerald-500/40 dark:border-emerald-500/30 shadow-lg space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+              <i data-lucide="qr-code" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display" data-i18n="upiPaymentTitle">Instant Tuition Fee Payment (UPI QR)</h3>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">GPay &bull; PhonePe &bull; Paytm</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="upiPaymentSub">Scan the QR code below with any UPI mobile app to pay monthly tuition fee directly.</p>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <span class="text-xs text-slate-400" data-i18n="feeAmountDue">Monthly Fee:</span>
+            <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400" id="parent-fee-amount-display">₹2,500</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          
+          <!-- QR Code Box (4 cols) -->
+          <div class="md:col-span-5 flex flex-col items-center justify-center p-5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <div class="qr-frame bg-white p-3 rounded-2xl shadow-md">
+              <img id="parent-upi-qr-image" src="" alt="UPI Payment QR Code" class="w-48 h-48 sm:w-56 sm:h-56 object-contain rounded-xl">
+            </div>
+            <span class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-3 flex items-center gap-1">
+              <i data-lucide="smartphone" class="w-3.5 h-3.5 text-emerald-600"></i> Scan with GPay / PhonePe / Paytm / BHIM
+            </span>
+          </div>
+
+          <!-- Payment Instructions & UTR submission (7 cols) -->
+          <div class="md:col-span-7 space-y-4">
+            <div class="bg-emerald-50/70 dark:bg-emerald-950/30 p-4 rounded-2xl border border-emerald-200 dark:border-emerald-800 text-xs space-y-2">
+              <div class="font-bold text-emerald-900 dark:text-emerald-300 flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4"></i> Harish Sir's Official Verified UPI ID:
+              </div>
+              <div class="flex items-center gap-2">
+                <code id="parent-upi-id-display" class="bg-white dark:bg-slate-900 px-3 py-1.5 rounded-xl border border-emerald-300 dark:border-emerald-700 font-mono font-bold text-sm text-emerald-800 dark:text-emerald-300">
+                  9876543210@upi
+                </code>
+                <button onclick="copyUpiId()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1 shadow-sm">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy
+                </button>
+              </div>
+              <p class="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+                Please mention student name in transaction remarks (e.g. <em>Rahul Verma - Class 10</em>).
+              </p>
+            </div>
+
+            <!-- Submit Transaction Reference -->
+            <form onsubmit="handleParentPaymentSubmit(event)" class="space-y-3 pt-2 text-xs">
+              <div class="font-bold text-slate-800 dark:text-slate-200" data-i18n="alreadyPaid">Already Paid? Submit Transaction UTR / Ref Number:</div>
+              <div class="flex gap-2">
+                <input type="text" id="parent-utr-input" required placeholder="e.g. UPI Ref # 324109823145" class="flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs sm:text-sm font-mono text-slate-900 dark:text-white outline-none">
+                <button type="submit" class="bg-slate-900 dark:bg-emerald-600 hover:bg-slate-800 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shrink-0">
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i> Submit
+                </button>
+              </div>
+              <div id="parent-payment-confirmation-msg" class="hidden p-2.5 rounded-xl bg-green-100 dark:bg-green-950 text-green-800 dark:text-green-300 text-xs font-semibold"></div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
       <!-- Today's Homework & What was Taught in Class -->
-      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
+      <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
         <div class="flex items-center gap-3 mb-5">
-          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300 flex items-center justify-center">
             <i data-lucide="book-check" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-slate-900 font-display">Today's Classwork & Assigned Homework</h3>
-            <p class="text-xs text-slate-500">Verify that your child completes their homework before tomorrow's class.</p>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white font-display" data-i18n="homeworkTitle">Today's Classwork & Assigned Homework</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="homeworkSub">Verify that your child completes their homework before tomorrow's class.</p>
           </div>
         </div>
 
@@ -1026,21 +1037,21 @@
       </div>
 
       <!-- Ward Academic Scorecard (Tests) -->
-      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm">
-        <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100">
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
           <div>
-            <h3 class="text-xl font-bold text-slate-900 font-display">Academic Performance & Mentor Feedback</h3>
-            <p class="text-xs text-slate-500">Unit test scores and personal remarks from Harish Sir</p>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="mentorFeedbackTitle">Academic Performance & Mentor Feedback</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="mentorFeedbackSub">Unit test scores and personal remarks from Harish Sir</p>
           </div>
-          <button onclick="printStudentReportCard()" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs px-4 py-2 rounded-xl flex items-center gap-2">
-            <i data-lucide="printer" class="w-4 h-4"></i> Print Official Report Card
+          <button onclick="window.print()" class="bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-semibold text-xs px-4 py-2 rounded-xl flex items-center gap-2">
+            <i data-lucide="printer" class="w-4 h-4"></i> <span data-i18n="printReportCard">Print Official Report Card</span>
           </button>
         </div>
 
         <div class="mt-6 overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="border-b border-slate-200 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50">
+              <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-500 text-[11px] uppercase tracking-wider bg-slate-50/50 dark:bg-slate-900/50">
                 <th class="py-3 px-4 rounded-l-xl">Test Name</th>
                 <th class="py-3 px-4">Subject</th>
                 <th class="py-3 px-4">Date</th>
@@ -1049,27 +1060,10 @@
                 <th class="py-3 px-4 rounded-r-xl">Harish Sir's Evaluation Remarks</th>
               </tr>
             </thead>
-            <tbody id="parent-tests-table-body" class="divide-y divide-slate-100 text-xs sm:text-sm">
+            <tbody id="parent-tests-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs sm:text-sm">
               <!-- Populated via app.js -->
             </tbody>
           </table>
-        </div>
-      </div>
-
-      <!-- Ward Available Notes & Video Lectures -->
-      <div class="bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200 space-y-5">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 font-display">Digital Study Materials Provided to Your Child</h3>
-            <p class="text-xs text-slate-500">Parents can inspect chapter notes and video lectures available for home revision.</p>
-          </div>
-          <button onclick="switchView('student')" class="text-emerald-700 text-xs font-bold hover:underline flex items-center gap-1">
-            Open Student Learning View <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          </button>
-        </div>
-
-        <div id="parent-materials-preview-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <!-- Populated via app.js -->
         </div>
       </div>
 
@@ -1081,64 +1075,163 @@
   <!-- MODALS -->
   <!-- ========================================================================= -->
 
-  <!-- 1. ROLE SWITCHER / LOGIN MODAL -->
-  <div id="modal-role" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div class="modal-backdrop fixed inset-0" onclick="closeRoleModal()"></div>
-    <div class="modal-content relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 z-10 space-y-6">
+  <!-- 1. TEACHER HARISH LOGIN MODAL -->
+  <div id="modal-teacher-login" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeTeacherLoginModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5">
       <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-xl font-bold text-slate-900 font-display">Select Portal Mode</h3>
-          <p class="text-xs text-slate-500">Switch between different user roles</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold">
+            <i data-lucide="lock" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="teacherLoginTitle">Teacher Portal Login</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="teacherLoginSub">Only for Harish Sir (Centre Administrator)</p>
+          </div>
         </div>
-        <button onclick="closeRoleModal()" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg">
+        <button onclick="closeTeacherLoginModal()" class="p-2 text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
 
-      <div class="space-y-3">
-        <!-- Teacher / Admin Option -->
-        <div onclick="switchView('admin'); closeRoleModal()" class="p-4 rounded-2xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50/50 cursor-pointer transition-all flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-            <i data-lucide="shield-check" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="font-bold text-slate-900 text-sm">Teacher / Admin Portal</div>
-            <div class="text-xs text-slate-500">Mark attendance, add notes, videos, tests &amp; manage students.</div>
-          </div>
+      <form onsubmit="handleTeacherLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="teacherIdLabel">Teacher ID *</label>
+          <input type="text" id="teacher-login-id" required value="harish" placeholder="e.g. harish" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
         </div>
 
-        <!-- Student Option -->
-        <div onclick="switchView('student'); closeRoleModal()" class="p-4 rounded-2xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50/50 cursor-pointer transition-all flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0">
-            <i data-lucide="book-open" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="font-bold text-slate-900 text-sm">Student Learning Hub</div>
-            <div class="text-xs text-slate-500">Read notes, watch video lectures &amp; check test marks.</div>
-          </div>
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="passwordLabel">Password *</label>
+          <input type="password" id="teacher-login-password" required value="harish@123" placeholder="Enter teacher password" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
         </div>
 
-        <!-- Parent Option -->
-        <div onclick="switchView('parent'); closeRoleModal()" class="p-4 rounded-2xl border border-slate-200 hover:border-purple-500 hover:bg-purple-50/50 cursor-pointer transition-all flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
-            <i data-lucide="users" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <div class="font-bold text-slate-900 text-sm">Parent Access Portal</div>
-            <div class="text-xs text-slate-500">View real-time daily attendance, marks card &amp; teacher connect.</div>
-          </div>
-        </div>
+        <div id="teacher-login-error" class="hidden p-2.5 rounded-xl bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 text-xs font-semibold"></div>
 
-        <!-- Public Option -->
-        <div onclick="switchView('public'); closeRoleModal()" class="p-3.5 rounded-2xl border border-slate-200 hover:bg-slate-50 cursor-pointer transition-all flex items-center gap-3 text-xs text-slate-600">
-          <i data-lucide="home" class="w-4 h-4 text-slate-500"></i>
-          <span>Return to Public Website Homepage</span>
-        </div>
-      </div>
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md shadow-emerald-600/20" data-i18n="loginTeacherBtn">
+          Login as Harish Sir
+        </button>
+      </form>
     </div>
   </div>
 
-  <!-- 2. VIDEO PLAYER MODAL -->
+  <!-- 2. STUDENT LOGIN MODAL -->
+  <div id="modal-student-login" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeStudentLoginModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="studentLoginTitle">Student Portal Login</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="studentLoginSub">Enter your Student ID and Password</p>
+          </div>
+        </div>
+        <button onclick="closeStudentLoginModal()" class="p-2 text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleStudentLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="studentIdLabel">Student ID *</label>
+          <input type="text" id="student-login-id" required value="HTC-1001" placeholder="e.g. HTC-1001" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white font-mono outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="passwordLabel">Password *</label>
+          <input type="password" id="student-login-password" required value="1234" placeholder="Enter student password" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none">
+        </div>
+
+        <div id="student-login-error" class="hidden p-2.5 rounded-xl bg-red-100 text-red-700 text-xs font-semibold"></div>
+
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md" data-i18n="loginStudentBtn">
+          Login to Student Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. PARENT LOGIN MODAL -->
+  <div id="modal-parent-login" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeParentLoginModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 flex items-center justify-center font-bold">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="parentLoginTitle">Parent Portal Login</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="parentLoginSub">Enter your Child's Student ID and Password</p>
+          </div>
+        </div>
+        <button onclick="closeParentLoginModal()" class="p-2 text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleParentLogin(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="studentIdLabel">Child's Student ID *</label>
+          <input type="text" id="parent-login-id" required value="HTC-1001" placeholder="e.g. HTC-1001" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white font-mono outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="passwordLabel">Password / PIN *</label>
+          <input type="password" id="parent-login-password" required value="1234" placeholder="Enter password (provided by Harish Sir)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none">
+        </div>
+
+        <div id="parent-login-error" class="hidden p-2.5 rounded-xl bg-red-100 text-red-700 text-xs font-semibold"></div>
+
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md" data-i18n="loginParentBtn">
+          Login to Parent Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. EDIT STUDENT CREDENTIALS MODAL (FOR HARISH SIR) -->
+  <div id="modal-edit-credentials" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeEditCredentialsModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Update Credentials</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Set custom ID or password for student and parent</p>
+        </div>
+        <button onclick="closeEditCredentialsModal()" class="p-2 text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleSaveStudentCredentials(event)" class="space-y-4 text-xs">
+        <input type="hidden" id="edit-cred-student-id">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Student Name</label>
+          <input type="text" id="edit-cred-student-name" disabled class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-500 dark:text-slate-400 font-semibold">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Student ID (Login Username) *</label>
+          <input type="text" id="edit-cred-new-id" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white font-mono outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Password (Shared for Student & Parent) *</label>
+          <input type="text" id="edit-cred-new-password" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white font-mono outline-none">
+          <p class="text-[11px] text-slate-400 mt-1">Both the student and their parents will use this password to log in.</p>
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
+          Save New Credentials
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. VIDEO PLAYER MODAL -->
   <div id="modal-video" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div class="modal-backdrop fixed inset-0" onclick="closeVideoModal()"></div>
     <div class="modal-content relative bg-slate-950 text-white rounded-3xl max-w-3xl w-full p-6 shadow-2xl z-10 space-y-4">
@@ -1165,44 +1258,44 @@
     </div>
   </div>
 
-  <!-- 3. NOTES VIEWER MODAL -->
+  <!-- 6. NOTES VIEWER MODAL -->
   <div id="modal-note" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div class="modal-backdrop fixed inset-0" onclick="closeNoteModal()"></div>
-    <div class="modal-content relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 z-10 space-y-5 max-h-[90vh] flex flex-col">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
         <div>
           <div class="flex items-center gap-2">
             <span id="modal-note-class-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Class 10</span>
-            <span id="modal-note-subject" class="text-xs font-semibold text-slate-500">Mathematics</span>
+            <span id="modal-note-subject" class="text-xs font-semibold text-slate-500 dark:text-slate-400">Mathematics</span>
           </div>
-          <h3 id="modal-note-title" class="text-lg sm:text-xl font-bold text-slate-900 font-display mt-1">Note Title</h3>
+          <h3 id="modal-note-title" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white font-display mt-1">Note Title</h3>
         </div>
-        <button onclick="closeNoteModal()" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg">
+        <button onclick="closeNoteModal()" class="p-2 text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
 
-      <div id="modal-note-body" class="overflow-y-auto flex-grow space-y-4 text-sm text-slate-700 leading-relaxed pr-2">
+      <div id="modal-note-body" class="overflow-y-auto flex-grow space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed pr-2">
         <!-- Rendered Note Content -->
       </div>
 
-      <div class="pt-4 border-t border-slate-100 flex items-center justify-between shrink-0 text-xs text-slate-500">
+      <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0 text-xs text-slate-500">
         <span id="modal-note-time">15 min read &bull; Harish Tuition Notes</span>
         <button onclick="downloadNoteContent()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-sm">
-          <i data-lucide="download" class="w-4 h-4"></i> Download Notes (PDF)
+          <i data-lucide="download" class="w-4 h-4"></i> Download Notes
         </button>
       </div>
     </div>
   </div>
 
-  <!-- 4. ADD STUDENT MODAL (ADMIN) -->
+  <!-- 7. ADD STUDENT MODAL -->
   <div id="modal-add-student" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div class="modal-backdrop fixed inset-0" onclick="closeAddStudentModal()"></div>
-    <div class="modal-content relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between">
         <div>
-          <h3 class="text-xl font-bold text-slate-900 font-display">Enroll New Student</h3>
-          <p class="text-xs text-slate-500">Assign roll number and secret parent PIN</p>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Enroll New Student</h3>
+          <p class="text-xs text-slate-500">Create student account &amp; set password</p>
         </div>
         <button onclick="closeAddStudentModal()" class="p-2 text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1211,65 +1304,65 @@
 
       <form onsubmit="handleCreateStudent(event)" class="space-y-4 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Student Full Name *</label>
-          <input type="text" id="new-student-name" required placeholder="e.g. Tanmay Joshi" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none focus:ring-2 focus:ring-emerald-500">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Student Full Name *</label>
+          <input type="text" id="new-student-name" required placeholder="e.g. Tanmay Joshi" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-emerald-500">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Class *</label>
-            <select id="new-student-class" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-              <option value="class-10">Class 10</option>
-              <option value="class-9">Class 9</option>
-              <option value="class-8">Class 8</option>
-              <option value="class-7">Class 7</option>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Class *</label>
+            <select id="new-student-class" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+              <option value="class-10">Class 10 (10వ తరగతి)</option>
+              <option value="class-9">Class 9 (9వ తరగతి)</option>
+              <option value="class-8">Class 8 (8వ తరగతి)</option>
+              <option value="class-7">Class 7 (7వ తరగతి)</option>
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Roll No *</label>
-            <input type="text" id="new-student-roll" required placeholder="e.g. 10-04" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Roll No *</label>
+            <input type="text" id="new-student-roll" required placeholder="e.g. 10-04" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Board</label>
-            <select id="new-student-board" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Board</label>
+            <select id="new-student-board" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
               <option value="CBSE">CBSE</option>
               <option value="State Board">State Board</option>
               <option value="ICSE">ICSE</option>
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Parent 4-Digit PIN *</label>
-            <input type="text" id="new-student-pin" maxlength="4" required value="1234" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none font-mono">
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Password *</label>
+            <input type="text" id="new-student-pin" required value="1234" placeholder="e.g. 1234" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white font-mono outline-none">
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Parent / Guardian Name *</label>
-          <input type="text" id="new-student-parent" required placeholder="e.g. Manoj Joshi" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Parent / Guardian Name *</label>
+          <input type="text" id="new-student-parent" required placeholder="e.g. Manoj Joshi" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Parent Mobile Number *</label>
-          <input type="tel" id="new-student-phone" required placeholder="e.g. +91 98450 12345" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Parent Mobile Number *</label>
+          <input type="tel" id="new-student-phone" required placeholder="e.g. +91 98450 12345" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
-        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md shadow-emerald-600/20">
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
           Save &amp; Enroll Student
         </button>
       </form>
     </div>
   </div>
 
-  <!-- 5. ADD NOTE MODAL (ADMIN) -->
+  <!-- 8. ADD NOTE MODAL -->
   <div id="modal-add-note" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div class="modal-backdrop fixed inset-0" onclick="closeAddNoteModal()"></div>
-    <div class="modal-content relative bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between">
         <div>
-          <h3 class="text-xl font-bold text-slate-900 font-display">Upload Subject Note</h3>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Upload Subject Note</h3>
           <p class="text-xs text-slate-500">Provide chapter notes, formulas, or summaries</p>
         </div>
         <button onclick="closeAddNoteModal()" class="p-2 text-slate-400 hover:text-slate-600">
@@ -1279,14 +1372,14 @@
 
       <form onsubmit="handleCreateNote(event)" class="space-y-4 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Note Title *</label>
-          <input type="text" id="new-note-title" required placeholder="e.g. Triangles & Similarities - Theorem Sheet" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Note Title *</label>
+          <input type="text" id="new-note-title" required placeholder="e.g. Triangles & Similarities - Theorem Sheet" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Class *</label>
-            <select id="new-note-class" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Class *</label>
+            <select id="new-note-class" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
               <option value="class-10">Class 10</option>
               <option value="class-9">Class 9</option>
               <option value="class-8">Class 8</option>
@@ -1294,46 +1387,46 @@
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Subject *</label>
-            <select id="new-note-subject" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-              <option value="Mathematics">Mathematics</option>
-              <option value="Science">Science</option>
-              <option value="English">English</option>
-              <option value="Social Science">Social Science</option>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Subject *</label>
+            <select id="new-note-subject" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+              <option value="Mathematics">Mathematics (గణితం)</option>
+              <option value="Science">Science (సైన్స్)</option>
+              <option value="English">English (ఇంగ్లీష్)</option>
+              <option value="Social Science">Social Science (సాంఘిక)</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Chapter / Unit Name *</label>
-          <input type="text" id="new-note-chapter" required placeholder="e.g. Chapter 6: Triangles" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Chapter / Unit Name *</label>
+          <input type="text" id="new-note-chapter" required placeholder="e.g. Chapter 6: Triangles" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Brief Summary *</label>
-          <textarea id="new-note-summary" rows="2" required placeholder="Quick 2-line summary of what is covered in this note..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none"></textarea>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Brief Summary *</label>
+          <textarea id="new-note-summary" rows="2" required placeholder="Quick 2-line summary..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none"></textarea>
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Note Content (HTML/Text) *</label>
-          <textarea id="new-note-content" rows="6" required placeholder="Enter key formulas, theorems, and explanations here..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none font-mono"></textarea>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Note Content *</label>
+          <textarea id="new-note-content" rows="5" required placeholder="Enter key formulas and theorems..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none font-mono"></textarea>
         </div>
 
         <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
-          Publish Note to Students &amp; Parents
+          Publish Note
         </button>
       </form>
     </div>
   </div>
 
-  <!-- 6. ADD VIDEO MODAL (ADMIN) -->
+  <!-- 9. ADD VIDEO MODAL -->
   <div id="modal-add-video" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
     <div class="modal-backdrop fixed inset-0" onclick="closeAddVideoModal()"></div>
-    <div class="modal-content relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 z-10 space-y-5">
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5">
       <div class="flex items-center justify-between">
         <div>
-          <h3 class="text-xl font-bold text-slate-900 font-display">Add Video Lecture</h3>
-          <p class="text-xs text-slate-500">Embed YouTube lecture or educational video</p>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display">Add Video Lecture</h3>
+          <p class="text-xs text-slate-500">Embed YouTube lecture for students</p>
         </div>
         <button onclick="closeAddVideoModal()" class="p-2 text-slate-400 hover:text-slate-600">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -1342,14 +1435,14 @@
 
       <form onsubmit="handleCreateVideo(event)" class="space-y-4 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Lecture Title *</label>
-          <input type="text" id="new-video-title" required placeholder="e.g. Light Reflection & Spherical Mirrors" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Lecture Title *</label>
+          <input type="text" id="new-video-title" required placeholder="e.g. Light Reflection & Spherical Mirrors" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Class *</label>
-            <select id="new-video-class" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Class *</label>
+            <select id="new-video-class" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
               <option value="class-10">Class 10</option>
               <option value="class-9">Class 9</option>
               <option value="class-8">Class 8</option>
@@ -1357,8 +1450,8 @@
             </select>
           </div>
           <div>
-            <label class="block font-bold text-slate-700 mb-1">Subject *</label>
-            <select id="new-video-subject" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Subject *</label>
+            <select id="new-video-subject" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
               <option value="Mathematics">Mathematics</option>
               <option value="Science">Science</option>
               <option value="English">English</option>
@@ -1368,24 +1461,13 @@
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">YouTube Video URL or ID *</label>
-          <input type="text" id="new-video-url" required placeholder="e.g. https://www.youtube.com/watch?v=2NXWj6j_n9k or 2NXWj6j_n9k" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Duration</label>
-            <input type="text" id="new-video-duration" placeholder="e.g. 21:40" value="20:00" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-          </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Chapter</label>
-            <input type="text" id="new-video-chapter" placeholder="e.g. Chapter 10" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-          </div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">YouTube Video URL or ID *</label>
+          <input type="text" id="new-video-url" required placeholder="e.g. https://www.youtube.com/watch?v=2NXWj6j_n9k or 2NXWj6j_n9k" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Lecture Summary *</label>
-          <textarea id="new-video-summary" rows="2" required placeholder="What will the student learn in this video?" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none"></textarea>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1">Lecture Summary *</label>
+          <textarea id="new-video-summary" rows="2" required placeholder="What will students learn in this video?" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none"></textarea>
         </div>
 
         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
@@ -1395,70 +1477,11 @@
     </div>
   </div>
 
-  <!-- 7. ADD TEST MARKS MODAL (ADMIN) -->
-  <div id="modal-add-test" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
-    <div class="modal-backdrop fixed inset-0" onclick="closeAddTestModal()"></div>
-    <div class="modal-content relative bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-xl font-bold text-slate-900 font-display">Record Test Marks</h3>
-          <p class="text-xs text-slate-500">Enter marks and personalized mentor remarks</p>
-        </div>
-        <button onclick="closeAddTestModal()" class="p-2 text-slate-400 hover:text-slate-600">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3 text-xs">
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Class</label>
-          <select id="modal-test-class" onchange="renderTestScoreInputs()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-            <option value="class-10">Class 10</option>
-            <option value="class-9">Class 9</option>
-            <option value="class-8">Class 8</option>
-            <option value="class-7">Class 7</option>
-          </select>
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Subject</label>
-          <select id="modal-test-subject" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-            <option value="Mathematics">Mathematics</option>
-            <option value="Science">Science</option>
-            <option value="English">English</option>
-            <option value="Social Science">Social Science</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3 text-xs">
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Test Title *</label>
-          <input type="text" id="modal-test-title" value="Unit Test 2" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-        </div>
-        <div>
-          <label class="block font-bold text-slate-700 mb-1">Maximum Marks</label>
-          <input type="number" id="modal-test-max" value="25" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm text-slate-900 outline-none">
-        </div>
-      </div>
-
-      <div class="border-t border-slate-100 pt-3">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">Student Marks &amp; Feedback Remarks</h4>
-        <div id="modal-test-students-container" class="space-y-3">
-          <!-- Populated dynamically based on class -->
-        </div>
-      </div>
-
-      <button onclick="saveTestScores()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
-        Save &amp; Publish Test Scores
-      </button>
-    </div>
-  </div>
-
   <!-- TOAST CONTAINER -->
   <div id="toast-container"></div>
 
   <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800 no-print">
+  <footer class="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800 no-print transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-3">
@@ -1466,21 +1489,21 @@
             <i data-lucide="graduation-cap" class="w-5 h-5"></i>
           </div>
           <div>
-            <div class="font-bold text-white text-base">Harish Tuition Centre</div>
+            <div class="font-bold text-white text-base">Harish Tuition Centre (హరీష్ ట్యూషన్ సెంటర్)</div>
             <div class="text-[11px] text-slate-400">Classes 7th to 10th (CBSE &bull; State Board &bull; ICSE)</div>
           </div>
         </div>
         <div class="flex items-center gap-4 text-xs">
-          <button onclick="switchView('public')" class="hover:text-white">Home</button>
-          <button onclick="switchView('admin')" class="hover:text-white">Teacher Portal</button>
-          <button onclick="switchView('student')" class="hover:text-white">Student Portal</button>
-          <button onclick="switchView('parent')" class="hover:text-white">Parent Portal</button>
-          <button onclick="resetToDefaultData()" class="text-slate-500 hover:text-red-400">Reset Demo Data</button>
+          <button onclick="switchView('public')" class="hover:text-white" data-i18n="navHome">Home</button>
+          <button onclick="handleTeacherNavClick()" class="hover:text-white" data-i18n="navTeacher">Teacher Portal</button>
+          <button onclick="handleStudentNavClick()" class="hover:text-white" data-i18n="navStudent">Student Portal</button>
+          <button onclick="handleParentNavClick()" class="hover:text-white" data-i18n="navParent">Parent Portal</button>
+          <button onclick="resetToDefaultData()" class="text-slate-500 hover:text-red-400" data-i18n="resetData">Reset Demo Data</button>
         </div>
       </div>
       <div class="flex flex-wrap items-center justify-between pt-6 border-t border-slate-800 text-[11px] text-slate-400">
         <div>&copy; 2026 Harish Tuition Centre. All rights reserved. Directed by Harish R., M.Sc., B.Ed.</div>
-        <div>Dedicated to academic clarity, conceptual rigor, and parental transparency.</div>
+        <div>Dedicated to conceptual rigor, daily discipline, and parental transparency.</div>
       </div>
     </div>
   </footer>

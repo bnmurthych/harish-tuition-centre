@@ -1,20 +1,94 @@
-/* Harish Tuition Centre - Custom Styles */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+/* Harish Tuition Centre - Custom Styles & Dark Mode */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
 
 :root {
   --primary: #059669;
   --primary-dark: #047857;
   --primary-light: #d1fae5;
   --accent: #2563eb;
-  --accent-light: #dbeafe;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Noto Sans Telugu', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Space Grotesk', 'Noto Sans Telugu', system-ui, sans-serif;
 }
 
 body {
   font-family: var(--font-sans);
   background-color: #f8fafc;
   color: #0f172a;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Dark Mode Overrides */
+html.dark body {
+  background-color: #090d16;
+  color: #f1f5f9;
+}
+
+html.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.88) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(51, 65, 85, 0.8) !important;
+}
+
+html.dark .glass-nav {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom-color: rgba(51, 65, 85, 0.8) !important;
+}
+
+html.dark .bg-white {
+  background-color: #0f172a !important;
+  color: #f1f5f9 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #131d31 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .text-slate-900 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-800 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300 {
+  border-color: #334155 !important;
+}
+
+html.dark input, 
+html.dark select, 
+html.dark textarea {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+html.dark .divide-slate-100 > * {
+  border-color: #334155 !important;
 }
 
 h1, h2, h3, .font-display {
@@ -29,9 +103,15 @@ h1, h2, h3, .font-display {
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
 }
+html.dark ::-webkit-scrollbar-track {
+  background: #090d16;
+}
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 9999px;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
@@ -77,6 +157,10 @@ h1, h2, h3, .font-display {
   box-shadow: 0 12px 24px -10px rgba(15, 23, 42, 0.12);
 }
 
+html.dark .hover-lift:hover {
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.4);
+}
+
 /* Tab active indicator */
 .tab-btn.active {
   background-color: #059669;
@@ -88,41 +172,25 @@ h1, h2, h3, .font-display {
   stroke: #ffffff;
 }
 
-/* Attendance toggle pills */
-.attendance-pill-present.selected {
-  background-color: #059669;
-  color: #ffffff;
-  border-color: #059669;
-}
-
-.attendance-pill-absent.selected {
-  background-color: #dc2626;
-  color: #ffffff;
-  border-color: #dc2626;
-}
-
-.attendance-pill-late.selected {
-  background-color: #d97706;
-  color: #ffffff;
-  border-color: #d97706;
-}
-
-/* Progress ring */
-.progress-ring-circle {
-  transition: stroke-dashoffset 0.45s ease-in-out;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
-}
-
 /* Modal backdrop & animation */
 .modal-backdrop {
-  background-color: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
   transition: opacity 0.2s ease-in-out;
 }
 
 .modal-content {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease-in-out;
+}
+
+/* QR Code glowing container */
+.qr-frame {
+  position: relative;
+  background: white;
+  padding: 12px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.2);
+  border: 2px solid #10b981;
 }
 
 /* Toast styling */
@@ -141,7 +209,7 @@ h1, h2, h3, .font-display {
   pointer-events: auto;
   animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   min-width: 280px;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 @keyframes slideInUp {
@@ -155,28 +223,20 @@ h1, h2, h3, .font-display {
   }
 }
 
-/* Printable Report Card & Attendance Styling */
+/* Printable Report Card Styling */
 @media print {
   body {
     background: #ffffff !important;
     color: #000000 !important;
   }
 
-  nav, footer, .no-print, #toast-container, .role-selector-bar, .modal-close-btn {
+  nav, footer, .no-print, #toast-container, .role-selector-bar, .modal-close-btn, #theme-toggle-btn, #lang-toggle-btn {
     display: none !important;
-  }
-
-  .print-only {
-    display: block !important;
   }
 
   .card, .glass-panel {
     box-shadow: none !important;
     border: 1px solid #cbd5e1 !important;
     break-inside: avoid;
-  }
-
-  .print-break-after {
-    page-break-after: always;
   }
 }
