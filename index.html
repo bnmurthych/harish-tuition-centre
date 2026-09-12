@@ -696,14 +696,14 @@
       <!-- Student Profile Hero -->
       <div class="bg-gradient-to-r from-emerald-700 via-teal-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-wrap items-center justify-between gap-6">
         <div class="flex items-center gap-5">
-          <img id="student-view-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150" alt="Student Avatar" class="w-20 h-20 rounded-2xl object-cover border-2 border-white/20 shadow-md">
+          <img id="student-view-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Student Avatar" class="w-20 h-20 rounded-2xl object-cover border-2 border-white/20 shadow-md">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <span id="student-view-class-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">Class 10 CBSE</span>
-              <span id="student-view-id" class="text-xs text-slate-300 font-mono">HTC-1001</span>
+              <span id="student-view-class-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">Student Portal</span>
+              <span id="student-view-id" class="text-xs text-slate-300 font-mono">---</span>
             </div>
-            <h2 id="student-view-name" class="text-2xl sm:text-3xl font-extrabold font-display">Rahul Verma</h2>
-            <p class="text-xs text-slate-300 mt-0.5">Roll No: <span id="student-view-roll">10-01</span> &bull; Mentor: Harish Sir</p>
+            <h2 id="student-view-name" class="text-2xl sm:text-3xl font-extrabold font-display">Student Portal</h2>
+            <p class="text-xs text-slate-300 mt-0.5">Roll No: <span id="student-view-roll">---</span> &bull; Director: NALAM HARISH Sir</p>
           </div>
         </div>
 
@@ -859,13 +859,13 @@
         <!-- Left Ward Info (5 cols) -->
         <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
           <div class="flex items-center gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
-            <img id="parent-ward-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150" alt="Ward Avatar" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700">
+            <img id="parent-ward-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Ward Avatar" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700">
             <div>
-              <h3 id="parent-ward-name" class="font-extrabold text-xl text-slate-900 dark:text-white font-display">Rahul Verma</h3>
+              <h3 id="parent-ward-name" class="font-extrabold text-xl text-slate-900 dark:text-white font-display">Parent Portal</h3>
               <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                <span id="parent-ward-class">Class 10 CBSE</span> &bull; Roll No: <span id="parent-ward-roll">10-01</span>
+                <span id="parent-ward-class">Tuition Student</span> &bull; Roll No: <span id="parent-ward-roll">---</span>
               </div>
-              <div class="text-xs font-mono text-emerald-700 dark:text-emerald-400 font-semibold mt-1" id="parent-ward-id">HTC-1001</div>
+              <div class="text-xs font-mono text-emerald-700 dark:text-emerald-400 font-semibold mt-1" id="parent-ward-id">---</div>
             </div>
           </div>
 
@@ -873,11 +873,11 @@
           <div class="space-y-3 text-xs text-slate-600 dark:text-slate-300">
             <div class="flex justify-between py-1.5 border-b border-slate-50 dark:border-slate-800">
               <span class="text-slate-400" data-i18n="guardianLabel">Parent / Guardian:</span>
-              <span id="parent-guardian-name" class="font-bold text-slate-800 dark:text-slate-200">Suresh Verma</span>
+              <span id="parent-guardian-name" class="font-bold text-slate-800 dark:text-slate-200">---</span>
             </div>
             <div class="flex justify-between py-1.5 border-b border-slate-50 dark:border-slate-800">
               <span class="text-slate-400" data-i18n="phoneLabel">Registered Mobile:</span>
-              <span id="parent-guardian-phone" class="font-bold text-slate-800 dark:text-slate-200">+91 98450 11223</span>
+              <span id="parent-guardian-phone" class="font-bold text-slate-800 dark:text-slate-200">---</span>
             </div>
             <div class="flex justify-between py-1.5 border-b border-slate-50 dark:border-slate-800">
               <span class="text-slate-400" data-i18n="batchTimeLabel">Batch Timing:</span>
@@ -999,7 +999,7 @@
                 </button>
               </div>
               <p class="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
-                Please mention student name in transaction remarks (e.g. <em>Rahul Verma - Class 10</em>).
+                Please mention student name in transaction remarks (e.g. <em>Student Name - Class</em>).
               </p>
             </div>
 
@@ -1136,12 +1136,12 @@
       <form onsubmit="handleStudentLogin(event)" class="space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="studentIdLabel">Student ID *</label>
-          <input type="text" id="student-login-id" required value="HTC-1001" placeholder="e.g. HTC-1001" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white font-mono outline-none">
+          <input type="text" id="student-login-id" required placeholder="Enter Student ID (e.g. HTC-1001)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white font-mono outline-none">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="passwordLabel">Password *</label>
-          <input type="password" id="student-login-password" required value="1234" placeholder="Enter student password" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none">
+          <input type="password" id="student-login-password" required placeholder="Enter Password" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div id="student-login-error" class="hidden p-2.5 rounded-xl bg-red-100 text-red-700 text-xs font-semibold"></div>
@@ -1175,12 +1175,12 @@
       <form onsubmit="handleParentLogin(event)" class="space-y-4 text-xs">
         <div>
           <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="studentIdLabel">Child's Student ID *</label>
-          <input type="text" id="parent-login-id" required value="HTC-1001" placeholder="e.g. HTC-1001" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white font-mono outline-none">
+          <input type="text" id="parent-login-id" required placeholder="Enter Child's Student ID" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white font-mono outline-none">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="passwordLabel">Password / PIN *</label>
-          <input type="password" id="parent-login-password" required value="1234" placeholder="Enter password (provided by Harish Sir)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none">
+          <input type="password" id="parent-login-password" required placeholder="Enter Password (given by NALAM HARISH Sir)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-900 dark:text-white outline-none">
         </div>
 
         <div id="parent-login-error" class="hidden p-2.5 rounded-xl bg-red-100 text-red-700 text-xs font-semibold"></div>

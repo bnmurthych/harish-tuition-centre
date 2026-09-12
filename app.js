@@ -1,7 +1,7 @@
 // Harish Tuition Centre - Main Application Logic
 // Features: Bilingual (English & Telugu), Dark Mode, Teacher Auth, Credential Manager, UPI QR Fee Payment
 
-const STORAGE_KEY = 'HTC_APP_DATA_V3';
+const STORAGE_KEY = 'HTC_APP_DATA_V4';
 const LANG_KEY = 'HTC_APP_LANG';
 const THEME_KEY = 'HTC_APP_THEME';
 const AUTH_KEY = 'HTC_APP_AUTH';
@@ -320,8 +320,8 @@ if (authSession && authSession.role === 'admin') {
 let currentView = 'public'; // 'public' | 'admin' | 'student' | 'parent'
 let currentAdminTab = 'attendance';
 let currentStudentTab = 'notes';
-let activeStudentId = 'HTC-1001';
-let activeParentStudentId = 'HTC-1001';
+let activeStudentId = null;
+let activeParentStudentId = null;
 
 // Translation helper
 function t(key) {
@@ -941,6 +941,11 @@ function renderCredentialsDirectory() {
   const tbody = document.getElementById('credentials-table-body');
   if (!tbody) return;
 
+  if (!appState.students || appState.students.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-slate-400 dark:text-slate-500 font-medium">${currentLang === 'te' ? 'ఇంకా ఏ విద్యార్థి నమోదు కాలేదు. పైనున్న "కొత్త విద్యార్థి చేరిక" బటన్ ద్వారా విద్యార్థులను చేర్చండి.' : 'No students enrolled yet. Click "Add Student" above to enroll students.'}</td></tr>`;
+    return;
+  }
+
   tbody.innerHTML = appState.students.map(s => {
     const stuName = currentLang === 'te' && s.nameTe ? s.nameTe : s.name;
     const parName = currentLang === 'te' && s.parentNameTe ? s.parentNameTe : s.parentName;
@@ -1328,7 +1333,21 @@ function setStudentTab(tabName) {
 
 function renderStudentView() {
   const student = appState.students.find(s => s.id === activeStudentId) || appState.students[0];
-  if (!student) return;
+  if (!student) {
+    document.getElementById('student-view-name').textContent = currentLang === 'te' ? 'విద్యార్థి వివరాలు లేవు' : 'Student Portal';
+    document.getElementById('student-view-class-badge').textContent = 'HTC Portal';
+    document.getElementById('student-view-id').textContent = '---';
+    document.getElementById('student-view-roll').textContent = '---';
+    document.getElementById('student-attendance-percent').textContent = '0%';
+    document.getElementById('student-attendance-detail').textContent = currentLang === 'te' ? 'ఇంకా రికార్డులు లేవు' : 'No records yet';
+    document.getElementById('student-today-status').innerHTML = `<span class="w-3 h-3 rounded-full bg-slate-400"></span> ${currentLang === 'te' ? 'నమోదు కాలేదు' : 'Not Marked'}`;
+    document.getElementById('student-today-time').textContent = currentLang === 'te' ? 'హరీష్ సార్ ఇంకా హాజరు నమోదు చేయలేదు' : 'Attendance not marked yet';
+    renderStudentNotes('class-10');
+    renderStudentVideos('class-10');
+    renderStudentTests('');
+    renderStudentAttendanceLog('');
+    return;
+  }
 
   const stuName = currentLang === 'te' && student.nameTe ? student.nameTe : student.name;
   const clsName = currentLang === 'te' && student.classNameTe ? student.classNameTe : student.className;
@@ -1462,6 +1481,11 @@ function renderStudentTests(studentId) {
     }
   });
 
+  if (testRows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 dark:text-slate-500">${currentLang === 'te' ? 'ఇంకా పరీక్షల మార్కులు నమోదు కాలేదు.' : 'No test results posted yet.'}</td></tr>`;
+    return;
+  }
+
   tbody.innerHTML = testRows.map(t => {
     return `
       <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
@@ -1483,6 +1507,11 @@ function renderStudentAttendanceLog(studentId) {
   if (!container) return;
 
   const logs = appState.attendance.filter(a => a.studentId === studentId).sort((a, b) => b.date.localeCompare(a.date));
+
+  if (logs.length === 0) {
+    container.innerHTML = `<div class="p-8 text-center text-slate-400 dark:text-slate-500 text-xs">${currentLang === 'te' ? 'హాజరు రికార్డులు లేవు.' : 'No attendance records logged yet.'}</div>`;
+    return;
+  }
 
   container.innerHTML = logs.map(l => {
     const isPres = l.status === 'Present';
@@ -1508,7 +1537,22 @@ function renderStudentAttendanceLog(studentId) {
 // ============================================================================
 function renderParentView() {
   const ward = appState.students.find(s => s.id === activeParentStudentId) || appState.students[0];
-  if (!ward) return;
+  if (!ward) {
+    document.getElementById('parent-ward-name').textContent = currentLang === 'te' ? 'విద్యార్థి వివరాలు లేవు' : 'Parent Portal';
+    document.getElementById('parent-ward-class').textContent = 'HTC Portal';
+    document.getElementById('parent-ward-roll').textContent = '---';
+    document.getElementById('parent-ward-id').textContent = '---';
+    document.getElementById('parent-guardian-name').textContent = '---';
+    document.getElementById('parent-guardian-phone').textContent = '---';
+    document.getElementById('parent-stat-percentage').textContent = '0%';
+    document.getElementById('parent-stat-absent-count').textContent = '0 Days';
+    document.getElementById('parent-live-status-text').textContent = currentLang === 'te' ? 'నమోదు కాలేదు' : 'Not Marked';
+    document.getElementById('parent-live-time-text').textContent = currentLang === 'te' ? 'హరీష్ సార్ ఇంకా హాజరు నమోదు చేయలేదు' : 'Attendance not marked yet';
+    document.getElementById('parent-live-remark-text').textContent = '';
+    renderParentHomework('class-10');
+    renderParentTests('');
+    return;
+  }
 
   const stuName = currentLang === 'te' && ward.nameTe ? ward.nameTe : ward.name;
   const parName = currentLang === 'te' && ward.parentNameTe ? ward.parentNameTe : ward.parentName;
@@ -1677,6 +1721,11 @@ function renderParentTests(studentId) {
       });
     }
   });
+
+  if (testRows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 dark:text-slate-500">${currentLang === 'te' ? 'ఇంకా పరీక్షల మార్కులు నమోదు కాలేదు.' : 'No test results posted yet.'}</td></tr>`;
+    return;
+  }
 
   tbody.innerHTML = testRows.map(t => {
     return `

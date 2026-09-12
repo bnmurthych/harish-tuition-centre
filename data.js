@@ -69,236 +69,11 @@ window.INITIAL_DATA = {
     }
   ],
 
-  // Student list with dedicated credentials (same for students & parents)
-  students: [
-    // Class 10 Students
-    {
-      id: "HTC-1001",
-      password: "1234", // Password shared by student and parent
-      name: "Rahul Verma",
-      nameTe: "రాహుల్ వర్మ",
-      rollNo: "10-01",
-      classId: "class-10",
-      className: "Class 10",
-      classNameTe: "10వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80",
-      parentName: "Suresh Verma",
-      parentNameTe: "సురేష్ వర్మ",
-      parentPhone: "+91 98450 11223",
-      parentEmail: "suresh.verma@example.com",
-      board: "CBSE",
-      feeStatus: "Paid",
-      feeAmountNum: 2500,
-      feeAmount: "₹2,500/month",
-      lastPaidDate: "2026-09-02",
-      transactionRef: "UPI-PAY-883921",
-      joinedDate: "2026-04-10"
-    },
-    {
-      id: "HTC-1002",
-      password: "1234",
-      name: "Ananya Iyer",
-      nameTe: "అనన్య అయ్యర్",
-      rollNo: "10-02",
-      classId: "class-10",
-      className: "Class 10",
-      classNameTe: "10వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
-      parentName: "R. Iyer",
-      parentNameTe: "ఆర్. అయ్యర్",
-      parentPhone: "+91 98450 22334",
-      parentEmail: "iyer.family@example.com",
-      board: "CBSE",
-      feeStatus: "Paid",
-      feeAmountNum: 2500,
-      feeAmount: "₹2,500/month",
-      lastPaidDate: "2026-09-03",
-      transactionRef: "UPI-PAY-772910",
-      joinedDate: "2026-04-12"
-    },
-    {
-      id: "HTC-1003",
-      password: "1234",
-      name: "Karthik Reddy",
-      nameTe: "కార్తీక్ రెడ్డి",
-      rollNo: "10-03",
-      classId: "class-10",
-      className: "Class 10",
-      classNameTe: "10వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-      parentName: "Venkatesh Reddy",
-      parentNameTe: "వెంకటేష్ రెడ్డి",
-      parentPhone: "+91 98450 33445",
-      parentEmail: "venkat.reddy@example.com",
-      board: "State Board",
-      feeStatus: "Pending",
-      feeAmountNum: 2500,
-      feeAmount: "₹2,500/month",
-      lastPaidDate: "-",
-      transactionRef: "",
-      joinedDate: "2026-05-02"
-    },
+  // Student list (clean directory - NALAM HARISH Sir can enroll students from the Teacher Portal)
+  students: [],
 
-    // Class 9 Students
-    {
-      id: "HTC-0901",
-      password: "1234",
-      name: "Diya Sharma",
-      nameTe: "దియా శర్మ",
-      rollNo: "09-01",
-      classId: "class-9",
-      className: "Class 9",
-      classNameTe: "9వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
-      parentName: "Rajesh Sharma",
-      parentNameTe: "రాజేష్ శర్మ",
-      parentPhone: "+91 98450 44556",
-      parentEmail: "rajesh.sharma@example.com",
-      board: "CBSE",
-      feeStatus: "Paid",
-      feeAmountNum: 2200,
-      feeAmount: "₹2,200/month",
-      lastPaidDate: "2026-09-01",
-      transactionRef: "UPI-PAY-441209",
-      joinedDate: "2026-04-15"
-    },
-    {
-      id: "HTC-0902",
-      password: "1234",
-      name: "Rohan Kulkarni",
-      nameTe: "రోహన్ కులకర్ణి",
-      rollNo: "09-02",
-      classId: "class-9",
-      className: "Class 9",
-      classNameTe: "9వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-      parentName: "Mahesh Kulkarni",
-      parentNameTe: "మహేష్ కులకర్ణి",
-      parentPhone: "+91 98450 55667",
-      parentEmail: "mahesh.k@example.com",
-      board: "State Board",
-      feeStatus: "Paid",
-      feeAmountNum: 2200,
-      feeAmount: "₹2,200/month",
-      lastPaidDate: "2026-09-05",
-      transactionRef: "UPI-PAY-992144",
-      joinedDate: "2026-04-20"
-    },
-
-    // Class 8 Students
-    {
-      id: "HTC-0801",
-      password: "1234",
-      name: "Sneha Patil",
-      nameTe: "స్నేహ పాటిల్",
-      rollNo: "08-01",
-      classId: "class-8",
-      className: "Class 8",
-      classNameTe: "8వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
-      parentName: "Ashok Patil",
-      parentNameTe: "అశోక్ పాటిల్",
-      parentPhone: "+91 98450 66778",
-      parentEmail: "ashok.patil@example.com",
-      board: "ICSE",
-      feeStatus: "Paid",
-      feeAmountNum: 2000,
-      feeAmount: "₹2,000/month",
-      lastPaidDate: "2026-09-04",
-      transactionRef: "UPI-PAY-112345",
-      joinedDate: "2026-05-05"
-    },
-    {
-      id: "HTC-0802",
-      password: "1234",
-      name: "Aditya Nair",
-      nameTe: "ఆదిత్య నాయర్",
-      rollNo: "08-02",
-      classId: "class-8",
-      className: "Class 8",
-      classNameTe: "8వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80",
-      parentName: "M. Nair",
-      parentNameTe: "ఎం. నాయర్",
-      parentPhone: "+91 98450 77889",
-      parentEmail: "nair.m@example.com",
-      board: "CBSE",
-      feeStatus: "Paid",
-      feeAmountNum: 2000,
-      feeAmount: "₹2,000/month",
-      lastPaidDate: "2026-09-02",
-      transactionRef: "UPI-PAY-665431",
-      joinedDate: "2026-05-10"
-    },
-
-    // Class 7 Students
-    {
-      id: "HTC-0701",
-      password: "1234",
-      name: "Pooja Hegde",
-      nameTe: "పూజా హెగ్డే",
-      rollNo: "07-01",
-      classId: "class-7",
-      className: "Class 7",
-      classNameTe: "7వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-      parentName: "Shankar Hegde",
-      parentNameTe: "శంకర్ హెగ్డే",
-      parentPhone: "+91 98450 88990",
-      parentEmail: "shankar.hegde@example.com",
-      board: "CBSE",
-      feeStatus: "Paid",
-      feeAmountNum: 1800,
-      feeAmount: "₹1,800/month",
-      lastPaidDate: "2026-09-03",
-      transactionRef: "UPI-PAY-332190",
-      joinedDate: "2026-05-15"
-    },
-    {
-      id: "HTC-0702",
-      password: "1234",
-      name: "Varun Rao",
-      nameTe: "వరుణ్ రావు",
-      rollNo: "07-02",
-      classId: "class-7",
-      className: "Class 7",
-      classNameTe: "7వ తరగతి",
-      avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80",
-      parentName: "Gopal Rao",
-      parentNameTe: "గోపాల్ రావు",
-      parentPhone: "+91 98450 99001",
-      parentEmail: "gopal.rao@example.com",
-      board: "State Board",
-      feeStatus: "Pending",
-      feeAmountNum: 1800,
-      feeAmount: "₹1,800/month",
-      lastPaidDate: "-",
-      transactionRef: "",
-      joinedDate: "2026-06-01"
-    }
-  ],
-
-  // Attendance Records
-  attendance: [
-    // Today (2026-09-12)
-    { date: "2026-09-12", studentId: "HTC-1001", status: "Present", arrivalTime: "7:28 PM", remarks: "Punctual, attentive", remarksTe: "సమయపాలన, శ్రద్ధగా విన్నారు" },
-    { date: "2026-09-12", studentId: "HTC-1002", status: "Present", arrivalTime: "7:30 PM", remarks: "Active participation in problem solving", remarksTe: "లెక్కల సాధనలో చురుకుగా పాల్గొన్నారు" },
-    { date: "2026-09-12", studentId: "HTC-1003", status: "Absent", arrivalTime: "-", remarks: "Parent informed: mild fever", remarksTe: "జ్వరం కారణంగా రాలేదు" },
-    { date: "2026-09-12", studentId: "HTC-0901", status: "Present", arrivalTime: "6:25 PM", remarks: "Completed homework", remarksTe: "హోంవర్క్ పూర్తి చేశారు" },
-    { date: "2026-09-12", studentId: "HTC-0902", status: "Present", arrivalTime: "6:32 PM", remarks: "Arrived slightly late", remarksTe: "కొద్దిగా ఆలస్యంగా వచ్చారు" },
-    { date: "2026-09-12", studentId: "HTC-0801", status: "Present", arrivalTime: "5:27 PM", remarks: "Good notebook maintenance", remarksTe: "నోట్‌బుక్ రికార్డులు బాగున్నాయి" },
-    { date: "2026-09-12", studentId: "HTC-0802", status: "Present", arrivalTime: "5:30 PM", remarks: "Solved chapter exercises", remarksTe: "అభ్యాస ప్రశ్నలు సాధించారు" },
-    { date: "2026-09-12", studentId: "HTC-0701", status: "Present", arrivalTime: "4:28 PM", remarks: "Well prepared for oral quiz", remarksTe: "మౌఖిక పరీక్షకు సిద్ధమయ్యారు" },
-    { date: "2026-09-12", studentId: "HTC-0702", status: "Present", arrivalTime: "4:31 PM", remarks: "Focused on math fractions", remarksTe: "భిన్నాల అధ్యయనంలో శ్రద్ధ" },
-
-    // Past records
-    { date: "2026-09-11", studentId: "HTC-1001", status: "Present", arrivalTime: "7:25 PM", remarks: "Good score in oral test", remarksTe: "మౌఖిక పరీక్షలో మంచి స్కోరు" },
-    { date: "2026-09-11", studentId: "HTC-1002", status: "Present", arrivalTime: "7:29 PM", remarks: "Active discussion", remarksTe: "చర్చలో పాల్గొన్నారు" },
-    { date: "2026-09-11", studentId: "HTC-1003", status: "Present", arrivalTime: "7:35 PM", remarks: "Came late due to rain", remarksTe: "వర్షం వల్ల కొద్దిగా ఆలస్యం" },
-    { date: "2026-09-10", studentId: "HTC-1001", status: "Present", arrivalTime: "7:28 PM", remarks: "Solved quadratic equation problems", remarksTe: "వర్గ సమీకరణాల సమస్యలను సాధించారు" },
-    { date: "2026-09-09", studentId: "HTC-1001", status: "Present", arrivalTime: "7:25 PM", remarks: "Physics numericals", remarksTe: "భౌతిక శాస్త్ర లెక్కలు" },
-    { date: "2026-09-08", studentId: "HTC-1001", status: "Absent", arrivalTime: "-", remarks: "Informed: family function", remarksTe: "కుటుంబ వేడుకల వల్ల హాజరుకాలేదు" }
-  ],
+  // Attendance Records (empty by default)
+  attendance: [],
 
   // Academic Subject Notes
   notes: [
@@ -439,11 +214,7 @@ window.INITIAL_DATA = {
       classId: "class-10",
       date: "2026-08-25",
       maxMarks: 25,
-      scores: [
-        { studentId: "HTC-1001", marks: 23, grade: "A+", remarks: "Outstanding performance in irrationality proofs. Clean presentation.", remarksTe: "అద్భుతమైన ప్రతిభ. నిరూపణలు చాలా స్పష్టంగా రాశారు." },
-        { studentId: "HTC-1002", marks: 24, grade: "A+", remarks: "Near perfect score! Excellent clarity.", remarksTe: "అత్యుత్తమ మార్కులు సాధించారు. అభినందనలు!" },
-        { studentId: "HTC-1003", marks: 18, grade: "B+", remarks: "Good effort. Practice prime factorization word problems once more.", remarksTe: "మంచి ప్రయత్నం. ప్రధాన కారణాంకాల లెక్కలు మరికొంత ప్రాక్టీస్ చేయాలి." }
-      ]
+      scores: []
     },
     {
       id: "test-102",
@@ -454,11 +225,7 @@ window.INITIAL_DATA = {
       classId: "class-10",
       date: "2026-09-05",
       maxMarks: 50,
-      scores: [
-        { studentId: "HTC-1001", marks: 46, grade: "A+", remarks: "Clear understanding of redox states. Well drawn diagrams.", remarksTe: "రెడాక్స్ చర్యలపై మంచి పట్టు ఉంది. బొమ్మలు చక్కగా గీశారు." },
-        { studentId: "HTC-1002", marks: 48, grade: "A+", remarks: "Topped the batch! Phenomenal mastery.", remarksTe: "బ్యాచ్ టాపర్‌గా నిలిచారు!" },
-        { studentId: "HTC-1003", marks: 37, grade: "B", remarks: "Need to memorize chemical state symbols (s, l, g, aq).", remarksTe: "భౌతిక స్థితుల చిహ్నాలు (s, l, g) గుర్తుంచుకోవాలి." }
-      ]
+      scores: []
     }
   ],
 
