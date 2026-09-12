@@ -5,8 +5,8 @@ window.INITIAL_DATA = {
     nameTe: "హరీష్ ట్యూషన్ సెంటర్",
     tagline: "Empowering Students of Classes 7th to 10th for Academic Excellence",
     taglineTe: "7 నుండి 10వ తరగతి విద్యార్థుల ఉజ్వల విద్యా భవిష్యత్తు కోసం అంకితం",
-    director: "Harish R., M.Sc., B.Ed. (12+ Years Teaching Experience)",
-    directorTe: "హరీష్ ఆర్., M.Sc., B.Ed. (12+ సంవత్సరాల బోధనా అనుభవం)",
+    director: "NALAM HARISH, M.Sc., B.Ed. (12+ Years Teaching Experience)",
+    directorTe: "నలం హరీష్, M.Sc., B.Ed. (12+ సంవత్సరాల బోధనా అనుభవం)",
     phone: "+91 98765 43210",
     email: "contact@harishtuition.edu.in",
     address: "#42, Temple Road, 2nd Main, Near City Library, Main Town",
@@ -19,11 +19,12 @@ window.INITIAL_DATA = {
     subjectsTe: ["గణితం (Mathematics)", "సైన్స్ (Physics, Chemistry, Biology)", "ఇంగ్లీష్ (English)", "సాంఘిక శాస్త్రం (Social Science)"]
   },
 
-  // Teacher / Admin Authentication
+  // Teacher / Admin Authentication (NALAM HARISH)
   teacherAuth: {
-    teacherId: "harish",
-    password: "harish@123",
-    name: "Harish R., M.Sc., B.Ed.",
+    teacherId: "262709",
+    password: "H@RInalam80085..",
+    name: "NALAM HARISH",
+    nameTe: "నలం హరీష్",
     role: "Director & Head Teacher",
     upiId: "9876543210@upi", // Harish Sir's UPI ID for fee collection
     upiName: "Harish Tuition Centre"

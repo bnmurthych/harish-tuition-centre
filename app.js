@@ -1,7 +1,7 @@
 // Harish Tuition Centre - Main Application Logic
 // Features: Bilingual (English & Telugu), Dark Mode, Teacher Auth, Credential Manager, UPI QR Fee Payment
 
-const STORAGE_KEY = 'HTC_APP_DATA_V2';
+const STORAGE_KEY = 'HTC_APP_DATA_V3';
 const LANG_KEY = 'HTC_APP_LANG';
 const THEME_KEY = 'HTC_APP_THEME';
 const AUTH_KEY = 'HTC_APP_AUTH';
@@ -25,7 +25,7 @@ const TRANSLATIONS = {
     heroSubtitle: "Welcome to Harish Tuition Centre. We mentor students of 7th, 8th, 9th, and 10th standards in Mathematics, Science, English & Social Science with digital chapter notes, video lectures, live daily attendance, and transparent parental updates.",
     ctaParent: "Parent Portal Login",
     ctaStudent: "Student Learning Hub",
-    ctaTeacher: "Teacher Harish Portal",
+    ctaTeacher: "Teacher NALAM HARISH Portal",
     statPassRate: "Board Pass Rate",
     statExperience: "Years Experience",
     statDaily: "Daily",
@@ -51,12 +51,12 @@ const TRANSLATIONS = {
     meetDirector: "Director's Desk",
     directorQuote: '"Every student has the potential to excel with the right guidance and daily discipline."',
     directorMsg: "At Harish Tuition Centre, we do not believe in rote memorization. We teach from the ground up, ensuring students understand the 'why' behind every mathematical formula and scientific phenomenon.",
-    directorName: "Harish R., M.Sc., B.Ed.",
+    directorName: "NALAM HARISH, M.Sc., B.Ed.",
     directorExp: "Founder & Academic Director (12+ Years Teaching Experience)",
     visitCentre: "Visit Our Centre",
     centreAddress: "#42, Temple Road, 2nd Main, Near City Library, Main Town.",
     loginCheckProgress: "Log In to Check Student Progress",
-    teacherHarishMode: "Harish Sir - Teacher Administrator Mode",
+    teacherHarishMode: "NALAM HARISH Sir - Teacher Administrator Mode",
     tuitionManagement: "Tuition Management Dashboard",
     teacherDashboardSubtitle: "Manage daily attendance, notes, videos, student passwords, and fee records.",
     addStudentBtn: "Add Student",
@@ -132,10 +132,10 @@ const TRANSLATIONS = {
     mentorFeedbackSub: "Unit test scores and personal remarks from Harish Sir",
     printReportCard: "Print Official Report Card",
     teacherLoginTitle: "Teacher Portal Login",
-    teacherLoginSub: "Only for Harish Sir (Centre Administrator)",
+    teacherLoginSub: "Only for NALAM HARISH Sir (Centre Administrator)",
     teacherIdLabel: "Teacher ID *",
     passwordLabel: "Password *",
-    loginTeacherBtn: "Login as Harish Sir",
+    loginTeacherBtn: "Login as NALAM HARISH Sir",
     studentLoginTitle: "Student Portal Login",
     studentLoginSub: "Enter your Student ID and Password",
     studentIdLabel: "Student ID *",
@@ -161,7 +161,7 @@ const TRANSLATIONS = {
     heroSubtitle: "హరీష్ ట్యూషన్ సెంటర్‌కు స్వాగతం. 7, 8, 9 మరియు 10వ తరగతి విద్యార్థులకు గణితం, సైన్స్, ఇంగ్లీష్ మరియు సాంఘిక శాస్త్రాలలో సమగ్ర అధ్యయన నోట్స్, వీడియో పాఠాలు, రోజువారీ లైవ్ హాజరు మరియు తల్లిదండ్రులకు పూర్తి పారదర్శకతను అందిస్తున్నాము.",
     ctaParent: "తల్లిదండ్రుల పోర్టల్ లాగిన్",
     ctaStudent: "విద్యార్థి పోర్టల్ లాగిన్",
-    ctaTeacher: "ఉపాధ్యాయుని పోర్టల్ (హరీష్ సార్)",
+    ctaTeacher: "ఉపాధ్యాయుని పోర్టల్ (నలం హరీష్ సార్)",
     statPassRate: "బోర్డు ఉత్తీర్ణత శాతం",
     statExperience: "సంవత్సరాల అనుభవం",
     statDaily: "రోజువారీ",
@@ -187,12 +187,12 @@ const TRANSLATIONS = {
     meetDirector: "డైరెక్టర్ సందేశం",
     directorQuote: '"సరైన మార్గదర్శకత్వం మరియు రోజువారీ క్రమశిక్షణతో ప్రతి విద్యార్థి అద్భుతాలు సాధించగలడు."',
     directorMsg: "హరీష్ ట్యూషన్ సెంటర్‌లో మేము బట్టీ పట్టే విధానాన్ని ప్రోత్సహించము. ప్రతి సూత్రం మరియు సైన్స్ ప్రయోగం వెనుక ఉన్న అర్థాన్ని విద్యార్థులకు స్పష్టంగా నేర్పుతాము.",
-    directorName: "హరీష్ ఆర్., M.Sc., B.Ed.",
+    directorName: "నలం హరీష్, M.Sc., B.Ed.",
     directorExp: "వ్యవస్థాపకుడు & అకడమిక్ డైరెక్టర్ (12+ సంవత్సరాల అనుభవం)",
     visitCentre: "మా సెంటర్‌ను సందర్శించండి",
     centreAddress: "#42, టెంపుల్ రోడ్, 2వ మెయిన్, సిటీ లైబ్రరీ దగ్గర, మెయిన్ టౌన్.",
     loginCheckProgress: "విద్యార్థి పురోగతిని చూడటానికి లాగిన్ అవ్వండి",
-    teacherHarishMode: "హరీష్ సార్ - టీచర్ అడ్మినిస్ట్రేటర్ మోడ్",
+    teacherHarishMode: "నలం హరీష్ సార్ - టీచర్ అడ్మినిస్ట్రేటర్ మోడ్",
     tuitionManagement: "ట్యూషన్ నిర్వహణ డ్యాష్‌బోర్డ్",
     teacherDashboardSubtitle: "రోజువారీ హాజరు, నోట్స్, వీడియోలు, విద్యార్థి పాస్‌వర్డ్‌లు మరియు ఫీజు రికార్డులను నిర్వహించండి.",
     addStudentBtn: "కొత్త విద్యార్థి చేరిక",
@@ -267,11 +267,11 @@ const TRANSLATIONS = {
     mentorFeedbackTitle: "విద్యా ప్రతిభ & ఉపాధ్యాయుని అభిప్రాయం",
     mentorFeedbackSub: "యూనిట్ టెస్ట్ మార్కులు మరియు హరీష్ సార్ వ్యక్తిగత సూచనలు",
     printReportCard: "అధికారిక రిపోర్ట్ కార్డు ముద్రించండి",
-    teacherLoginTitle: "ఉపాధ్యాయుని లాగిన్ (హరీష్ సార్)",
-    teacherLoginSub: "హరీష్ సార్ (సెంటర్ అడ్మినిస్ట్రేటర్) కోసం మాత్రమే",
+    teacherLoginTitle: "ఉపాధ్యాయుని లాగిన్ (నలం హరీష్ సార్)",
+    teacherLoginSub: "నలం హరీష్ సార్ (సెంటర్ అడ్మినిస్ట్రేటర్) కోసం మాత్రమే",
     teacherIdLabel: "టీచర్ ID *",
     passwordLabel: "పాస్‌వర్డ్ *",
-    loginTeacherBtn: "హరీష్ సార్‌గా లాగిన్ అవ్వండి",
+    loginTeacherBtn: "నలం హరీష్ సార్‌గా లాగిన్ అవ్వండి",
     studentLoginTitle: "విద్యార్థి పోర్టల్ లాగిన్",
     studentLoginSub: "మీ విద్యార్థి ID మరియు పాస్‌వర్డ్ నమోదు చేయండి",
     studentIdLabel: "విద్యార్థి ID *",
@@ -290,7 +290,11 @@ function loadState() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
     try {
-      return JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      if (window.INITIAL_DATA && window.INITIAL_DATA.teacherAuth) {
+        parsed.teacherAuth = JSON.parse(JSON.stringify(window.INITIAL_DATA.teacherAuth));
+      }
+      return parsed;
     } catch (e) {
       console.error('Resetting to initial data', e);
     }
@@ -308,6 +312,10 @@ function saveState() {
 let currentLang = localStorage.getItem(LANG_KEY) || 'en'; // 'en' or 'te'
 let currentTheme = localStorage.getItem(THEME_KEY) || 'light'; // 'light' or 'dark'
 let authSession = JSON.parse(localStorage.getItem(AUTH_KEY) || '{"role": null, "id": null, "name": null}');
+if (authSession && authSession.role === 'admin') {
+  authSession.id = '262709';
+  authSession.name = 'NALAM HARISH';
+}
 
 let currentView = 'public'; // 'public' | 'admin' | 'student' | 'parent'
 let currentAdminTab = 'attendance';
@@ -434,10 +442,11 @@ function updateAuthUI() {
   if (!container) return;
 
   if (authSession.role === 'admin') {
+    const adminDisplayName = currentLang === 'te' ? 'నలం హరీష్ సార్' : 'NALAM HARISH Sir';
     container.innerHTML = `
       <div class="flex items-center gap-2 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 px-3 py-1.5 rounded-full text-xs font-bold">
         <span class="w-2 h-2 rounded-full bg-emerald-500 live-dot"></span>
-        <span>Harish Sir</span>
+        <span>${adminDisplayName}</span>
         <button onclick="logoutSession()" class="ml-1 text-emerald-900 dark:text-emerald-200 hover:text-red-500" title="Logout">
           <i data-lucide="log-out" class="w-3.5 h-3.5 inline"></i>
         </button>
@@ -517,22 +526,22 @@ function closeTeacherLoginModal() {
 
 function handleTeacherLogin(e) {
   e.preventDefault();
-  const id = document.getElementById('teacher-login-id').value.trim().toLowerCase();
-  const pass = document.getElementById('teacher-login-password').value;
+  const idInput = document.getElementById('teacher-login-id').value.trim();
+  const passInput = document.getElementById('teacher-login-password').value;
 
-  const validId = appState.teacherAuth.teacherId.toLowerCase();
-  const validPass = appState.teacherAuth.password;
+  const validId = (appState.teacherAuth?.teacherId || "262709").toString().trim();
+  const validPass = appState.teacherAuth?.password || "H@RInalam80085..";
 
-  if (id === validId && pass === validPass) {
-    authSession = { role: 'admin', id: 'harish', name: 'Harish R., M.Sc., B.Ed.' };
+  if (idInput === validId && passInput === validPass) {
+    authSession = { role: 'admin', id: '262709', name: 'NALAM HARISH' };
     localStorage.setItem(AUTH_KEY, JSON.stringify(authSession));
     closeTeacherLoginModal();
     updateAuthUI();
     switchView('admin');
-    showToast(currentLang === 'te' ? 'స్వాగతం హరీష్ సార్!' : 'Welcome Harish Sir!', 'success');
+    showToast(currentLang === 'te' ? 'స్వాగతం నలం హరీష్ సార్!' : 'Welcome NALAM HARISH Sir!', 'success');
   } else {
     const err = document.getElementById('teacher-login-error');
-    err.textContent = currentLang === 'te' ? 'తప్పుడు Teacher ID లేదా పాస్‌వర్డ్. దయచేసి మళ్ళీ ప్రయత్నించండి.' : 'Invalid Teacher ID or Password. Please try again.';
+    err.textContent = currentLang === 'te' ? 'తప్పుడు Teacher ID లేదా పాస్‌వర్డ్. దయచేసి సరైన వివరాలు నమోదు చేయండి.' : 'Invalid Teacher ID or Password. Please enter the correct credentials.';
     err.classList.remove('hidden');
   }
 }
@@ -1724,7 +1733,7 @@ function closeNoteModal() {
 
 function downloadNoteContent(noteId) {
   const note = appState.notes[0];
-  const content = `HARISH TUITION CENTRE - OFFICIAL STUDY NOTES\nClass: ${note.className} | Subject: ${note.subject}\nTitle: ${note.title}\n\nSUMMARY:\n${note.summary}\n\n---\nCreated by Harish R., M.Sc., B.Ed. (Harish Tuition Centre)`;
+  const content = `HARISH TUITION CENTRE - OFFICIAL STUDY NOTES\nClass: ${note.className} | Subject: ${note.subject}\nTitle: ${note.title}\n\nSUMMARY:\n${note.summary}\n\n---\nCreated by NALAM HARISH, M.Sc., B.Ed. (Harish Tuition Centre)`;
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement('a');
