@@ -7,6 +7,84 @@ const THEME_KEY = 'HTC_APP_THEME';
 const AUTH_KEY = 'HTC_APP_AUTH';
 
 // ============================================================================
+// INDEXEDDB MEDIA DATABASE (STORES LARGE LECTURE VIDEO BLOBS ON DEVICE)
+// ============================================================================
+const MEDIA_DB_NAME = 'HTC_MEDIA_DATABASE';
+const MEDIA_DB_VERSION = 1;
+const MEDIA_STORE_VIDEOS = 'lecture_videos';
+
+function openMediaDB() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) {
+      reject(new Error('IndexedDB is not supported in this browser environment'));
+      return;
+    }
+    const request = indexedDB.open(MEDIA_DB_NAME, MEDIA_DB_VERSION);
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(MEDIA_STORE_VIDEOS)) {
+        db.createObjectStore(MEDIA_STORE_VIDEOS, { keyPath: 'id' });
+      }
+    };
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function saveVideoFileToDB(id, blob, meta = {}) {
+  const db = await openMediaDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(MEDIA_STORE_VIDEOS, 'readwrite');
+    const store = tx.objectStore(MEDIA_STORE_VIDEOS);
+    const record = {
+      id,
+      blob,
+      name: meta.name || 'lecture-video.mp4',
+      type: meta.type || 'video/mp4',
+      size: meta.size || (blob ? blob.size : 0),
+      createdAt: Date.now()
+    };
+    const req = store.put(record);
+    req.onsuccess = () => resolve(record);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function getVideoFileFromDB(id) {
+  const db = await openMediaDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(MEDIA_STORE_VIDEOS, 'readonly');
+    const store = tx.objectStore(MEDIA_STORE_VIDEOS);
+    const req = store.get(id);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function deleteVideoFileFromDB(id) {
+  try {
+    const db = await openMediaDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(MEDIA_STORE_VIDEOS, 'readwrite');
+      const store = tx.objectStore(MEDIA_STORE_VIDEOS);
+      const req = store.delete(id);
+      req.onsuccess = () => resolve(true);
+      req.onerror = (e) => reject(e.target.error);
+    });
+  } catch (err) {
+    console.warn('Could not delete video from IndexedDB:', err);
+  }
+}
+
+function formatFileSize(bytes) {
+  if (!bytes || bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+}
+
+// ============================================================================
 // BILINGUAL TRANSLATION DICTIONARY (ENGLISH & TELUGU)
 // ============================================================================
 const TRANSLATIONS = {
@@ -98,8 +176,25 @@ const TRANSLATIONS = {
     notesManagerSub: "Upload revision notes, formula sheets, and chapter summaries.",
     addNewNote: "Add New Subject Note",
     videoManagerTitle: "Video Lecture Repository",
-    videoManagerSub: "Add and manage video lectures with embedded players.",
-    addNewVideo: "Add New Video Lecture",
+    videoManagerSub: "Upload lecture videos directly from phone / laptop media or embed YouTube.",
+    addNewVideo: "Add Video Lecture",
+    uploadFromDevice: "Phone / Laptop Media",
+    youtubeLink: "YouTube Link",
+    selectVideoFileLabel: "Select Video File from Phone or Laptop *",
+    chooseVideoFile: "Tap to choose video from phone or laptop",
+    videoFileHint: "MP4, WebM, MOV, M4V • Camera, Gallery or Files",
+    changeFileBtn: "Change",
+    videoUrlLabel: "YouTube Video URL or ID *",
+    videoTitleLabel: "Lecture Title *",
+    videoClassLabel: "Class *",
+    videoSubjectLabel: "Subject *",
+    videoSummaryLabel: "Lecture Summary *",
+    savingVideoProgress: "Saving video lecture into device storage...",
+    publishVideoBtn: "Publish Video Lecture",
+    addVideoModalTitle: "Add Video Lecture",
+    addVideoModalSub: "Upload from phone / laptop media or embed YouTube",
+    loadingVideo: "Loading video from device storage...",
+    lectureSummaryHeading: "Lecture Summary & Key Concepts",
     upiSettings: "Teacher UPI Fee Settings",
     feeLedgerTitle: "Student Fee Ledger & Payment Status",
     myAttendanceRate: "My Attendance Rate",
@@ -234,8 +329,25 @@ const TRANSLATIONS = {
     notesManagerSub: "రివిజన్ నోట్స్, ఫార్ములా షీట్లు మరియు అధ్యాయాల సమాచారం అప్‌లోడ్ చేయండి.",
     addNewNote: "కొత్త సబ్జెక్ట్ నోట్ చేర్చండి",
     videoManagerTitle: "వీడియో పాఠాల రిపోజిటరీ",
-    videoManagerSub: "వీడియో పాఠాలను జోడించి నిర్వహించండి.",
+    videoManagerSub: "ఫోన్ / లాప్‌టాప్ నుండి నేరుగా వీడియో పాఠాలను అప్‌లోడ్ చేయండి లేదా యూట్యూబ్ లింక్ జోడించండి.",
     addNewVideo: "కొత్త వీడియో పాఠం చేర్చండి",
+    uploadFromDevice: "ఫోన్ / లాప్‌టాప్ మీడియా",
+    youtubeLink: "యూట్యూబ్ లింక్",
+    selectVideoFileLabel: "ఫోన్ లేదా లాప్‌టాప్ నుండి వీడియో ఫైల్‌ను ఎంచుకోండి *",
+    chooseVideoFile: "మీ ఫోన్ లేదా లాప్‌టాప్ నుండి వీడియోను ఎంచుకోండి",
+    videoFileHint: "MP4, WebM, MOV, M4V • కెమెరా, గ్యాలరీ లేదా ఫైల్స్",
+    changeFileBtn: "మార్చండి",
+    videoUrlLabel: "యూట్యూబ్ వీడియో URL లేదా ID *",
+    videoTitleLabel: "పాఠం శీర్షిక (Title) *",
+    videoClassLabel: "తరగతి *",
+    videoSubjectLabel: "విషయం (Subject) *",
+    videoSummaryLabel: "పాఠం సారాంశం (Summary) *",
+    savingVideoProgress: "వీడియో పరికర స్టోరేజ్‌లో భద్రపరచబడుతోంది...",
+    publishVideoBtn: "వీడియో పాఠాన్ని ప్రచురించండి",
+    addVideoModalTitle: "కొత్త వీడియో పాఠం చేర్చండి",
+    addVideoModalSub: "ఫోన్ / లాప్‌టాప్ నుండి నేరుగా అప్‌లోడ్ చేయండి లేదా యూట్యూబ్ లింక్ జోడించండి",
+    loadingVideo: "పరికర స్టోరేజ్ నుండి వీడియో లోడ్ అవుతోంది...",
+    lectureSummaryHeading: "పాఠం సారాంశం & ముఖ్యమైన అంశాలు",
     upiSettings: "టీచర్ UPI ఫీజు సెట్టింగ్స్",
     feeLedgerTitle: "విద్యార్థుల ఫీజు లెడ్జర్ మరియు చెల్లింపు స్థితి",
     myAttendanceRate: "నా హాజరు శాతం",
@@ -427,6 +539,8 @@ function applyLanguage(lang) {
   if (currentView === 'admin') {
     renderAttendanceSheet();
     renderCredentialsDirectory();
+    renderAdminNotes();
+    renderAdminVideos();
   }
 
   if (window.lucide) {
@@ -1194,37 +1308,78 @@ function renderAdminVideos() {
   const container = document.getElementById('admin-videos-grid');
   if (!container) return;
 
+  if (appState.videos.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full py-12 text-center text-slate-400 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 p-8">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
+          <i data-lucide="video" class="w-8 h-8"></i>
+        </div>
+        <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 mb-1">${currentLang === 'te' ? 'ఇంకా వీడియో పాఠాలు లేవు' : 'No Video Lectures Yet'}</h4>
+        <p class="text-xs text-slate-500 mb-4 max-w-sm mx-auto">${currentLang === 'te' ? 'మీ ఫోన్ లేదా లాప్‌టాప్ గ్యాలరీ నుండి వీడియోను నేరుగా అప్‌లోడ్ చేయండి.' : 'Upload your first lecture video directly from your phone gallery or laptop files.'}</p>
+        <button onclick="openAddVideoModal()" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition-all">
+          <i data-lucide="upload-cloud" class="w-4 h-4"></i> ${currentLang === 'te' ? 'వీడియో అప్‌లోడ్ చేయండి' : 'Upload Video Lecture'}
+        </button>
+      </div>
+    `;
+    if (window.lucide) window.lucide.createIcons();
+    return;
+  }
+
   container.innerHTML = appState.videos.map(vid => {
     const title = currentLang === 'te' && vid.titleTe ? vid.titleTe : vid.title;
+    const isUpload = vid.type === 'upload';
+
+    const thumbnailHtml = isUpload ? `
+      <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 aspect-video flex flex-col items-center justify-center p-4 text-center group cursor-pointer" onclick="openVideoModal('${vid.id}')">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform mb-2">
+          <i data-lucide="play" class="w-5 h-5 ml-0.5"></i>
+        </div>
+        <span class="text-[11px] font-bold text-emerald-300 font-mono tracking-wide flex items-center gap-1">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> ${currentLang === 'te' ? 'మీడియా వీడియో' : 'Device Media'}
+        </span>
+        <span class="text-[10px] text-slate-400 mt-0.5 truncate max-w-[85%]">${vid.fileName || vid.title}</span>
+        <span class="absolute bottom-2 right-2 bg-emerald-900/90 text-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded font-mono border border-emerald-500/30">
+          ${vid.duration || 'Video'}
+        </span>
+        <span class="absolute top-2 left-2 bg-black/75 text-emerald-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-emerald-500/30">
+          <i data-lucide="check-circle" class="w-3 h-3"></i> ${currentLang === 'te' ? 'ఫోన్ / లాప్‌టాప్' : 'Phone/Laptop'}
+        </span>
+      </div>
+    ` : `
+      <div class="relative bg-slate-900 aspect-video flex items-center justify-center group cursor-pointer" onclick="openVideoModal('${vid.id}')">
+        <img src="https://img.youtube.com/vi/${vid.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+        <div class="absolute w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+          <i data-lucide="play" class="w-5 h-5 ml-0.5"></i>
+        </div>
+        <span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded font-mono">
+          ${vid.duration || '20:00'}
+        </span>
+        <span class="absolute top-2 left-2 bg-black/75 text-red-400 text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-red-500/30">
+          <i data-lucide="youtube" class="w-3 h-3"></i> YouTube
+        </span>
+      </div>
+    `;
 
     return `
       <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden hover-lift flex flex-col justify-between">
-        <div class="relative bg-slate-900 aspect-video flex items-center justify-center group cursor-pointer" onclick="openVideoModal('${vid.id}')">
-          <img src="https://img.youtube.com/vi/${vid.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-          <div class="absolute w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <i data-lucide="play" class="w-5 h-5 ml-0.5"></i>
-          </div>
-          <span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded font-mono">
-            ${vid.duration}
-          </span>
-        </div>
+        ${thumbnailHtml}
 
         <div class="p-5 flex-grow flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${isUpload ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'}">
                 ${vid.className} • ${vid.subject}
               </span>
-              <span class="text-[11px] text-slate-400 font-mono">${vid.views} views</span>
+              <span class="text-[11px] text-slate-400 font-mono">${vid.views || 0} ${currentLang === 'te' ? 'వీక్షణలు' : 'views'}</span>
             </div>
             <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1 font-display line-clamp-2">${title}</h4>
           </div>
 
           <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4 flex items-center justify-between">
-            <button onclick="openVideoModal('${vid.id}')" class="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1">
-              Play Video
+            <button onclick="openVideoModal('${vid.id}')" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+              <i data-lucide="play-circle" class="w-3.5 h-3.5"></i> ${currentLang === 'te' ? 'వీడియో ప్లే చేయండి' : 'Play Video'}
             </button>
-            <button onclick="deleteVideo('${vid.id}')" class="text-xs text-red-500 hover:text-red-700">
+            <button onclick="deleteVideo('${vid.id}')" class="text-xs text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/50 transition-colors" title="Delete Video">
               <i data-lucide="trash-2" class="w-4 h-4"></i>
             </button>
           </div>
@@ -1238,13 +1393,18 @@ function renderAdminVideos() {
   }
 }
 
-function deleteVideo(id) {
-  if (confirm('Delete this video?')) {
+async function deleteVideo(id) {
+  const confirmMsg = currentLang === 'te' ? 'ఈ వీడియో పాఠాన్ని ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?' : 'Are you sure you want to delete this video lecture?';
+  if (confirm(confirmMsg)) {
+    const vid = appState.videos.find(v => v.id === id);
+    if (vid && vid.type === 'upload') {
+      await deleteVideoFileFromDB(id);
+    }
     appState.videos = appState.videos.filter(v => v.id !== id);
     saveState();
     renderAdminVideos();
     renderAdminKPIs();
-    showToast('Video deleted', 'info');
+    showToast(currentLang === 'te' ? 'వీడియో పాఠం తొలగించబడింది' : 'Video lecture deleted', 'info');
   }
 }
 
@@ -1436,29 +1596,70 @@ function renderStudentVideos(classId) {
   if (!container) return;
 
   const videos = appState.videos.filter(v => v.classId === classId);
+  if (videos.length === 0) {
+    container.innerHTML = `
+      <div class="col-span-full py-12 text-center text-slate-400 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-300 dark:border-slate-800 p-8">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
+          <i data-lucide="video" class="w-7 h-7"></i>
+        </div>
+        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-1">${currentLang === 'te' ? 'ఇంకా వీడియోలు అందుబాటులో లేవు' : 'No Video Lectures Available'}</h4>
+        <p class="text-xs text-slate-500">${currentLang === 'te' ? 'హరీష్ సార్ త్వరలో ఈ తరగతికి సంబంధించిన వీడియో పాఠాలను అప్‌లోడ్ చేస్తారు.' : 'Harish Sir will upload lecture videos for this batch soon.'}</p>
+      </div>
+    `;
+    if (window.lucide) window.lucide.createIcons();
+    return;
+  }
 
   container.innerHTML = videos.map(v => {
     const title = currentLang === 'te' && v.titleTe ? v.titleTe : v.title;
+    const isUpload = v.type === 'upload';
+
+    const thumbnailHtml = isUpload ? `
+      <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 aspect-video flex flex-col items-center justify-center p-4 text-center group cursor-pointer" onclick="openVideoModal('${v.id}')">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform mb-2">
+          <i data-lucide="play" class="w-5 h-5 ml-0.5"></i>
+        </div>
+        <span class="text-[11px] font-bold text-emerald-300 font-mono tracking-wide flex items-center gap-1">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5"></i> ${currentLang === 'te' ? 'మీడియా వీడియో' : 'Device Media'}
+        </span>
+        <span class="text-[10px] text-slate-400 mt-0.5 truncate max-w-[85%]">${v.fileName || v.title}</span>
+        <span class="absolute bottom-2 right-2 bg-emerald-900/90 text-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded font-mono border border-emerald-500/30">
+          ${v.duration || 'Video'}
+        </span>
+      </div>
+    ` : `
+      <div class="relative bg-slate-900 aspect-video flex items-center justify-center group cursor-pointer" onclick="openVideoModal('${v.id}')">
+        <img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+        <div class="absolute w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+          <i data-lucide="play" class="w-5 h-5 ml-0.5"></i>
+        </div>
+        <span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded font-mono">${v.duration || '20:00'}</span>
+      </div>
+    `;
+
     return `
       <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden hover-lift flex flex-col justify-between">
-        <div class="relative bg-slate-900 aspect-video flex items-center justify-center group cursor-pointer" onclick="openVideoModal('${v.id}')">
-          <img src="https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-          <div class="absolute w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <i data-lucide="play" class="w-5 h-5 ml-0.5"></i>
-          </div>
-          <span class="absolute bottom-2 right-2 bg-black/80 text-white text-[10px] font-bold px-2 py-0.5 rounded font-mono">${v.duration}</span>
-        </div>
+        ${thumbnailHtml}
         <div class="p-5 flex-grow flex flex-col justify-between">
-          <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1 font-display line-clamp-2">${title}</h4>
+          <div class="mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${isUpload ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300'}">
+              ${v.subject}
+            </span>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm mt-2 font-display line-clamp-2">${title}</h4>
+          </div>
           <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
-            <button onclick="openVideoModal('${v.id}')" class="w-full bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 text-blue-800 dark:text-blue-300 font-bold text-xs py-2 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
-              <i data-lucide="play-circle" class="w-4 h-4"></i> Watch Lecture
+            <button onclick="openVideoModal('${v.id}')" class="w-full bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 text-emerald-800 dark:text-emerald-300 font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+              <i data-lucide="play-circle" class="w-4 h-4"></i> ${currentLang === 'te' ? 'వీడియో పాఠం చూడండి' : 'Watch Lecture'}
             </button>
           </div>
         </div>
       </div>
     `;
   }).join('');
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 function renderStudentTests(studentId) {
@@ -1746,20 +1947,124 @@ function renderParentTests(studentId) {
 // ============================================================================
 // MODAL CONTROLS & UTILITIES
 // ============================================================================
-function openVideoModal(id) {
+let currentActiveObjectUrl = null;
+
+async function openVideoModal(id) {
   const vid = appState.videos.find(v => v.id === id);
   if (!vid) return;
 
-  document.getElementById('modal-video-title').textContent = currentLang === 'te' && vid.titleTe ? vid.titleTe : vid.title;
-  document.getElementById('modal-video-subject-badge').textContent = `${vid.className} • ${vid.subject}`;
-  document.getElementById('modal-video-summary').textContent = currentLang === 'te' && vid.summaryTe ? vid.summaryTe : vid.summary;
-  document.getElementById('modal-video-iframe').src = `https://www.youtube-nocookie.com/embed/${vid.youtubeId}?autoplay=1`;
+  const title = currentLang === 'te' && vid.titleTe ? vid.titleTe : vid.title;
+  const summary = currentLang === 'te' && vid.summaryTe ? vid.summaryTe : vid.summary;
 
-  document.getElementById('modal-video').classList.remove('hidden');
+  const titleEl = document.getElementById('modal-video-title');
+  const badgeEl = document.getElementById('modal-video-subject-badge');
+  const sourceBadgeEl = document.getElementById('modal-video-source-badge');
+  const summaryEl = document.getElementById('modal-video-summary');
+  const playerEl = document.getElementById('modal-video-player');
+  const iframeEl = document.getElementById('modal-video-iframe');
+  const loadingEl = document.getElementById('modal-video-loading');
+  const downloadBtn = document.getElementById('modal-video-download-btn');
+
+  if (titleEl) titleEl.textContent = title;
+  if (badgeEl) badgeEl.textContent = `${vid.className} • ${vid.subject}`;
+  if (summaryEl) summaryEl.textContent = summary || (currentLang === 'te' ? 'ఈ వీడియో కోసం సారాంశం అందుబాటులో లేదు.' : 'No lecture summary provided.');
+
+  // Reset previous playback
+  if (currentActiveObjectUrl) {
+    URL.revokeObjectURL(currentActiveObjectUrl);
+    currentActiveObjectUrl = null;
+  }
+  if (playerEl) {
+    playerEl.pause();
+    playerEl.src = '';
+    playerEl.classList.add('hidden');
+  }
+  if (iframeEl) {
+    iframeEl.src = '';
+    iframeEl.classList.add('hidden');
+  }
+  if (loadingEl) loadingEl.classList.add('hidden');
+  if (downloadBtn) downloadBtn.classList.add('hidden');
+
+  if (vid.type === 'upload') {
+    if (sourceBadgeEl) {
+      sourceBadgeEl.textContent = currentLang === 'te' ? '📱 ఫోన్ / లాప్‌టాప్ మీడియా' : '📱 Device Media';
+      sourceBadgeEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/30 text-emerald-300 border border-emerald-500/40';
+      sourceBadgeEl.classList.remove('hidden');
+    }
+
+    if (loadingEl) loadingEl.classList.remove('hidden');
+    document.getElementById('modal-video').classList.remove('hidden');
+
+    try {
+      const record = await getVideoFileFromDB(vid.id);
+      if (loadingEl) loadingEl.classList.add('hidden');
+
+      if (record && record.blob) {
+        currentActiveObjectUrl = URL.createObjectURL(record.blob);
+        playerEl.src = currentActiveObjectUrl;
+        playerEl.classList.remove('hidden');
+        playerEl.play().catch(e => console.log('Autoplay deferred by browser:', e));
+
+        if (downloadBtn) {
+          downloadBtn.classList.remove('hidden');
+          downloadBtn.onclick = () => {
+            const a = document.createElement('a');
+            a.href = currentActiveObjectUrl;
+            a.download = vid.fileName || `${vid.title || 'lecture'}.mp4`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          };
+        }
+      } else {
+        alert(currentLang === 'te' ? 'క్షమించండి! ఈ వీడియో ఫైల్ మీ పరికర స్టోరేజ్‌లో కనుగొనబడలేదు.' : 'Video file not found in device media storage.');
+        closeVideoModal();
+      }
+    } catch (err) {
+      if (loadingEl) loadingEl.classList.add('hidden');
+      console.error('Error opening video from IndexedDB:', err);
+      alert('Error loading video: ' + err.message);
+      closeVideoModal();
+    }
+  } else {
+    // YouTube
+    if (sourceBadgeEl) {
+      sourceBadgeEl.textContent = '▶ YouTube';
+      sourceBadgeEl.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-500/30 text-red-300 border border-red-500/40';
+      sourceBadgeEl.classList.remove('hidden');
+    }
+
+    iframeEl.src = `https://www.youtube-nocookie.com/embed/${vid.youtubeId}?autoplay=1`;
+    iframeEl.classList.remove('hidden');
+    document.getElementById('modal-video').classList.remove('hidden');
+  }
+
+  // Increment view count
+  vid.views = (vid.views || 0) + 1;
+  saveState();
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
 }
 
 function closeVideoModal() {
-  document.getElementById('modal-video-iframe').src = '';
+  const playerEl = document.getElementById('modal-video-player');
+  const iframeEl = document.getElementById('modal-video-iframe');
+  if (playerEl) {
+    playerEl.pause();
+    playerEl.src = '';
+    playerEl.classList.add('hidden');
+  }
+  if (iframeEl) {
+    iframeEl.src = '';
+    iframeEl.classList.add('hidden');
+  }
+  if (currentActiveObjectUrl) {
+    URL.revokeObjectURL(currentActiveObjectUrl);
+    currentActiveObjectUrl = null;
+  }
   document.getElementById('modal-video').classList.add('hidden');
 }
 
@@ -1882,47 +2187,178 @@ function handleCreateNote(e) {
   showToast(`Note "${title}" published!`, 'success');
 }
 
-// Add Video Modal
-function openAddVideoModal() {
-  document.getElementById('modal-add-video').classList.remove('hidden');
+// Add Video Modal (Phone / Laptop Media & YouTube)
+let selectedVideoFile = null;
+let currentVideoSource = 'device'; // default to 'device' (phone / laptop media upload)
+
+function setVideoUploadSource(source) {
+  currentVideoSource = source;
+  const tabDevice = document.getElementById('video-source-tab-device');
+  const tabOnline = document.getElementById('video-source-tab-online');
+  const containerDevice = document.getElementById('video-source-device-container');
+  const containerOnline = document.getElementById('video-source-online-container');
+  const urlInput = document.getElementById('new-video-url');
+
+  if (source === 'device') {
+    if (tabDevice) tabDevice.className = 'flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm';
+    if (tabOnline) tabOnline.className = 'flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+    if (containerDevice) containerDevice.classList.remove('hidden');
+    if (containerOnline) containerOnline.classList.add('hidden');
+    if (urlInput) urlInput.removeAttribute('required');
+  } else {
+    if (tabOnline) tabOnline.className = 'flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white dark:bg-slate-700 text-red-600 dark:text-red-400 shadow-sm';
+    if (tabDevice) tabDevice.className = 'flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+    if (containerDevice) containerDevice.classList.add('hidden');
+    if (containerOnline) containerOnline.classList.remove('hidden');
+    if (urlInput) urlInput.setAttribute('required', 'required');
+  }
 }
+
+function handleVideoFileSelection(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  selectedVideoFile = file;
+  const nameEl = document.getElementById('video-selected-filename');
+  const sizeEl = document.getElementById('video-selected-filesize');
+  const dropzoneEl = document.getElementById('video-dropzone');
+  const badgeEl = document.getElementById('video-file-selected-badge');
+
+  if (nameEl) nameEl.textContent = file.name;
+  if (sizeEl) sizeEl.textContent = formatFileSize(file.size);
+  if (dropzoneEl) dropzoneEl.classList.add('hidden');
+  if (badgeEl) badgeEl.classList.remove('hidden');
+
+  // Auto-fill title if currently blank
+  const titleInput = document.getElementById('new-video-title');
+  if (titleInput && !titleInput.value.trim()) {
+    const rawName = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+    titleInput.value = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+  }
+}
+
+function clearSelectedVideoFile(e) {
+  if (e) e.stopPropagation();
+  selectedVideoFile = null;
+  const fileInput = document.getElementById('new-video-file-input');
+  if (fileInput) fileInput.value = '';
+  const dropzoneEl = document.getElementById('video-dropzone');
+  const badgeEl = document.getElementById('video-file-selected-badge');
+  if (dropzoneEl) dropzoneEl.classList.remove('hidden');
+  if (badgeEl) badgeEl.classList.add('hidden');
+}
+
+function openAddVideoModal() {
+  clearSelectedVideoFile();
+  const form = document.querySelector('#modal-add-video form');
+  if (form) form.reset();
+  setVideoUploadSource('device');
+  document.getElementById('modal-add-video').classList.remove('hidden');
+  if (window.lucide) window.lucide.createIcons();
+}
+
 function closeAddVideoModal() {
+  clearSelectedVideoFile();
   document.getElementById('modal-add-video').classList.add('hidden');
 }
 
-function handleCreateVideo(e) {
+async function handleCreateVideo(e) {
   e.preventDefault();
   const title = document.getElementById('new-video-title').value.trim();
   const classId = document.getElementById('new-video-class').value;
   const subject = document.getElementById('new-video-subject').value;
-  const rawUrl = document.getElementById('new-video-url').value.trim();
   const summary = document.getElementById('new-video-summary').value.trim();
 
-  let youtubeId = rawUrl;
-  if (rawUrl.includes('v=')) youtubeId = rawUrl.split('v=')[1].split('&')[0];
-  else if (rawUrl.includes('youtu.be/')) youtubeId = rawUrl.split('youtu.be/')[1].split('?')[0];
-
   const classNames = { 'class-7': 'Class 7', 'class-8': 'Class 8', 'class-9': 'Class 9', 'class-10': 'Class 10' };
+  const videoId = `vid-${Date.now()}`;
+  const submitBtn = document.getElementById('btn-publish-video');
+  const progressEl = document.getElementById('video-upload-progress');
 
-  appState.videos.unshift({
-    id: `vid-${Date.now()}`,
-    title,
-    subject,
-    classId,
-    className: classNames[classId],
-    duration: '20:00',
-    addedDate: new Date().toISOString().slice(0, 10),
-    youtubeId,
-    instructor: 'Harish Sir',
-    views: 1,
-    summary
-  });
+  if (currentVideoSource === 'device') {
+    if (!selectedVideoFile) {
+      alert(currentLang === 'te' ? 'దయచేసి మీ ఫోన్ లేదా లాప్‌టాప్ నుండి ఒక వీడియో ఫైల్‌ను ఎంచుకోండి.' : 'Please select a video file from your phone or laptop gallery/files.');
+      return;
+    }
 
-  saveState();
-  renderAdminVideos();
-  renderAdminKPIs();
-  closeAddVideoModal();
-  showToast('Video lecture published!', 'success');
+    if (submitBtn) submitBtn.disabled = true;
+    if (progressEl) progressEl.classList.remove('hidden');
+
+    try {
+      // Store full blob into browser IndexedDB (handles hundreds of MBs seamlessly)
+      await saveVideoFileToDB(videoId, selectedVideoFile, {
+        name: selectedVideoFile.name,
+        type: selectedVideoFile.type,
+        size: selectedVideoFile.size
+      });
+
+      const formattedDuration = formatFileSize(selectedVideoFile.size);
+
+      appState.videos.unshift({
+        id: videoId,
+        type: 'upload',
+        title,
+        titleTe: title,
+        subject,
+        classId,
+        className: classNames[classId] || 'Class 10',
+        duration: formattedDuration,
+        fileName: selectedVideoFile.name,
+        fileSize: selectedVideoFile.size,
+        mimeType: selectedVideoFile.type || 'video/mp4',
+        addedDate: new Date().toISOString().slice(0, 10),
+        instructor: 'NALAM HARISH Sir',
+        views: 0,
+        summary,
+        summaryTe: summary
+      });
+
+      saveState();
+      renderAdminVideos();
+      renderAdminKPIs();
+      closeAddVideoModal();
+      showToast(currentLang === 'te' ? 'వీడియో విజయవంతంగా భద్రపరచబడింది!' : 'Video lecture saved from device successfully!', 'success');
+    } catch (err) {
+      console.error('Failed to store video in IndexedDB:', err);
+      alert('Error saving video to device storage: ' + err.message);
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+      if (progressEl) progressEl.classList.add('hidden');
+    }
+  } else {
+    // Online / YouTube
+    const rawUrl = document.getElementById('new-video-url').value.trim();
+    if (!rawUrl) {
+      alert(currentLang === 'te' ? 'దయచేసి యూట్యూబ్ లింక్ లేదా IDని నమోదు చేయండి.' : 'Please enter a YouTube video URL or ID.');
+      return;
+    }
+
+    let youtubeId = rawUrl;
+    if (rawUrl.includes('v=')) youtubeId = rawUrl.split('v=')[1].split('&')[0];
+    else if (rawUrl.includes('youtu.be/')) youtubeId = rawUrl.split('youtu.be/')[1].split('?')[0];
+
+    appState.videos.unshift({
+      id: videoId,
+      type: 'youtube',
+      title,
+      titleTe: title,
+      subject,
+      classId,
+      className: classNames[classId] || 'Class 10',
+      duration: '20:00',
+      addedDate: new Date().toISOString().slice(0, 10),
+      youtubeId,
+      instructor: 'NALAM HARISH Sir',
+      views: 0,
+      summary,
+      summaryTe: summary
+    });
+
+    saveState();
+    renderAdminVideos();
+    renderAdminKPIs();
+    closeAddVideoModal();
+    showToast(currentLang === 'te' ? 'యూట్యూబ్ వీడియో విజయవంతంగా ప్రచురించబడింది!' : 'YouTube video lecture published!', 'success');
+  }
 }
 
 // Toast
