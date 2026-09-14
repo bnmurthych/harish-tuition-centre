@@ -229,16 +229,31 @@ window.INITIAL_DATA = {
     }
   ],
 
-  // Centre Announcements
+  // Centre Announcements & Holiday Notices
   announcements: [
+    {
+      id: "ann-holiday-1",
+      title: "Vinayaka Chavithi Tuition Centre Holiday Notice",
+      titleTe: "వినాయక చవితి సందర్భంగా ట్యూషన్ సెంటర్‌కు సెలవు ప్రకటన",
+      date: "2026-09-18",
+      target: "All Students & Parents (Classes 7 to 10)",
+      targetTe: "అన్ని తరగతుల విద్యార్థులు & తల్లిదండ్రులు",
+      category: "holiday",
+      badge: "Holiday",
+      badgeTe: "సెలవు",
+      content: "Tuition centre will remain closed on Friday, 18th September on the auspicious occasion of Vinayaka Chavithi. Regular evening classes will resume on Saturday, 19th September as per batch timings.",
+      contentTe: "వినాయక చవితి పర్వదినాన్ని పురస్కరించుకుని ఈ శుక్రవారం (18 సెప్టెంబర్) ట్యూషన్ సెంటర్‌కు సెలవు ప్రకటించడమైనది. తిరిగి శనివారం (19 సెప్టెంబర్) యధావిధిగా తరగతులు జరుగుతాయి."
+    },
     {
       id: "ann-1",
       title: "Class 10 Special Board Doubt Clearing Session",
       titleTe: "10వ తరగతి బోర్డు పరీక్షల ప్రత్యక సందేహాల నివృత్తి తరగతి",
-      date: "2026-09-10",
+      date: "2026-09-20",
       target: "Class 10 Students & Parents",
       targetTe: "10వ తరగతి విద్యార్థులు & తల్లిదండ్రులు",
-      badge: "Important",
+      category: "exam",
+      badge: "Special Class",
+      badgeTe: "ప్రత్యేక తరగతి",
       content: "Special 2-hour doubt clearing session for Mathematics on Sunday, 10:00 AM. Bring previous year question booklets.",
       contentTe: "ఈ ఆదివారం ఉదయం 10:00 గంటలకు గణిత శాస్త్రంపై ప్రత్యేక 2 గంటల సందేహాల నివృత్తి తరగతి నిర్వహించబడుతుంది."
     },
@@ -246,14 +261,19 @@ window.INITIAL_DATA = {
       id: "ann-2",
       title: "Monthly Progress Report Cards Published",
       titleTe: "నెలవారీ ప్రోగ్రెస్ రిపోర్ట్ కార్డులు విడుదలయ్యాయి",
-      date: "2026-09-08",
+      date: "2026-09-14",
       target: "All Parents (Classes 7 to 10)",
       targetTe: "అన్ని తరగతుల తల్లిదండ్రులు",
+      category: "general",
       badge: "Academic",
+      badgeTe: "అకడమిక్",
       content: "August-September test scores and attendance percentages have been updated. Parents are requested to log in.",
       contentTe: "ఆగస్టు-సెప్టెంబర్ పరీక్ష మార్కులు మరియు హాజరు శాతం పేరెంట్ పోర్టల్‌లో అప్‌డేట్ చేయబడ్డాయి. దయచేసి పరిశీలించండి."
     }
   ],
+
+  // Direct Teacher-Student Messages Store
+  messages: [],
 
   // Daily Homework
   homework: [

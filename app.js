@@ -238,7 +238,34 @@ const TRANSLATIONS = {
     parentLoginTitle: "Parent Portal Login",
     parentLoginSub: "Enter your Child's Student ID and Password",
     loginParentBtn: "Login to Parent Portal",
-    resetData: "Reset Demo Data"
+    resetData: "Reset Demo Data",
+    changePhoto: "Change Photo",
+    messagesWithTeacher: "Chat with Harish Sir",
+    chatWithTeacher: "Chat with Harish Sir",
+    tabStudentChat: "Student Messages",
+    tabAnnouncements: "Announcements & Holidays",
+    announcementsModalTitle: "Centre Announcements & Holidays",
+    announcementsModalSub: "Official notices from Director NALAM HARISH Sir",
+    filterAll: "All",
+    filterHolidays: "🏖️ Holidays",
+    filterExams: "📝 Exams",
+    filterNotices: "📢 Notices",
+    postNoticeBtn: "Post New Notice",
+    closeBtn: "Close",
+    publishAnnouncementTitle: "Publish Notice / Holiday",
+    publishAnnouncementSub: "Announce tuition holidays, exam dates, or test series",
+    annTitleLabel: "Notice Title (English) *",
+    annTitleTeLabel: "Notice Title (తెలుగు శీర్షిక) (Optional)",
+    annCategoryLabel: "Category *",
+    annDateLabel: "Date / Effective Day *",
+    annMessageLabel: "Detailed Notice Message (English) *",
+    annMessageTeLabel: "Detailed Notice Message (తెలుగు సమాచారం) (Optional)",
+    publishNoticeSubmit: "Broadcast to All Students & Parents",
+    quickMsg: "Quick:",
+    adminChatTitle: "Student Direct Messaging",
+    adminChatSub: "Send homework feedback, praise, or alerts directly to students",
+    studentChatTitle: "Direct Guidance & Doubt Support",
+    studentChatSub: "Send doubts, questions, and homework updates directly to NALAM HARISH Sir"
   },
 
   te: {
@@ -391,7 +418,34 @@ const TRANSLATIONS = {
     parentLoginTitle: "తల్లిదండ్రుల పోర్టల్ లాగిన్",
     parentLoginSub: "మీ పిల్లల విద్యార్థి ID మరియు పాస్‌వర్డ్ నమోదు చేయండి",
     loginParentBtn: "పేరెంట్ పోర్టల్‌లోకి ప్రవేశించండి",
-    resetData: "డెమో డేటా రీసెట్ చేయండి"
+    resetData: "డెమో డేటా రీసెట్ చేయండి",
+    changePhoto: "ఫోటో మార్చండి",
+    messagesWithTeacher: "హరీష్ సార్‌తో సందేశాలు",
+    chatWithTeacher: "హరీష్ సార్‌తో చాట్ చేయండి",
+    tabStudentChat: "విద్యార్థుల సందేశాలు",
+    tabAnnouncements: "ప్రకటనలు & సెలవులు",
+    announcementsModalTitle: "సెంటర్ ప్రకటనలు & సెలవులు",
+    announcementsModalSub: "డైరెక్టర్ నలం హరీష్ సార్ అధికారిక సమాచారం",
+    filterAll: "అన్నీ",
+    filterHolidays: "🏖️ సెలవులు",
+    filterExams: "📝 పరీక్షలు",
+    filterNotices: "📢 నోటీసులు",
+    postNoticeBtn: "కొత్త నోటీసు ప్రచురించండి",
+    closeBtn: "మూసివేయి",
+    publishAnnouncementTitle: "నోటీస్ / సెలవు సమాచారం ప్రచురించండి",
+    publishAnnouncementSub: "ట్యూషన్ సెలవులు, పరీక్షల తేదీలు లేదా టెస్ట్ సిరీస్ ప్రకటించండి",
+    annTitleLabel: "నోటీస్ శీర్షిక (ఇంగ్లీష్) *",
+    annTitleTeLabel: "నోటీస్ శీర్షిక (తెలుగు) (ఐచ్ఛికం)",
+    annCategoryLabel: "విభాగం *",
+    annDateLabel: "తేదీ / వర్తించే రోజు *",
+    annMessageLabel: "వివరమైన సమాచారం (ఇంగ్లీష్) *",
+    annMessageTeLabel: "వివరమైన సమాచారం (తెలుగు) (ఐచ్ఛికం)",
+    publishNoticeSubmit: "విద్యార్థులు & తల్లిదండ్రులందరికీ పంపండి",
+    quickMsg: "త్వరిత:",
+    adminChatTitle: "విద్యార్థుల ప్రత్యక్ష సందేశాలు",
+    adminChatSub: "హోంవర్క్ ఫీడ్‌బ్యాక్, ప్రశంసలు లేదా నోటీసులను నేరుగా విద్యార్థులకు పంపండి",
+    studentChatTitle: "ప్రత్యక్ష మార్గదర్శకత్వం & సందేహాల నివృత్తి",
+    studentChatSub: "సందేహాలు, ప్రశ్నలు మరియు హోంవర్క్ వివరాలను నేరుగా నలం హరీష్ సార్‌కు పంపండి"
   }
 };
 
@@ -406,6 +460,8 @@ function loadState() {
       if (window.INITIAL_DATA && window.INITIAL_DATA.teacherAuth) {
         parsed.teacherAuth = JSON.parse(JSON.stringify(window.INITIAL_DATA.teacherAuth));
       }
+      parsed.messages = parsed.messages || (window.INITIAL_DATA && window.INITIAL_DATA.messages ? JSON.parse(JSON.stringify(window.INITIAL_DATA.messages)) : []);
+      parsed.announcements = parsed.announcements || (window.INITIAL_DATA && window.INITIAL_DATA.announcements ? JSON.parse(JSON.stringify(window.INITIAL_DATA.announcements)) : []);
       return parsed;
     } catch (e) {
       console.error('Resetting to initial data', e);
@@ -468,6 +524,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAttendanceSheet();
   renderStudentView();
   renderParentView();
+  updateMessageBadges();
+  updateAnnouncementBadge();
 
   if (window.lucide) {
     window.lucide.createIcons();
@@ -858,7 +916,7 @@ function renderPublicLanding() {
 // ============================================================================
 function setAdminTab(tabName) {
   currentAdminTab = tabName;
-  const tabs = ['attendance', 'credentials', 'reports', 'notes', 'videos', 'fees'];
+  const tabs = ['attendance', 'credentials', 'reports', 'notes', 'videos', 'fees', 'chat', 'announcements'];
 
   tabs.forEach(t => {
     const panel = document.getElementById(`admin-panel-${t}`);
@@ -879,6 +937,8 @@ function setAdminTab(tabName) {
   if (tabName === 'notes') renderAdminNotes();
   if (tabName === 'videos') renderAdminVideos();
   if (tabName === 'fees') renderFeeLedger();
+  if (tabName === 'chat') renderAdminChat();
+  if (tabName === 'announcements') renderAdminAnnouncements();
 
   if (window.lucide) {
     window.lucide.createIcons();
@@ -903,6 +963,14 @@ function renderAdminKPIs() {
   // Fees KPI
   const paidCount = appState.students.filter(s => s.feeStatus === 'Paid').length;
   document.getElementById('stat-fees-collected').textContent = `${paidCount} / ${appState.students.length} Paid`;
+
+  // Harish Sir Profile Avatar
+  const teacherAvatar = document.getElementById('admin-teacher-avatar');
+  if (teacherAvatar && appState.teacherAuth?.photo) {
+    teacherAvatar.src = appState.teacherAuth.photo;
+  }
+
+  updateMessageBadges();
 }
 
 // Attendance Register
@@ -1471,7 +1539,7 @@ function saveUpiSettings() {
 // ============================================================================
 function setStudentTab(tabName) {
   currentStudentTab = tabName;
-  const tabs = ['notes', 'videos', 'tests', 'calendar'];
+  const tabs = ['notes', 'videos', 'tests', 'calendar', 'chat'];
 
   tabs.forEach(t => {
     const panel = document.getElementById(`student-panel-${t}`);
@@ -1485,6 +1553,14 @@ function setStudentTab(tabName) {
       else btn.className = 'tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all';
     }
   });
+
+  if (tabName === 'chat') {
+    renderStudentChat();
+    const stId = activeStudentId || (appState.students[0] ? appState.students[0].id : null);
+    if (stId) {
+      markMessagesAsRead(stId, 'teacher');
+    }
+  }
 
   if (window.lucide) {
     window.lucide.createIcons();
@@ -1506,6 +1582,7 @@ function renderStudentView() {
     renderStudentVideos('class-10');
     renderStudentTests('');
     renderStudentAttendanceLog('');
+    updateMessageBadges();
     return;
   }
 
@@ -1550,6 +1627,10 @@ function renderStudentView() {
 
   // Render Attendance History Log
   renderStudentAttendanceLog(student.id);
+
+  // Render Chat & Badges
+  renderStudentChat();
+  updateMessageBadges();
 
   if (window.lucide) {
     window.lucide.createIcons();
@@ -1833,6 +1914,9 @@ function renderParentView() {
   // Render Homework & Tests
   renderParentHomework(ward.classId);
   renderParentTests(ward.id);
+
+  // Update badges
+  updateMessageBadges();
 
   if (window.lucide) {
     window.lucide.createIcons();
@@ -2391,6 +2475,749 @@ function showToast(msg, type = 'info') {
     toast.style.transition = 'opacity 0.3s ease';
     setTimeout(() => toast.remove(), 300);
   }, 3500);
+}
+
+// ============================================================================
+// PROFILE PHOTO CUSTOMIZATION & UPLOAD ENGINE (DEVICE MEDIA / CAMERA / LAPTOP)
+// ============================================================================
+let activePhotoTarget = 'student'; // 'teacher' | 'student' | 'parent'
+
+function triggerProfilePhotoUpload(target) {
+  activePhotoTarget = target;
+  const input = document.getElementById('profile-photo-input');
+  if (input) {
+    input.click();
+  }
+}
+
+function handleProfilePhotoUpload(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast(currentLang === 'te' ? 'దయచేసి సరైన ఇమేజ్ ఫైల్‌ను ఎంచుకోండి' : 'Please select a valid image file', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      // Offscreen canvas compression to 256x256 max
+      const canvas = document.createElement('canvas');
+      const maxDim = 256;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxDim) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        }
+      } else {
+        if (height > maxDim) {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convert to compressed lightweight data URL (~15-25KB, safe for localStorage)
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+      if (activePhotoTarget === 'teacher') {
+        if (!appState.teacherAuth) appState.teacherAuth = {};
+        appState.teacherAuth.photo = compressedDataUrl;
+        const adminAvatar = document.getElementById('admin-teacher-avatar');
+        if (adminAvatar) adminAvatar.src = compressedDataUrl;
+        saveState();
+        showToast(currentLang === 'te' ? 'ఉపాధ్యాయుని ఫోటో విజయవంతంగా మార్చబడింది!' : 'Teacher profile photo updated successfully!', 'success');
+      } else if (activePhotoTarget === 'student' || activePhotoTarget === 'parent') {
+        const targetId = (activePhotoTarget === 'student' ? activeStudentId : activeParentStudentId) || (appState.students[0] ? appState.students[0].id : null);
+        const st = appState.students.find(s => s.id === targetId);
+        if (st) {
+          st.avatar = compressedDataUrl;
+          const stuAvatar = document.getElementById('student-view-avatar');
+          if (stuAvatar) stuAvatar.src = compressedDataUrl;
+          const parAvatar = document.getElementById('parent-ward-avatar');
+          if (parAvatar) parAvatar.src = compressedDataUrl;
+          saveState();
+          if (currentView === 'admin') renderAttendanceSheet();
+          showToast(currentLang === 'te' ? 'విద్యార్థి ప్రొఫైల్ ఫోటో విజయవంతంగా మార్చబడింది!' : 'Student profile photo updated successfully!', 'success');
+        }
+      }
+
+      // Reset file input value
+      event.target.value = '';
+    };
+    img.onerror = function() {
+      showToast('Could not process image file', 'error');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ============================================================================
+// TWO-WAY CHATBOX SYSTEM & UNREAD MESSAGE POP-UP BADGES
+// ============================================================================
+let adminSelectedChatStudentId = null;
+
+function getStudentMessages(studentId) {
+  if (!appState.messages) appState.messages = [];
+  return appState.messages.filter(m => m.studentId === studentId);
+}
+
+function getUnreadCountForStudent(studentId) {
+  if (!appState.messages) return 0;
+  return appState.messages.filter(m => m.studentId === studentId && m.sender === 'teacher' && !m.read).length;
+}
+
+function getTotalUnreadCountForTeacher() {
+  if (!appState.messages) return 0;
+  return appState.messages.filter(m => m.sender === 'student' && !m.read).length;
+}
+
+function markMessagesAsRead(studentId, senderRoleToMarkRead) {
+  if (!appState.messages) return;
+  let changed = false;
+  appState.messages.forEach(m => {
+    if (m.studentId === studentId && m.sender === senderRoleToMarkRead && !m.read) {
+      m.read = true;
+      changed = true;
+    }
+  });
+  if (changed) {
+    saveState();
+    updateMessageBadges();
+  }
+}
+
+function updateMessageBadges() {
+  const currentStId = activeStudentId || (appState.students[0] ? appState.students[0].id : null);
+  const currentParId = activeParentStudentId || (appState.students[0] ? appState.students[0].id : null);
+
+  // Teacher portal badge (unread from students)
+  const teacherUnread = getTotalUnreadCountForTeacher();
+  const adminBadge = document.getElementById('admin-tab-chat-badge');
+  if (adminBadge) {
+    if (teacherUnread > 0) {
+      adminBadge.textContent = teacherUnread;
+      adminBadge.classList.remove('hidden');
+    } else {
+      adminBadge.classList.add('hidden');
+    }
+  }
+
+  // Student portal badge (unread from teacher for active student)
+  const studentUnread = currentStId ? getUnreadCountForStudent(currentStId) : 0;
+  const studentTabBadge = document.getElementById('student-tab-chat-badge');
+  if (studentTabBadge) {
+    if (studentUnread > 0) {
+      studentTabBadge.textContent = studentUnread;
+      studentTabBadge.classList.remove('hidden');
+    } else {
+      studentTabBadge.classList.add('hidden');
+    }
+  }
+  const studentHeroBadge = document.getElementById('student-hero-chat-badge');
+  if (studentHeroBadge) {
+    if (studentUnread > 0) {
+      studentHeroBadge.textContent = studentUnread;
+      studentHeroBadge.classList.remove('hidden');
+    } else {
+      studentHeroBadge.classList.add('hidden');
+    }
+  }
+
+  // Parent portal badge (unread from teacher for ward)
+  const parentUnread = currentParId ? getUnreadCountForStudent(currentParId) : 0;
+  const parentBadge = document.getElementById('parent-chat-unread-badge');
+  if (parentBadge) {
+    if (parentUnread > 0) {
+      parentBadge.textContent = `🔴 ${parentUnread}`;
+      parentBadge.classList.remove('hidden');
+    } else {
+      parentBadge.classList.add('hidden');
+    }
+  }
+
+  // Floating Chat Badge (bottom-right widget)
+  const floatBadge = document.getElementById('floating-chat-badge');
+  if (floatBadge) {
+    let floatCount = 0;
+    if (authSession.role === 'admin') {
+      floatCount = teacherUnread;
+    } else {
+      const activeId = activeStudentId || activeParentStudentId || (appState.students[0] ? appState.students[0].id : null);
+      floatCount = activeId ? getUnreadCountForStudent(activeId) : 0;
+    }
+
+    if (floatCount > 0) {
+      floatBadge.textContent = floatCount;
+      floatBadge.classList.remove('hidden');
+    } else {
+      floatBadge.classList.add('hidden');
+    }
+  }
+
+  updateAnnouncementBadge();
+}
+
+// Teacher Portal Chat Rendering
+function renderAdminChat() {
+  const students = appState.students || [];
+  if (!adminSelectedChatStudentId && students.length > 0) {
+    adminSelectedChatStudentId = students[0].id;
+  }
+
+  const listContainer = document.getElementById('admin-chat-students-list');
+  if (listContainer) {
+    listContainer.innerHTML = students.map(s => {
+      const isSelected = s.id === adminSelectedChatStudentId;
+      const unreadCount = (appState.messages || []).filter(m => m.studentId === s.id && m.sender === 'student' && !m.read).length;
+      const sName = currentLang === 'te' && s.nameTe ? s.nameTe : s.name;
+      const lastMsg = (appState.messages || []).filter(m => m.studentId === s.id).slice(-1)[0];
+      const previewText = lastMsg ? (lastMsg.text.length > 25 ? lastMsg.text.slice(0, 25) + '...' : lastMsg.text) : (currentLang === 'te' ? 'ఇంకా సందేశాలు లేవు' : 'No messages yet');
+
+      return `
+        <button type="button" onclick="selectAdminChatStudent('${s.id}')" class="w-full p-3 rounded-2xl text-left transition-all flex items-center justify-between gap-3 ${isSelected ? 'bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 shadow-sm' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}">
+          <div class="flex items-center gap-3 min-w-0">
+            <img src="${s.avatar}" class="w-10 h-10 rounded-xl object-cover shrink-0 border border-slate-200 dark:border-slate-700">
+            <div class="min-w-0">
+              <div class="font-bold text-xs text-slate-900 dark:text-white truncate">${sName}</div>
+              <div class="text-[11px] text-slate-400 truncate">${previewText}</div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-[10px] font-mono text-slate-400">${s.rollNo}</div>
+            ${unreadCount > 0 ? `<span class="inline-block mt-0.5 px-1.5 py-0.2 rounded-full bg-red-500 text-white text-[10px] font-black badge-pop">${unreadCount}</span>` : ''}
+          </div>
+        </button>
+      `;
+    }).join('');
+  }
+
+  const activeStudent = students.find(s => s.id === adminSelectedChatStudentId) || students[0];
+  if (!activeStudent) return;
+
+  const stuName = currentLang === 'te' && activeStudent.nameTe ? activeStudent.nameTe : activeStudent.name;
+  const activeAvatar = document.getElementById('admin-chat-active-avatar');
+  const activeName = document.getElementById('admin-chat-active-name');
+  const activeSub = document.getElementById('admin-chat-active-sub');
+
+  if (activeAvatar) activeAvatar.src = activeStudent.avatar;
+  if (activeName) activeName.textContent = stuName;
+  if (activeSub) activeSub.textContent = `${activeStudent.className} • Roll: ${activeStudent.rollNo} • ${activeStudent.id}`;
+
+  // Messages Thread
+  const stream = document.getElementById('admin-chat-messages-stream');
+  if (stream) {
+    const msgs = getStudentMessages(activeStudent.id);
+    if (msgs.length === 0) {
+      stream.innerHTML = `
+        <div class="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400 text-xs">
+          <i data-lucide="message-square" class="w-8 h-8 mb-2 opacity-40"></i>
+          <div>${currentLang === 'te' ? 'ఇంకా సందేశాలు లేవు. హరీష్ సార్ ఈ విద్యార్థికి హోంవర్క్ లేదా సూచనలను పంపవచ్చు.' : 'No messages in this chat yet. Send homework feedback or encouragement to this student.'}</div>
+        </div>
+      `;
+    } else {
+      stream.innerHTML = msgs.map(m => {
+        const isTeacher = m.sender === 'teacher';
+        return `
+          <div class="flex flex-col ${isTeacher ? 'items-end' : 'items-start'}">
+            <div class="max-w-[80%] rounded-2xl px-4 py-2.5 text-xs shadow-sm ${isTeacher ? 'bg-emerald-600 text-white rounded-tr-none' : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-none border border-slate-200 dark:border-slate-700'}">
+              <div class="text-[10px] font-bold opacity-75 mb-0.5">${isTeacher ? 'NALAM HARISH Sir' : stuName}</div>
+              <div class="leading-relaxed whitespace-pre-wrap">${m.text}</div>
+              <div class="text-[9px] text-right mt-1 opacity-70">${m.timeStr || ''} • ${m.dateStr || ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      stream.scrollTop = stream.scrollHeight;
+    }
+  }
+
+  // Mark student messages as read by teacher
+  markMessagesAsRead(activeStudent.id, 'student');
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function selectAdminChatStudent(studentId) {
+  adminSelectedChatStudentId = studentId;
+  renderAdminChat();
+}
+
+function handleAdminSendMessage(e) {
+  e.preventDefault();
+  const input = document.getElementById('admin-chat-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  const student = appState.students.find(s => s.id === adminSelectedChatStudentId) || appState.students[0];
+  if (!student) return;
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const dateStr = now.toLocaleDateString([], { day: 'numeric', month: 'short' });
+
+  appState.messages.push({
+    id: `msg-${Date.now()}-${Math.floor(Math.random()*1000)}`,
+    studentId: student.id,
+    sender: 'teacher',
+    senderName: 'NALAM HARISH Sir',
+    text: text,
+    timestamp: now.toISOString(),
+    timeStr,
+    dateStr,
+    read: false
+  });
+
+  saveState();
+  input.value = '';
+  renderAdminChat();
+  updateMessageBadges();
+  showToast(currentLang === 'te' ? 'సందేశం విద్యార్థికి పంపబడింది' : 'Message sent to student', 'success');
+}
+
+function insertAdminChatTemplate(text) {
+  const input = document.getElementById('admin-chat-input');
+  if (input) {
+    input.value = text;
+    input.focus();
+  }
+}
+
+function promptBroadcastMessage() {
+  const msg = prompt(currentLang === 'te' ? 'విద్యార్థులందరికీ ఒకేసారి పంపవలసిన సందేశం టైప్ చేయండి:' : 'Type broadcast message to send to all students:');
+  if (!msg || !msg.trim()) return;
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const dateStr = now.toLocaleDateString([], { day: 'numeric', month: 'short' });
+
+  appState.students.forEach(s => {
+    appState.messages.push({
+      id: `msg-${Date.now()}-${s.id}`,
+      studentId: s.id,
+      sender: 'teacher',
+      senderName: 'NALAM HARISH Sir',
+      text: msg.trim(),
+      timestamp: now.toISOString(),
+      timeStr,
+      dateStr,
+      read: false
+    });
+  });
+
+  saveState();
+  renderAdminChat();
+  updateMessageBadges();
+  showToast(currentLang === 'te' ? 'విద్యార్థులందరికీ సందేశం ప్రసారమైంది!' : 'Broadcast message sent to all students!', 'success');
+}
+
+// Student Portal Chat Rendering
+function renderStudentChat() {
+  const currentStId = activeStudentId || (appState.students[0] ? appState.students[0].id : null);
+  const student = appState.students.find(s => s.id === currentStId);
+  if (!student) return;
+
+  const stuName = currentLang === 'te' && student.nameTe ? student.nameTe : student.name;
+  const stream = document.getElementById('student-chat-messages-stream');
+  if (stream) {
+    const msgs = getStudentMessages(student.id);
+    if (msgs.length === 0) {
+      stream.innerHTML = `
+        <div class="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400 text-xs">
+          <i data-lucide="message-circle" class="w-8 h-8 mb-2 text-emerald-500 opacity-60"></i>
+          <div class="font-bold text-slate-700 dark:text-slate-300 mb-1">${currentLang === 'te' ? 'హరీష్ సార్‌తో నేరుగా మాట్లాడండి' : 'Chat with Director NALAM HARISH Sir'}</div>
+          <div>${currentLang === 'te' ? 'మీ సందేహాలు లేదా హోంవర్క్ వివరాలను ఇక్కడ పంపవచ్చు.' : 'Ask your math/science doubts, report completed practice questions, or ask for guidance.'}</div>
+        </div>
+      `;
+    } else {
+      stream.innerHTML = msgs.map(m => {
+        const isTeacher = m.sender === 'teacher';
+        return `
+          <div class="flex flex-col ${isTeacher ? 'items-start' : 'items-end'}">
+            <div class="max-w-[80%] rounded-2xl px-4 py-2.5 text-xs shadow-sm ${isTeacher ? 'bg-emerald-600 text-white rounded-tl-none' : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tr-none border border-slate-200 dark:border-slate-700'}">
+              <div class="text-[10px] font-bold opacity-75 mb-0.5">${isTeacher ? 'NALAM HARISH Sir' : stuName}</div>
+              <div class="leading-relaxed whitespace-pre-wrap">${m.text}</div>
+              <div class="text-[9px] text-right mt-1 opacity-70">${m.timeStr || ''} • ${m.dateStr || ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      stream.scrollTop = stream.scrollHeight;
+    }
+  }
+
+  // Mark teacher messages as read by student
+  markMessagesAsRead(student.id, 'teacher');
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function handleStudentSendMessage(e) {
+  e.preventDefault();
+  const input = document.getElementById('student-chat-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  const currentStId = activeStudentId || (appState.students[0] ? appState.students[0].id : null);
+  const student = appState.students.find(s => s.id === currentStId);
+  if (!student) return;
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const dateStr = now.toLocaleDateString([], { day: 'numeric', month: 'short' });
+
+  appState.messages.push({
+    id: `msg-${Date.now()}-${Math.floor(Math.random()*1000)}`,
+    studentId: student.id,
+    sender: 'student',
+    senderName: student.name,
+    text: text,
+    timestamp: now.toISOString(),
+    timeStr,
+    dateStr,
+    read: false
+  });
+
+  saveState();
+  input.value = '';
+  renderStudentChat();
+  updateMessageBadges();
+  showToast(currentLang === 'te' ? 'సందేశం హరీష్ సార్‌కు చేరింది' : 'Message sent to Harish Sir', 'success');
+}
+
+function insertStudentChatTemplate(text) {
+  const input = document.getElementById('student-chat-input');
+  if (input) {
+    input.value = text;
+    input.focus();
+  }
+}
+
+// Modal Popup Chat (for Parent portal, Floating button, and anywhere)
+let activeModalChatStudentId = null;
+
+function openChatModal(fromRole = 'parent') {
+  if (fromRole === 'parent') {
+    activeModalChatStudentId = activeParentStudentId || (appState.students[0] ? appState.students[0].id : null);
+  } else if (fromRole === 'student') {
+    activeModalChatStudentId = activeStudentId || (appState.students[0] ? appState.students[0].id : null);
+  } else {
+    activeModalChatStudentId = activeStudentId || activeParentStudentId || (appState.students[0] ? appState.students[0].id : null);
+  }
+
+  if (!activeModalChatStudentId && appState.students.length > 0) {
+    activeModalChatStudentId = appState.students[0].id;
+  }
+
+  renderModalChat();
+  document.getElementById('modal-chat').classList.remove('hidden');
+}
+
+function closeChatModal() {
+  document.getElementById('modal-chat').classList.add('hidden');
+}
+
+function openFloatingChat() {
+  if (authSession.role === 'admin') {
+    switchView('admin');
+    setAdminTab('chat');
+  } else if (authSession.role === 'student') {
+    switchView('student');
+    setStudentTab('chat');
+  } else if (authSession.role === 'parent') {
+    openChatModal('parent');
+  } else {
+    openChatModal('student');
+  }
+}
+
+function renderModalChat() {
+  const student = appState.students.find(s => s.id === activeModalChatStudentId) || appState.students[0];
+  if (!student) return;
+
+  const stuName = currentLang === 'te' && student.nameTe ? student.nameTe : student.name;
+  const container = document.getElementById('chat-modal-messages');
+  if (!container) return;
+
+  const msgs = getStudentMessages(student.id);
+  if (msgs.length === 0) {
+    container.innerHTML = `
+      <div class="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400 text-xs">
+        <i data-lucide="message-square" class="w-8 h-8 mb-2 text-emerald-500 opacity-60"></i>
+        <div class="font-bold text-slate-700 dark:text-slate-300 mb-1">${currentLang === 'te' ? 'నలం హరీష్ సార్‌తో లైవ్ చాట్' : 'Direct Chat with NALAM HARISH Sir'}</div>
+        <div>${currentLang === 'te' ? 'మీ సందేహాలు లేదా చెల్లింపు వివరాలను ఇక్కడ నేరుగా పంపండి.' : 'Send queries, homework doubts, or payment confirmations.'}</div>
+      </div>
+    `;
+  } else {
+    container.innerHTML = msgs.map(m => {
+      const isTeacher = m.sender === 'teacher';
+      return `
+        <div class="flex flex-col ${isTeacher ? 'items-start' : 'items-end'}">
+          <div class="max-w-[80%] rounded-2xl px-4 py-2.5 text-xs shadow-sm ${isTeacher ? 'bg-emerald-600 text-white rounded-tl-none' : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tr-none border border-slate-200 dark:border-slate-700'}">
+            <div class="text-[10px] font-bold opacity-75 mb-0.5">${isTeacher ? 'NALAM HARISH Sir' : stuName}</div>
+            <div class="leading-relaxed whitespace-pre-wrap">${m.text}</div>
+            <div class="text-[9px] text-right mt-1 opacity-70">${m.timeStr || ''} • ${m.dateStr || ''}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    container.scrollTop = container.scrollHeight;
+  }
+
+  // Mark teacher messages as read
+  markMessagesAsRead(student.id, 'teacher');
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function handleModalSendMessage(e) {
+  e.preventDefault();
+  const input = document.getElementById('chat-modal-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  const student = appState.students.find(s => s.id === activeModalChatStudentId) || appState.students[0];
+  if (!student) return;
+
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const dateStr = now.toLocaleDateString([], { day: 'numeric', month: 'short' });
+
+  appState.messages.push({
+    id: `msg-${Date.now()}-${Math.floor(Math.random()*1000)}`,
+    studentId: student.id,
+    sender: 'student',
+    senderName: student.name,
+    text: text,
+    timestamp: now.toISOString(),
+    timeStr,
+    dateStr,
+    read: false
+  });
+
+  saveState();
+  input.value = '';
+  renderModalChat();
+  updateMessageBadges();
+  showToast(currentLang === 'te' ? 'సందేశం హరీష్ సార్‌కు చేరింది' : 'Message sent to Harish Sir', 'success');
+}
+
+function insertModalChatTemplate(text) {
+  const input = document.getElementById('chat-modal-input');
+  if (input) {
+    input.value = text;
+    input.focus();
+  }
+}
+
+// ============================================================================
+// ANNOUNCEMENTS & HOLIDAY NOTICE BOARD ENGINE
+// ============================================================================
+let currentAnnouncementsFilter = 'all';
+
+function updateAnnouncementBadge() {
+  const badge = document.getElementById('nav-announcements-badge');
+  if (badge) {
+    const holidays = (appState.announcements || []).filter(a => a.category === 'holiday' || a.type === 'holiday');
+    if (holidays.length > 0) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+}
+
+function openAnnouncementsModal() {
+  const postBtn = document.getElementById('modal-ann-post-btn');
+  if (postBtn) {
+    if (authSession.role === 'admin') {
+      postBtn.classList.remove('hidden');
+    } else {
+      postBtn.classList.add('hidden');
+    }
+  }
+  filterAnnouncementsModal('all');
+  document.getElementById('modal-announcements').classList.remove('hidden');
+}
+
+function closeAnnouncementsModal() {
+  document.getElementById('modal-announcements').classList.add('hidden');
+}
+
+function filterAnnouncementsModal(category) {
+  currentAnnouncementsFilter = category;
+
+  // Update filter buttons styling
+  document.querySelectorAll('.modal-ann-filter-btn').forEach(btn => {
+    if (btn.getAttribute('data-filter') === category) {
+      btn.className = 'modal-ann-filter-btn px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm font-bold';
+    } else {
+      btn.className = 'modal-ann-filter-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900 font-semibold';
+    }
+  });
+
+  renderModalAnnouncements();
+}
+
+function renderModalAnnouncements() {
+  const container = document.getElementById('modal-announcements-list');
+  if (!container) return;
+
+  let list = appState.announcements || [];
+  if (currentAnnouncementsFilter !== 'all') {
+    list = list.filter(a => a.category === currentAnnouncementsFilter || a.type === currentAnnouncementsFilter);
+  }
+
+  if (list.length === 0) {
+    container.innerHTML = `<div class="p-8 text-center text-slate-400 text-xs">${currentLang === 'te' ? 'ఈ విభాగంలో నోటీసులు లేవు.' : 'No notices in this category.'}</div>`;
+    return;
+  }
+
+  container.innerHTML = list.map(ann => {
+    const isHoliday = ann.category === 'holiday' || ann.type === 'holiday';
+    const isExam = ann.category === 'exam' || ann.type === 'exam';
+    const title = currentLang === 'te' && ann.titleTe ? ann.titleTe : ann.title;
+    const content = currentLang === 'te' && ann.contentTe ? ann.contentTe : ann.content;
+    const badge = ann.badge || (isHoliday ? (currentLang === 'te' ? '🏖️ సెలవు' : '🏖️ Holiday') : (isExam ? (currentLang === 'te' ? '📝 పరీక్ష' : '📝 Exam') : (currentLang === 'te' ? '📢 నోటీస్' : '📢 Notice')));
+
+    return `
+      <div class="p-4 rounded-2xl border transition-all ${isHoliday ? 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800' : isExam ? 'bg-blue-50/70 dark:bg-blue-950/30 border-blue-300 dark:border-blue-800' : 'bg-slate-50/80 dark:bg-slate-850 border-slate-200 dark:border-slate-800'}">
+        <div class="flex items-center justify-between gap-2 mb-1.5">
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isHoliday ? 'bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200' : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'}">
+            ${badge}
+          </span>
+          <span class="text-[11px] font-mono text-slate-500">${ann.date}</span>
+        </div>
+        <h4 class="font-extrabold text-sm text-slate-900 dark:text-white leading-snug mb-1">${title}</h4>
+        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${content}</p>
+        <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-700/60">
+          <span>${currentLang === 'te' ? 'లక్ష్యం:' : 'For:'} ${currentLang === 'te' && ann.targetTe ? ann.targetTe : (ann.target || 'All Students & Parents')}</span>
+          <span class="font-medium text-emerald-600 dark:text-emerald-400">Harish Tuition Centre</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Teacher Portal Announcements Management
+function renderAdminAnnouncements() {
+  const grid = document.getElementById('admin-announcements-grid');
+  if (!grid) return;
+
+  const list = appState.announcements || [];
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="col-span-2 p-8 text-center text-slate-400 text-xs">No announcements created yet. Click "Create Announcement" above.</div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(ann => {
+    const isHoliday = ann.category === 'holiday' || ann.type === 'holiday';
+    const title = currentLang === 'te' && ann.titleTe ? ann.titleTe : ann.title;
+    const content = currentLang === 'te' && ann.contentTe ? ann.contentTe : ann.content;
+
+    return `
+      <div class="bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${isHoliday ? 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300' : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'}">
+              ${ann.badge || (isHoliday ? '🏖️ Holiday' : '📢 Notice')}
+            </span>
+            <span class="text-[11px] font-mono text-slate-400">${ann.date}</span>
+          </div>
+          <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1 leading-snug">${title}</h4>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">${content}</p>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+          <span class="text-[11px] text-slate-400">${ann.target || 'All Batches'}</span>
+          <button onclick="deleteAnnouncement('${ann.id}')" class="text-red-500 hover:text-red-700 text-xs font-semibold flex items-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+}
+
+function openAddAnnouncementModal() {
+  document.getElementById('modal-add-announcement').classList.remove('hidden');
+}
+
+function closeAddAnnouncementModal() {
+  document.getElementById('modal-add-announcement').classList.add('hidden');
+}
+
+function handleCreateAnnouncement(e) {
+  e.preventDefault();
+  const title = document.getElementById('new-ann-title').value.trim();
+  const titleTe = document.getElementById('new-ann-title-te').value.trim();
+  const category = document.getElementById('new-ann-category').value;
+  const date = document.getElementById('new-ann-date').value.trim();
+  const content = document.getElementById('new-ann-message').value.trim();
+  const contentTe = document.getElementById('new-ann-message-te').value.trim();
+
+  let badge = '📢 Notice';
+  if (category === 'holiday') badge = '🏖️ Holiday';
+  if (category === 'exam') badge = '📝 Exam';
+  if (category === 'urgent') badge = '⚠️ Urgent';
+
+  const newAnn = {
+    id: `ann-${Date.now()}`,
+    title,
+    titleTe: titleTe || title,
+    date,
+    category,
+    type: category,
+    badge,
+    content,
+    contentTe: contentTe || content,
+    target: 'All Students & Parents (7th - 10th)',
+    targetTe: 'అన్ని తరగతుల విద్యార్థులు & తల్లిదండ్రులు'
+  };
+
+  appState.announcements.unshift(newAnn);
+  saveState();
+  closeAddAnnouncementModal();
+  renderModalAnnouncements();
+  renderAdminAnnouncements();
+  renderPublicLanding();
+  updateAnnouncementBadge();
+  showToast(currentLang === 'te' ? 'కొత్త ప్రకటన విజయవంతంగా ప్రచురించబడింది!' : 'New announcement broadcasted successfully!', 'success');
+}
+
+function deleteAnnouncement(id) {
+  if (confirm(currentLang === 'te' ? 'ఈ ప్రకటనను తొలగించాలా?' : 'Delete this announcement?')) {
+    appState.announcements = appState.announcements.filter(a => a.id !== id);
+    saveState();
+    renderAdminAnnouncements();
+    renderModalAnnouncements();
+    renderPublicLanding();
+    updateAnnouncementBadge();
+    showToast(currentLang === 'te' ? 'ప్రకటన తొలగించబడింది' : 'Announcement deleted', 'info');
+  }
 }
 
 function resetToDefaultData() {

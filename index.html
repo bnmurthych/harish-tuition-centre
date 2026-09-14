@@ -94,6 +94,12 @@
         <!-- Right Controls: Language Selector, Theme Switcher & Login/Session -->
         <div class="flex items-center gap-2 sm:gap-3">
           
+          <!-- Announcements & Holiday Updates Bell Button -->
+          <button onclick="openAnnouncementsModal()" id="announcements-nav-btn" class="relative p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-sm transition-all" title="Announcements & Holidays / ప్రకటనలు & సెలవులు">
+            <i data-lucide="bell" class="w-4 h-4 text-amber-500"></i>
+            <span id="nav-announcements-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 shadow-sm animate-pulse">3</span>
+          </button>
+
           <!-- Language Toggle Button (English | తెలుగు) -->
           <button onclick="toggleLanguage()" id="lang-toggle-btn" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-slate-200 dark:border-slate-700 shadow-sm" title="Switch Language / భాషను మార్చండి">
             <i data-lucide="languages" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
@@ -122,6 +128,13 @@
 
     <!-- Mobile Dropdown Navigation -->
     <div id="mobile-nav" class="hidden lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-2">
+      <button onclick="openAnnouncementsModal(); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          <i data-lucide="bell" class="w-4 h-4 text-amber-500"></i>
+          <span data-i18n="announcementsNav">Announcements & Holidays</span>
+        </span>
+        <span id="mobile-announcements-badge" class="bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+      </button>
       <button onclick="switchView('public'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2">
         <i data-lucide="home" class="w-4 h-4"></i> <span data-i18n="navHome">Home</span>
       </button>
@@ -363,12 +376,24 @@
       
       <!-- Admin Header -->
       <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-        <div>
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mb-1">
-            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <span data-i18n="teacherHarishMode">Harish Sir - Teacher Administrator Mode</span>
+        <div class="flex items-center gap-4">
+          <div class="avatar-container relative group cursor-pointer" onclick="triggerProfilePhotoUpload('teacher')" title="Tap to upload teacher photo / ఫోటో మార్చడానికి నొక్కండి">
+            <img id="admin-teacher-avatar" src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=150" alt="Harish Sir" class="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500 shadow-md">
+            <div class="avatar-overlay absolute inset-0 bg-black/60 rounded-2xl flex flex-col items-center justify-center text-white text-[10px] font-bold gap-0.5">
+              <i data-lucide="camera" class="w-4 h-4"></i>
+              <span data-i18n="changePhoto">Photo</span>
+            </div>
+            <span class="absolute -bottom-1 -right-1 p-1 bg-emerald-600 rounded-full border border-white text-white shadow">
+              <i data-lucide="camera" class="w-2.5 h-2.5"></i>
+            </span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display" data-i18n="tuitionManagement">Tuition Management Dashboard</h2>
-          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400" data-i18n="teacherDashboardSubtitle">Manage daily attendance, notes, videos, student passwords, and fee records.</p>
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 mb-1">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> <span data-i18n="teacherHarishMode">Harish Sir - Teacher Administrator Mode</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display" data-i18n="tuitionManagement">Tuition Management Dashboard</h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400" data-i18n="teacherDashboardSubtitle">Manage daily attendance, notes, videos, student passwords, and fee records.</p>
+          </div>
         </div>
 
         <div class="flex items-center gap-2">
@@ -448,6 +473,13 @@
         </button>
         <button onclick="setAdminTab('fees')" id="admin-tab-fees" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
           <i data-lucide="indian-rupee" class="w-4 h-4 text-emerald-500"></i> <span data-i18n="tabFeeManager">Fee Ledger & UPI</span>
+        </button>
+        <button onclick="setAdminTab('chat')" id="admin-tab-chat" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all relative">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i> <span data-i18n="tabStudentChat">Student Messages</span>
+          <span id="admin-tab-chat-badge" class="hidden bg-red-600 text-white text-[10px] font-black px-1.5 py-0.2 rounded-full badge-pop">0</span>
+        </button>
+        <button onclick="setAdminTab('announcements')" id="admin-tab-announcements" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
+          <i data-lucide="bell" class="w-4 h-4 text-amber-500"></i> <span data-i18n="tabAnnouncements">Announcements & Holidays</span>
         </button>
       </div>
 
@@ -686,6 +718,107 @@
         </div>
       </div>
 
+      <!-- TAB 7: STUDENT MESSAGES & CHAT (HARISH SIR) -->
+      <div id="admin-panel-chat" class="hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="adminChatTitle">Student Messages &amp; Guidance Desk</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="adminChatSub">Send personal advice, homework alerts, and test feedback directly to students and parents.</p>
+          </div>
+          <button onclick="promptBroadcastMessage()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-2 transition-all">
+            <i data-lucide="megaphone" class="w-4 h-4"></i> <span data-i18n="broadcastBtn">Broadcast Message to Class</span>
+          </button>
+        </div>
+
+        <!-- 2-Column Chat Interface -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden min-h-[580px]">
+          
+          <!-- Left Column: Student List (4 cols) -->
+          <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-800 flex flex-col">
+            <div class="p-4 border-b border-slate-100 dark:border-slate-800 space-y-2.5">
+              <div class="relative">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-3"></i>
+                <input type="text" id="admin-chat-search" oninput="renderAdminChatStudentList()" placeholder="Search student name or ID..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 dark:text-white outline-none">
+              </div>
+              <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+                <button onclick="filterAdminChatBatch('all')" id="chat-filter-all" class="px-2.5 py-1 rounded-lg font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">All</button>
+                <button onclick="filterAdminChatBatch('class-10')" id="chat-filter-class-10" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Class 10</button>
+                <button onclick="filterAdminChatBatch('class-9')" id="chat-filter-class-9" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Class 9</button>
+                <button onclick="filterAdminChatBatch('class-8')" id="chat-filter-class-8" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Class 8</button>
+                <button onclick="filterAdminChatBatch('class-7')" id="chat-filter-class-7" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">Class 7</button>
+              </div>
+            </div>
+
+            <!-- Student Contacts List -->
+            <div id="admin-chat-students-list" class="overflow-y-auto flex-grow divide-y divide-slate-100 dark:divide-slate-800 max-h-[500px]">
+              <!-- Populated via app.js -->
+            </div>
+          </div>
+
+          <!-- Right Column: Active Conversation (8 cols) -->
+          <div class="lg:col-span-8 flex flex-col justify-between bg-slate-50/50 dark:bg-slate-900/50">
+            
+            <!-- Conversation Header -->
+            <div id="admin-chat-active-header" class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-white dark:bg-slate-900">
+              <div class="flex items-center gap-3">
+                <img id="admin-chat-active-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-10 h-10 rounded-xl object-cover border border-slate-200 dark:border-slate-700">
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h4 id="admin-chat-active-name" class="font-bold text-sm text-slate-900 dark:text-white">Select a student</h4>
+                    <span id="admin-chat-active-class" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">Class</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400">ID: <span id="admin-chat-active-id">---</span> &bull; Roll: <span id="admin-chat-active-roll">---</span></div>
+                </div>
+              </div>
+              <div id="admin-chat-active-actions" class="flex items-center gap-2">
+                <!-- WhatsApp link -->
+              </div>
+            </div>
+
+            <!-- Messages Stream Area -->
+            <div id="admin-chat-messages-container" class="p-5 overflow-y-auto flex-grow space-y-4 max-h-[420px] chat-thread flex flex-col">
+              <!-- Populated via app.js -->
+            </div>
+
+            <!-- Quick Template Chips & Composer Input -->
+            <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-3">
+              <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+                <span class="text-slate-400 font-semibold shrink-0">Quick Templates:</span>
+                <button type="button" onclick="insertAdminChatTemplate('Please ensure you complete today\'s homework before tomorrow\'s class.')" class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 shrink-0 border border-emerald-200 dark:border-emerald-800 font-medium">📌 Homework Reminder</button>
+                <button type="button" onclick="insertAdminChatTemplate('Excellent performance in today\'s unit test! Keep up the dedication.')" class="px-2.5 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-100 shrink-0 border border-purple-200 dark:border-purple-800 font-medium">🎉 Great Marks</button>
+                <button type="button" onclick="insertAdminChatTemplate('Noticed you were absent today. Please collect notes from batchmates and attend tomorrow.')" class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 hover:bg-amber-100 shrink-0 border border-amber-200 dark:border-amber-800 font-medium">⚠️ Absence Note</button>
+                <button type="button" onclick="insertAdminChatTemplate('Kindly bring geometry box and textbook for tomorrow\'s class.')" class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 shrink-0 border border-blue-200 dark:border-blue-800 font-medium">📐 Bring Instruments</button>
+              </div>
+
+              <form onsubmit="handleAdminSendMessage(event)" class="flex items-end gap-2">
+                <textarea id="admin-chat-input" rows="2" placeholder="Write a message to student and parent... (Press Enter to send)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();handleAdminSendMessage(event);}" class="flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white outline-none resize-none focus:border-emerald-500"></textarea>
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-2xl shadow-md transition-all flex items-center justify-center shrink-0">
+                  <i data-lucide="send" class="w-5 h-5"></i>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 8: ANNOUNCEMENTS & HOLIDAYS MANAGER (HARISH SIR) -->
+      <div id="admin-panel-announcements" class="hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="announcementsTitle">Centre Announcements &amp; Holiday Circulars</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="announcementsSub">Publish holiday notices, revision batches, and board exam schedules for students and parents.</p>
+          </div>
+          <button onclick="openAddAnnouncementModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl shadow-sm flex items-center gap-2 transition-all">
+            <i data-lucide="plus" class="w-4 h-4"></i> <span data-i18n="postAnnouncementBtn">Post New Announcement</span>
+          </button>
+        </div>
+
+        <div id="admin-announcements-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated via app.js -->
+        </div>
+      </div>
+
     </section>
 
     <!-- ========================================================================= -->
@@ -696,7 +829,16 @@
       <!-- Student Profile Hero -->
       <div class="bg-gradient-to-r from-emerald-700 via-teal-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl flex flex-wrap items-center justify-between gap-6">
         <div class="flex items-center gap-5">
-          <img id="student-view-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Student Avatar" class="w-20 h-20 rounded-2xl object-cover border-2 border-white/20 shadow-md">
+          <div class="avatar-container relative group cursor-pointer" onclick="triggerProfilePhotoUpload('student')" title="Tap to upload profile photo / ఫోటో మార్చడానికి నొక్కండి">
+            <img id="student-view-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Student Avatar" class="w-20 h-20 rounded-2xl object-cover border-2 border-white/30 shadow-md">
+            <div class="avatar-overlay absolute inset-0 bg-black/60 rounded-2xl flex flex-col items-center justify-center text-white text-[10px] font-bold gap-0.5">
+              <i data-lucide="camera" class="w-5 h-5"></i>
+              <span data-i18n="changePhoto">Change</span>
+            </div>
+            <span class="absolute -bottom-1 -right-1 p-1 bg-emerald-600 rounded-full border border-white text-white shadow">
+              <i data-lucide="camera" class="w-3 h-3"></i>
+            </span>
+          </div>
           <div>
             <div class="flex items-center gap-2 mb-1">
               <span id="student-view-class-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-400/20 text-emerald-200 border border-emerald-400/30">Student Portal</span>
@@ -707,9 +849,16 @@
           </div>
         </div>
 
-        <button onclick="logoutSession()" class="bg-white/15 hover:bg-white/25 text-white border border-white/20 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all">
-          <i data-lucide="log-out" class="w-4 h-4"></i> <span data-i18n="logoutBtn">Logout</span>
-        </button>
+        <div class="flex items-center gap-3">
+          <button onclick="setStudentTab('chat')" class="bg-emerald-500/30 hover:bg-emerald-500/50 text-white border border-emerald-400/40 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-2 transition-all relative">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span data-i18n="messagesWithTeacher">Chat with Harish Sir</span>
+            <span id="student-hero-chat-badge" class="hidden bg-red-500 text-white text-[10px] font-black px-1.5 py-0.2 rounded-full badge-pop">0</span>
+          </button>
+          <button onclick="logoutSession()" class="bg-white/15 hover:bg-white/25 text-white border border-white/20 text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 transition-all">
+            <i data-lucide="log-out" class="w-4 h-4"></i> <span data-i18n="logoutBtn">Logout</span>
+          </button>
+        </div>
       </div>
 
       <!-- Student Attendance & Performance Summary Cards -->
@@ -769,6 +918,11 @@
         <button onclick="setStudentTab('calendar')" id="student-tab-calendar" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all">
           <i data-lucide="calendar" class="w-4 h-4"></i> <span data-i18n="tabAttendanceLog">Attendance Log</span>
         </button>
+        <button onclick="setStudentTab('chat')" id="student-tab-chat" class="tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 transition-all relative">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i>
+          <span data-i18n="tabTeacherMessages">Messages from Harish Sir</span>
+          <span id="student-tab-chat-badge" class="hidden bg-red-600 text-white text-[10px] font-black px-1.5 py-0.2 rounded-full badge-pop">0</span>
+        </button>
       </div>
 
       <!-- STUDENT TAB 1: NOTES -->
@@ -819,6 +973,54 @@
         </div>
       </div>
 
+      <!-- STUDENT TAB 5: MESSAGES / CHAT WITH HARISH SIR -->
+      <div id="student-panel-chat" class="hidden space-y-6">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col min-h-[550px]">
+          
+          <!-- Teacher Header -->
+          <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 bg-emerald-700 text-white flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-white text-emerald-800 flex items-center justify-center font-bold text-lg shadow-sm">
+                NH
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-extrabold text-base leading-tight">NALAM HARISH Sir</h4>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/40 text-emerald-100 border border-emerald-400/30">Director &amp; Mentor</span>
+                </div>
+                <p class="text-xs text-emerald-100/90 mt-0.5">Direct Message Channel &bull; Mathematics &amp; Science</p>
+              </div>
+            </div>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/20">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 live-dot"></span> Active
+            </span>
+          </div>
+
+          <!-- Messages Stream -->
+          <div id="student-chat-messages-container" class="p-5 overflow-y-auto flex-grow space-y-4 max-h-[420px] chat-thread flex flex-col bg-slate-50/50 dark:bg-slate-950/40">
+            <!-- Populated via app.js -->
+          </div>
+
+          <!-- Quick Response Chips & Student Input -->
+          <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 space-y-2.5">
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[11px]">
+              <span class="text-slate-400 font-semibold shrink-0">Quick Queries:</span>
+              <button type="button" onclick="insertStudentChatTemplate('Sir, having a doubt in today\'s homework problem.')" class="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 shrink-0 border border-emerald-200 dark:border-emerald-800 font-medium">❓ Homework Doubt</button>
+              <button type="button" onclick="insertStudentChatTemplate('Completed all practice problems from Chapter exercise, Sir!')" class="px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 shrink-0 border border-blue-200 dark:border-blue-800 font-medium">✅ Completed Exercises</button>
+              <button type="button" onclick="insertStudentChatTemplate('Sir, I might be 10 minutes late today due to school function.')" class="px-2.5 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 hover:bg-amber-100 shrink-0 border border-amber-200 dark:border-amber-800 font-medium">⏱️ Running Late</button>
+            </div>
+
+            <form onsubmit="handleStudentSendMessage(event)" class="flex items-end gap-2">
+              <textarea id="student-chat-input" rows="2" placeholder="Type a message or question to Harish Sir... (Press Enter to send)" onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();handleStudentSendMessage(event);}" class="flex-grow bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white outline-none resize-none focus:border-emerald-500"></textarea>
+              <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white p-3 rounded-2xl shadow-md transition-all flex items-center justify-center shrink-0">
+                <i data-lucide="send" class="w-5 h-5"></i>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
     </section>
 
     <!-- ========================================================================= -->
@@ -859,7 +1061,16 @@
         <!-- Left Ward Info (5 cols) -->
         <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
           <div class="flex items-center gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
-            <img id="parent-ward-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Ward Avatar" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700">
+            <div class="avatar-container relative group cursor-pointer" onclick="triggerProfilePhotoUpload('parent')" title="Tap to upload student photo / ఫోటో మార్చడానికి నొక్కండి">
+              <img id="parent-ward-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Ward Avatar" class="w-16 h-16 rounded-2xl object-cover border border-slate-200 dark:border-slate-700">
+              <div class="avatar-overlay absolute inset-0 bg-black/60 rounded-2xl flex flex-col items-center justify-center text-white text-[10px] font-bold gap-0.5">
+                <i data-lucide="camera" class="w-4 h-4"></i>
+                <span data-i18n="changePhoto">Photo</span>
+              </div>
+              <span class="absolute -bottom-1 -right-1 p-1 bg-emerald-600 rounded-full border border-white text-white shadow">
+                <i data-lucide="camera" class="w-2.5 h-2.5"></i>
+              </span>
+            </div>
             <div>
               <h3 id="parent-ward-name" class="font-extrabold text-xl text-slate-900 dark:text-white font-display">Parent Portal</h3>
               <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -889,15 +1100,22 @@
             </div>
           </div>
 
-          <!-- Direct Teacher Connect -->
-          <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
-            <div class="text-xs font-bold text-slate-700 dark:text-slate-300" data-i18n="contactTeacher">Direct Contact with Harish Sir:</div>
+          <!-- Direct Teacher Connect & Chat -->
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <div class="text-xs font-bold text-slate-700 dark:text-slate-300" data-i18n="contactTeacher">Direct Contact with Harish Sir:</div>
+              <span id="parent-chat-unread-badge" class="hidden px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-red-500 text-white badge-pop">🔴 0</span>
+            </div>
+            <button onclick="openChatModal('parent')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm">
+              <i data-lucide="message-square" class="w-4 h-4"></i>
+              <span data-i18n="chatWithTeacher">Chat with Harish Sir</span>
+            </button>
             <div class="grid grid-cols-2 gap-2">
               <a href="tel:+919876543210" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
                 <i data-lucide="phone" class="w-3.5 h-3.5 text-emerald-600"></i> <span data-i18n="callTeacher">Call Teacher</span>
               </a>
-              <a id="parent-whatsapp-link" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
-                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i> <span>WhatsApp</span>
+              <a id="parent-whatsapp-link" href="#" target="_blank" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold py-2 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600"></i> <span>WhatsApp</span>
               </a>
             </div>
           </div>
@@ -1550,6 +1768,183 @@
       </form>
     </div>
   </div>
+
+  <!-- 10. ANNOUNCEMENTS MODAL -->
+  <div id="modal-announcements" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeAnnouncementsModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <i data-lucide="bell" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="announcementsModalTitle">Centre Announcements & Holidays</h3>
+            <p class="text-xs text-slate-500" data-i18n="announcementsModalSub">Official notices from Director NALAM HARISH Sir</p>
+          </div>
+        </div>
+        <button onclick="closeAnnouncementsModal()" class="p-2 text-slate-400 hover:text-slate-600 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Filters & Harish Sir Action -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-semibold">
+          <button onclick="filterAnnouncementsModal('all')" class="modal-ann-filter-btn px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm" data-filter="all" data-i18n="filterAll">All</button>
+          <button onclick="filterAnnouncementsModal('holiday')" class="modal-ann-filter-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900" data-filter="holiday" data-i18n="filterHolidays">🏖️ Holidays</button>
+          <button onclick="filterAnnouncementsModal('exam')" class="modal-ann-filter-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900" data-filter="exam" data-i18n="filterExams">📝 Exams</button>
+          <button onclick="filterAnnouncementsModal('general')" class="modal-ann-filter-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-400 hover:text-slate-900" data-filter="general" data-i18n="filterNotices">📢 Notices</button>
+        </div>
+
+        <button id="modal-ann-post-btn" onclick="openAddAnnouncementModal()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all shadow-sm">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i>
+          <span data-i18n="postNoticeBtn">Post New Notice</span>
+        </button>
+      </div>
+
+      <!-- Announcements List Container -->
+      <div id="modal-announcements-list" class="flex-1 overflow-y-auto space-y-3.5 pr-1 max-h-[50vh]">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Harish Tuition Centre Official Notice Board</span>
+        <button onclick="closeAnnouncementsModal()" class="text-xs font-bold text-slate-600 dark:text-slate-300 hover:underline" data-i18n="closeBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. ADD ANNOUNCEMENT MODAL (FOR HARISH SIR) -->
+  <div id="modal-add-announcement" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeAddAnnouncementModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white font-display" data-i18n="publishAnnouncementTitle">Publish Notice / Holiday</h3>
+          <p class="text-xs text-slate-500" data-i18n="publishAnnouncementSub">Announce tuition holidays, exam dates, or test series</p>
+        </div>
+        <button onclick="closeAddAnnouncementModal()" class="p-2 text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleCreateAnnouncement(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="annTitleLabel">Notice Title (English) *</label>
+          <input type="text" id="new-ann-title" required placeholder="e.g. Vinayaka Chavithi Tuition Holiday Notice" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="annTitleTeLabel">Notice Title (తెలుగు శీర్షిక) (Optional)</label>
+          <input type="text" id="new-ann-title-te" placeholder="ఉదా: వినాయక చవితి సందర్భంగా ట్యూషన్ సెలవు" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="annCategoryLabel">Category *</label>
+            <select id="new-ann-category" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+              <option value="holiday">🏖️ Holiday (సెలవు)</option>
+              <option value="exam">📝 Exam / Test Series</option>
+              <option value="general">📢 General Notice</option>
+              <option value="urgent">⚠️ Urgent Alert</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="annDateLabel">Date / Effective Day *</label>
+            <input type="text" id="new-ann-date" required placeholder="e.g. 17 Sep 2026" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="annMessageLabel">Detailed Notice Message (English) *</label>
+          <textarea id="new-ann-message" rows="3" required placeholder="Describe the announcement, instructions for students, homework or reopening dates..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none"></textarea>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 dark:text-slate-300 mb-1" data-i18n="annMessageTeLabel">Detailed Notice Message (తెలుగు సమాచారం) (Optional)</label>
+          <textarea id="new-ann-message-te" rows="2" placeholder="ట్యూషన్ తిరిగి ప్రారంభమయ్యే తేదీ మరియు విద్యార్థులకు సూచనలు..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-900 dark:text-white outline-none"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2">
+          <i data-lucide="megaphone" class="w-4 h-4"></i>
+          <span data-i18n="publishNoticeSubmit">Broadcast to All Students & Parents</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 12. FLOATING CHAT & POPUP CHAT MODAL (TWO-WAY INTERACTIVE CHATBOX) -->
+  <div id="modal-chat" class="fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeChatModal()"></div>
+    <div class="modal-content relative bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 dark:border-slate-800 z-10 flex flex-col overflow-hidden h-[85vh] max-h-[620px]">
+      
+      <!-- Chat Header -->
+      <div class="p-4 sm:p-5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex items-center justify-between shadow">
+        <div class="flex items-center gap-3">
+          <div class="relative">
+            <img id="chat-modal-recipient-avatar" src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=150" alt="Avatar" class="w-10 h-10 rounded-xl object-cover border-2 border-white/40">
+            <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-300 rounded-full border-2 border-emerald-700"></span>
+          </div>
+          <div>
+            <div id="chat-modal-recipient-name" class="font-extrabold text-sm sm:text-base leading-tight font-display">NALAM HARISH Sir</div>
+            <div id="chat-modal-recipient-sub" class="text-[11px] text-emerald-100 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span> Tuition Director &bull; Available
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button onclick="closeChatModal()" class="p-2 text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Template Pills -->
+      <div class="p-2.5 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 flex items-center gap-1.5 overflow-x-auto text-[11px] no-scrollbar">
+        <span class="text-slate-400 font-semibold shrink-0 pl-1" data-i18n="quickMsg">Quick:</span>
+        <button type="button" onclick="insertModalChatTemplate('Sir, when is the next test? / సర్, తదుపరి పరీక్ష ఎప్పుడు?')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-emerald-50 shrink-0">
+          📅 Next Test?
+        </button>
+        <button type="button" onclick="insertModalChatTemplate('Sir, please explain yesterday\'s homework problem / నిన్నటి హోంవర్క్ సందేహం ఉంది')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-emerald-50 shrink-0">
+          ❓ Homework Doubt
+        </button>
+        <button type="button" onclick="insertModalChatTemplate('Completed today\'s practice questions Sir! / నేటి ప్రాక్టీస్ పూర్తయింది')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-emerald-50 shrink-0">
+          ✅ Practice Done
+        </button>
+        <button type="button" onclick="insertModalChatTemplate('Fee paid via PhonePe/GPay UPI Sir, thank you! / ఫీజు చెల్లించాము')" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-emerald-50 shrink-0">
+          💳 Fee Paid
+        </button>
+      </div>
+
+      <!-- Messages Thread Stream -->
+      <div id="chat-modal-messages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-50/50 dark:bg-slate-900/50">
+        <!-- Messages rendered dynamically -->
+      </div>
+
+      <!-- Message Composer -->
+      <form onsubmit="handleModalSendMessage(event)" class="p-3 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-2">
+        <input type="text" id="chat-modal-input" required placeholder="Type your message to Harish Sir... / మెసేజ్ టైప్ చేయండి..." class="flex-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 dark:text-white outline-none focus:border-emerald-500">
+        <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-2.5 rounded-xl shadow-md transition-all shrink-0 active:scale-95">
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FLOATING CHAT BUTTON WITH NUMBERED UNREAD POP-UP BADGE -->
+  <div id="floating-chat-container" class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2">
+    <button id="floating-chat-btn" onclick="openFloatingChat()" class="relative bg-emerald-600 hover:bg-emerald-700 text-white p-3.5 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-105 active:scale-95 group" title="Chat with Harish Sir / హరీష్ సర్ తో చాట్ చేయండి">
+      <i data-lucide="message-circle" class="w-6 h-6"></i>
+      <!-- Pop-up numbered badge -->
+      <span id="floating-chat-badge" class="hidden absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[11px] font-black px-2 py-0.5 rounded-full border-2 border-white dark:border-slate-900 shadow-md badge-pop">
+        1
+      </span>
+    </button>
+  </div>
+
+  <!-- HIDDEN PROFILE PHOTO UPLOAD INPUT (ACCESSIBLE FROM MEDIA / CAMERA / LAPTOP) -->
+  <input type="file" id="profile-photo-input" accept="image/*" class="hidden" onchange="handleProfilePhotoUpload(event)">
 
   <!-- TOAST CONTAINER -->
   <div id="toast-container"></div>
